@@ -21,14 +21,15 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserItemComponent } from './user-item/user-item.component';
+import { StageComponent } from './stage/stage.component';
 
 import { ChatService } from './services/chat.service';
 import { AuthService } from './services/auth.service';
 import { StoryService } from './services/story.service';
 
-
 import { appRoutes } from '../routes';
 import { ControlPanelComponent } from './control-panel/control-panel.component';
+import { SurveyComponent } from './survey/survey.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { ControlPanelComponent } from './control-panel/control-panel.component';
     NavBarComponent,
     UserListComponent,
     UserItemComponent,
-    ControlPanelComponent
+    ControlPanelComponent,
+    SurveyComponent,
+    StageComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ export class StoryService {
     constructor(private db: AngularFireDatabase) { }
 
     getStory(): FirebaseListObservable<any> {
+        console.log('get story: ', this.db.list('story'))
         return this.db.list('story');
     }
 

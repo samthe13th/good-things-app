@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
-import { ChatService } from '../services/chat.service';
+import { StoryService } from '../services/story.service';
 import { Observable } from 'rxjs/Observable';
-import { ChatMessage } from '../interfaces/chat-message.interface';
+import { StorySegment } from '../interfaces/story-segment.interface';
 import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 
 @Component({
@@ -11,17 +11,18 @@ import { FirebaseListObservable } from 'angularfire2/database-deprecated';
 })
 export class FeedComponent implements OnInit, OnChanges {
 
-  feed: FirebaseListObservable<ChatMessage[]>;
+  feed: FirebaseListObservable<StorySegment[]>;
 
   constructor(
-    private chat: ChatService
+    private story: StoryService
   ) { }
 
   ngOnInit() {
-    this.feed = this.chat.getMessages();
+   // this.feed = this.chat.getMessages();
+   this.feed = this.story.getStory();
   }
 
   ngOnChanges() {
-    this.feed = this.chat.getMessages();
+    this.feed = this.story.getStory();
   }
 }
