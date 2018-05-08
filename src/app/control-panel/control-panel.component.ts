@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { STORY } from './story'
+import { STORY } from '../story'
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { StoryService } from '../services/story.service';
 
@@ -18,20 +18,24 @@ export class ControlPanelComponent implements OnInit {
   lastBlock = [];
   currentBlock;
   currentSegment = '';
+  segment = '';
   storyMode = false;
   mode = 'chat';
   time = '00:00';
   clock = 0;
 
-  constructor(private storyBlocks: StoryService) { }
+  storyBlocks;
+  storySegment; 
+
+  constructor(private storyService: StoryService) { }
 
   ngOnInit() {
     const block = this.story[this.storyIndex].value;
     this.lastBlock = [];
     this.currentBlock = block.split('/');
-    this.storyBlocks.clear();
-    this.storyBlocks.tellStory(this.story[this.storyIndex]);;
-    this.storyFeed = this.storyBlocks.getStory();
+    this.storyService.clear();
+    this.storyService.tellStory(this.story[this.storyIndex]);;
+    this.storyFeed = this.storyService.getStory();
   }
 
   startClock() {
@@ -49,37 +53,48 @@ export class ControlPanelComponent implements OnInit {
     return (number > 9) ? String(number) : `0${String(number)}`;
   }
 
+  /*
   mockType() {
     if (this.segIndex < this.currentBlock.length){
 
+      this.segment = this.currentBlock[this.segIndex];
+
       if (this.currentBlock[this.segIndex][this.charIndex] !== '*') {
-      this.currentSegment += this.currentBlock[this.segIndex][this.charIndex];
+        this.currentSegment += this.currentBlock[this.segIndex][this.charIndex];
       }
 
-      if (this.charIndex === (this.currentBlock[this.segIndex].length - 1)){
+      if (this.charIndex === (this.currentBlock[this.segIndex].length - 1)) {
         console.log('currentSegment: ', this.currentSegment);
-        this.lastBlock.push(this.currentSegment);
+        // this.lastBlock.push(this.currentSegment);
         this.currentSegment = '';
         this.charIndex = 0;
         this.segIndex++;
         setTimeout(() => {
-        this.mockType();
+         this.mockType();
         }, 1000)
       } else {
-      setTimeout(() => {
-        if (this.charIndex < (this.currentBlock[this.segIndex].length - 1)) {
-          this.charIndex += 1;
-          this.mockType();
-        }
-      }, this.interval(this.currentBlock[this.segIndex][this.charIndex]));
+        setTimeout(() => {
+          if (this.charIndex < (this.currentBlock[this.segIndex].length - 1)) {
+            this.charIndex += 1;
+            this.mockType();
+          }
+        }, this.interval(this.currentBlock[this.segIndex][this.charIndex]));
       }
     } else {
       console.log("end of block");
       this.lastBlock.push('---');
       this.storyMode = false;
-      if (this.mode === 'story'){
+      if (this.mode === 'story') {
         this.mode = 'wait';
       }
+    }
+  }
+  */
+  
+  autoTypeBlock() {
+    if (this.segIndex < this.currentBlock.length) {
+      this.storyService.updateCurrentSegment({ type: 'story', value: this.currentBlock[this.segIndex]});
+      this.segment = this.currentBlock[this.segIndex];
     }
   }
 
@@ -88,7 +103,8 @@ export class ControlPanelComponent implements OnInit {
   }
 
   advanceStory() {
-    if (this.clock === 0){
+    console.log('advance')
+    if (this.clock === 0) {
       this.startClock();
     }
     this.segIndex = 0;
@@ -96,23 +112,46 @@ export class ControlPanelComponent implements OnInit {
     this.mode = 'story';
     this.storyIndex += 1;
     this.currentBlock = this.story[this.storyIndex].value.split('/')
-    this.storyBlocks.tellStory(this.story[this.storyIndex]);
     this.setMode();
+
+    this.storyBlocks = this.storyService.getStory();
+    this.storySegment = this.storyBlocks.push();
+
+    console.log('current block: ', this.currentBlock);
+    this.autoTypeBlock();
   }
 
   setMode() {
     console.log("MODE: ", this.story[this.storyIndex].type);
     this.mode = this.story[this.storyIndex].type;
-    if (this.mode === 'story'){
-      this.mockType();
-    }
+    /*
+      if (this.mode === 'story') {
+        this.mockType();
+      }
+    */
   }
 
   submit(input){
     console.log(input.value );
     this.segIndex = 0;
-    this.currentBlock = [ input.value ];
-    this.mockType();
+    this.currentBlock = [input.value];
+    this.autoTypeBlock();
     input.value = '';
+  }
+
+  onFinishTyping(segment) {
+    console.log('finished typing: ', segment);
+    console.log(this.currentBlock[this.currentBlock.length - 1])
+    this.segment = '';
+    this.lastBlock.push(segment);
+    this.storyService.tellStory({ type: 'story', value: segment});
+    this.segIndex += 1;
+    if (segment === this.currentBlock[this.currentBlock.length - 1]) {
+      this.lastBlock.push('---')
+      this.mode = 'wait';
+    }
+    setTimeout(() => {
+      this.autoTypeBlock();
+    }, 1000)
   }
 }

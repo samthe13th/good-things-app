@@ -1,0 +1,5 @@
+      <div class="control-panel__stage--typed-segement" *ngFor="let segment of segments">
+        <span *ngIf="segment !== '---'">{{ segment }}</span>
+        <br *ngIf="segment === '---'">
+      </div>
+    <!--  <auto-type  [typeString]="segment" (typedSegment)="onFinishTyping($event)"></auto-type> -->

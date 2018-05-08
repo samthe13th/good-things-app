@@ -1,6 +1,7 @@
 <div class="feed">
   <div *ngFor="let segment of feed | async">
     {{ segment.value }}
-   <!-- <app-message [chatMessage]=message></app-message> -->
   </div>
+  <div *ngFor="let item of currentSegment | async">{{ item.value }}</div> 
+ <!-- <auto-type [typeString]="currentSegment.value | async"></auto-type>-->
 </div>

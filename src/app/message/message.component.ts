@@ -2,7 +2,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChatService } from '../services/chat.service';
 import { AuthService } from '../services/auth.service';
-import { ChatMessage } from '../interfaces/chat-message.interface';
 
 @Component({
   selector: 'app-message',
@@ -11,7 +10,7 @@ import { ChatMessage } from '../interfaces/chat-message.interface';
 })
 export class MessageComponent implements OnInit {
 
-  @Input() chatMessage: ChatMessage;
+  @Input() chatMessage;
   userName: string;
   messageContent: string;
   timeStamp: Date = new Date();

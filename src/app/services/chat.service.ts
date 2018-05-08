@@ -5,12 +5,10 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service';
 import * as firebase from 'firebase/app';
 
-import { ChatMessage } from '../interfaces/chat-message.interface';
 @Injectable()
 export class ChatService {
 user: firebase.User;
 chatMessages;
-chatMessage: ChatMessage;
 userName: string;
 
   constructor(
@@ -43,18 +41,12 @@ userName: string;
 
   sendMessage(msg: string) {
     const timestamp = this.getTimeStamp();
-    this.chatMessages = this.getMessages();
     this.chatMessages.push({
       message: msg,
       timeSent: timestamp,
       userName: this.userName,
     });
     console.log('send message');
-  }
-
-  getMessages(): FirebaseListObservable<ChatMessage[]> {
-    // query to create our message feed binding
-    return this.db.list('messages');
   }
 
   getTimeStamp() {

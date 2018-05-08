@@ -32,11 +32,8 @@
           <span *ngIf="mode === 'chat'">Typing-mode on (manually enter text)</span>
       </div>
     <div class="control-panel__stage">
-      <div class="control-panel__stage--typed-segement" *ngFor="let segment of lastBlock">
-        <span *ngIf="segment !== '---'">{{ segment }}</span>
-        <br *ngIf="segment === '---'">
-      </div>
-      <div>{{ currentSegment }}<span class="cursor">|</span></div>
+      <story [segments]="lastBlock"></story>
+      <auto-type  [typeString]="segment" (typedSegment)="onFinishTyping($event)"></auto-type>
     </div>
   </div>
   <div class="control-panel__feedback">

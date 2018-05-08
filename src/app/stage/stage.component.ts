@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./stage.component.css']
 })
 export class StageComponent implements OnInit, AfterViewChecked{
-
+  currentSegment = 'test';
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -16,5 +16,9 @@ export class StageComponent implements OnInit, AfterViewChecked{
   }
 
   ngAfterViewChecked() {
+  }
+
+  onFinishTyping(segment){
+    console.log("finshed: ", segment)
   }
 }

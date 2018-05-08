@@ -22,6 +22,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserItemComponent } from './user-item/user-item.component';
 import { StageComponent } from './stage/stage.component';
+import { AutoTypeComponent } from './auto-type/auto-type.component';
+import { StoryComponent } from './story/story.component';
 
 import { ChatService } from './services/chat.service';
 import { AuthService } from './services/auth.service';
@@ -46,6 +48,8 @@ import { SurveyComponent } from './survey/survey.component';
     ControlPanelComponent,
     SurveyComponent,
     StageComponent,
+    AutoTypeComponent,
+    StoryComponent,
   ],
   imports: [
     BrowserModule,

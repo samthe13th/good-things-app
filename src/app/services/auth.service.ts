@@ -23,18 +23,13 @@ export class AuthService {
   }
 
   signInAnonymously() {
-    console.log('sign in')
     return this.afAuth.auth.signInAnonymously().catch(function(error) {
-      console.log("error: ", error.message)
-      // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
     });
   }
 
   login(email: string, password: string) {
-
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((value) => {
         const status = 'online';

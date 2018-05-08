@@ -7,17 +7,9 @@ export const STORY = [
         type: "story",
         value: "You're here./I can't believe you're here./Um, I don't even know what to say./Or, \"say\".  Whatever this is./I'm just a little/It's just a lot/You know?/I know you know.  I hope it wasn't hard to get here today/Literally, or otherwise/Figuratively/Both legitimate/I'm nervous/Sorry."
     },
-    {  
-        type: "chat",
-        value: "",
-    },
     {
         type: "story",
         value: "I'm just - as I said - just very happy that you're here./So you're alone, now, okay?  No one is going to come bother you, so relax, get comfortable.  You are safe here./But out there/I'm not always sure."
-    },
-    {  
-        type: "chat",
-        value: "",
     },
     {
         type: "story",
