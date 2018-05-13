@@ -7,15 +7,17 @@ import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/d
 @Component({
   selector: 'auto-type',
   template: `
-    {{ stream }}<span class="cursor">|</span>
+    <span *ngFor="let segment of segments">{{ segment.value }}</span>
+    <br>
+    {{ stream }}
   `,
   styleUrls: ['./auto-type.component.css']
 })
-export class AutoTypeComponent implements OnInit, OnChanges {
+export class AutoTypeComponent {
     charIndex = 0;
     length = 0;
     stream = '';
-    currentSegment: FirebaseObjectObservable<any>;
+    segments = [];
 
     @Output() typedSegment: EventEmitter<string> = new EventEmitter();
 
@@ -34,23 +36,11 @@ export class AutoTypeComponent implements OnInit, OnChanges {
     }
     private _typeString: string;
 
-    constructor(private story: StoryService){}
-
-    ngOnInit() {
-        console.log('current segment: ', this.currentSegment)
-    }
-
-    ngOnChanges() {
-        console.log('current segment: ', this.currentSegment)
-    }
-
     interval = char => (char === '*') ? 500 : (Math.random() * 80 + 20);
 
     autoType() {
         if (this.typeString[this.charIndex] !== '*') {
-            console.log('length: ', this.typeString.length);
             this.stream += this.typeString[this.charIndex];
-            console.log('stream: ', this.stream)
         }
     
         if (this.charIndex < this.length - 1) {

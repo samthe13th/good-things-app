@@ -1,7 +1,5 @@
-<div class="feed">
-  <div *ngFor="let segment of feed | async">
-    {{ segment.value }}
-  </div>
-  <div *ngFor="let item of currentSegment | async">{{ item.value }}</div> 
- <!-- <auto-type [typeString]="currentSegment.value | async"></auto-type>-->
-</div>
+<story 
+    (advanceScroll)="onAdvanceScroll($event)"
+    (finishedTyping)="onFinishTyping($event)"
+    [segments]="feed | async">
+</story>

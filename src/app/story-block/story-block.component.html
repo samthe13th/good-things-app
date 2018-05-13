@@ -1,0 +1,12 @@
+
+<div *ngIf="staticBlock">
+  <br>
+  <div *ngFor="let segment of segmentList">{{ segment | RemoveSpecialCharacters }}</div>
+</div>
+<div *ngIf="!staticBlock">
+  <auto-type 
+    *ngFor="let segment of cue" 
+    (typedSegment)="onFinishTyping($event)" 
+    [typeString]="segment.value">
+  </auto-type>
+</div>

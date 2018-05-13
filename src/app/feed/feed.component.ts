@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, EventEmitter, Output, HostBinding } from '@angular/core';
 import { StoryService } from '../services/story.service';
 import { Observable } from 'rxjs/Observable';
 import { StorySegment } from '../interfaces/story-segment.interface';
@@ -10,7 +10,8 @@ import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/d
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit, OnChanges {
-
+  @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
+  @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
   feed: FirebaseListObservable<StorySegment[]>;
   currentSegment:  FirebaseListObservable<StorySegment[]>;
 
@@ -29,5 +30,14 @@ export class FeedComponent implements OnInit, OnChanges {
     console.log('change');
     this.feed = this.story.getStory();
     this.currentSegment = this.story.getCurrentSegment();
+  }
+
+  onFinishTyping(boolean){
+    this.finishedTyping.emit(boolean);
+  }
+
+  onAdvanceScroll(boolean) {
+    console.log("@feed advance");
+    this.advanceScroll.emit(boolean);
   }
 }

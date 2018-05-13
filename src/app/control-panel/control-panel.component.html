@@ -32,8 +32,8 @@
           <span *ngIf="mode === 'chat'">Typing-mode on (manually enter text)</span>
       </div>
     <div class="control-panel__stage">
-      <story [segments]="lastBlock"></story>
-      <auto-type  [typeString]="segment" (typedSegment)="onFinishTyping($event)"></auto-type>
+      <!--<story (finishedTyping)="onFinishTyping($event)" [segments]="feed | async"></story>-->
+      <app-feed (finishedTyping)="onFinishTyping($event)" ></app-feed>
     </div>
   </div>
   <div class="control-panel__feedback">

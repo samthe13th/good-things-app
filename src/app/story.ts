@@ -1,19 +1,19 @@
 export const STORY = [
     {
-        type: "chat", 
+        type: "start", 
         value: ""
     },
     {
         type: "story",
-        value: "You're here./I can't believe you're here./Um, I don't even know what to say./Or, \"say\".  Whatever this is./I'm just a little/It's just a lot/You know?/I know you know.  I hope it wasn't hard to get here today/Literally, or otherwise/Figuratively/Both legitimate/I'm nervous/Sorry."
+        value: "You're here./I can't believe you're here./Um,** I don't even know what to say./Or, \"say\".**  Whatever this is./I'm just a little/It's just* a lot/You know?/I know you know.**  I hope it wasn't* hard to get here today/Literally,* or otherwise*/Figuratively/Both legitimate*/I'm nervous/Sorry."
     },
     {
         type: "story",
-        value: "I'm just - as I said - just very happy that you're here./So you're alone, now, okay?  No one is going to come bother you, so relax, get comfortable.  You are safe here./But out there/I'm not always sure."
+        value: "I'm just* - as I said* - just very happy that you're here./So you're alone,* now, okay?  No one is going to come bother you,* so relax, get comfortable.**  You are safe here./But out there*/I'm not always sure."
     },
     {
         type: "story",
-        value: "There is so much in this world. There is too much./I'm a live wire, charged and electric. I'm a radio receiver, alive with static./Does that sound familiar?"
+        value: "There is so much in this world.** There is too much./I'm a live wire,* charged and electric.** I'm a radio receiver,* alive with static./Does that sound familiar?"
     },
     {
         type: "story",

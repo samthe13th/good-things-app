@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'story',
@@ -6,5 +6,24 @@ import { Component, OnInit, OnChanges, Input } from '@angular/core';
   styleUrls: ['./story.component.css']
 })
 export class StoryComponent {
- @Input() segments: String[];
+ @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
+ @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
+ @Input() 
+  set segments(value) {
+    this._segments = value;
+  }
+  get segments(){
+    return this._segments;
+  }
+  private _segments;
+
+  onFinishTyping(segment) {
+    console.log('finish typing block: ', segment)
+    this.finishedTyping.emit(true);
+  }
+
+  onAdvanceScroll(boolean) {
+    console.log('@story advance')
+    this.advanceScroll.emit(boolean);
+  }
 }

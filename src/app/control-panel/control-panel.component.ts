@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { STORY } from '../story'
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { StoryService } from '../services/story.service';
+import { StorySegment } from '../interfaces/story-segment.interface';
 
 @Component({
   selector: 'app-control-panel',
@@ -27,15 +28,24 @@ export class ControlPanelComponent implements OnInit {
   storyBlocks;
   storySegment; 
 
+  feed: FirebaseListObservable<StorySegment[]>;
+
   constructor(private storyService: StoryService) { }
 
   ngOnInit() {
     const block = this.story[this.storyIndex].value;
     this.lastBlock = [];
-    this.currentBlock = block.split('/');
+    this.currentBlock = { type: 'story', value: block };
     this.storyService.clear();
-    this.storyService.tellStory(this.story[this.storyIndex]);;
+    this.storyService.tellStory(this.currentBlock);;
     this.storyFeed = this.storyService.getStory();
+    this.feed = this.storyService.getStory();
+  }
+
+
+  ngOnChanges() {
+    console.log('change');
+    this.feed = this.storyService.getStory();
   }
 
   startClock() {
@@ -93,8 +103,8 @@ export class ControlPanelComponent implements OnInit {
   
   autoTypeBlock() {
     if (this.segIndex < this.currentBlock.length) {
-      this.storyService.updateCurrentSegment({ type: 'story', value: this.currentBlock[this.segIndex]});
-      this.segment = this.currentBlock[this.segIndex];
+      this.storyService.updateCurrentSegment({ type: 'story', value: this.currentBlock});
+      this.segment = this.currentBlock;
     }
   }
 
@@ -103,6 +113,7 @@ export class ControlPanelComponent implements OnInit {
   }
 
   advanceStory() {
+    this.feed = this.storyService.getStory();
     console.log('advance')
     if (this.clock === 0) {
       this.startClock();
@@ -111,11 +122,12 @@ export class ControlPanelComponent implements OnInit {
     this.storyMode = true;
     this.mode = 'story';
     this.storyIndex += 1;
-    this.currentBlock = this.story[this.storyIndex].value.split('/')
+    this.currentBlock = { type: 'story', value: this.story[this.storyIndex].value };
     this.setMode();
 
     this.storyBlocks = this.storyService.getStory();
     this.storySegment = this.storyBlocks.push();
+    this.storyService.tellStory(this.currentBlock);
 
     console.log('current block: ', this.currentBlock);
     this.autoTypeBlock();
@@ -140,12 +152,14 @@ export class ControlPanelComponent implements OnInit {
   }
 
   onFinishTyping(segment) {
-    console.log('finished typing: ', segment);
-    console.log(this.currentBlock[this.currentBlock.length - 1])
-    this.segment = '';
-    this.lastBlock.push(segment);
-    this.storyService.tellStory({ type: 'story', value: segment});
+    console.log('END OF TYPING')
+    //this.segment = '';
+    //this.lastBlock.push(segment);
+    this.mode = 'wait';
+  //  this.storyService.tellStory({ type: 'story', value: segment});
+  /*
     this.segIndex += 1;
+    this.mode === 'wait';
     if (segment === this.currentBlock[this.currentBlock.length - 1]) {
       this.lastBlock.push('---')
       this.mode = 'wait';
@@ -153,5 +167,6 @@ export class ControlPanelComponent implements OnInit {
     setTimeout(() => {
       this.autoTypeBlock();
     }, 1000)
+    */
   }
 }

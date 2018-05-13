@@ -1,5 +1,10 @@
-      <div class="control-panel__stage--typed-segement" *ngFor="let segment of segments">
-        <span *ngIf="segment !== '---'">{{ segment }}</span>
-        <br *ngIf="segment === '---'">
+<div style="height: 30%"></div>      
+<div class="control-panel__stage--typed-segement" *ngFor="let segment of segments; let i = index">
+        <story-block 
+          (advanceScroll)="onAdvanceScroll($event)"
+          (finishedTyping)="onFinishTyping($event)" 
+          [block]="segment" 
+          [staticBlock]="i < (segments.length - 1)">
+        </story-block>
       </div>
-    <!--  <auto-type  [typeString]="segment" (typedSegment)="onFinishTyping($event)"></auto-type> -->
+<div style="height: 30%"></div>   
