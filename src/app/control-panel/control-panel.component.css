@@ -37,6 +37,12 @@
     font-size: 20px;
 }
 
+.control-panel__stage-wrapper {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+}
+
 .control-panel__story-block {
     width: 150px;
     height: 150px;

@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { ChatService } from '../services/chat.service';
+import { StorySegment } from '../interfaces/story-segment.interface';
 
 @Component({
   selector: 'app-stage',
@@ -9,34 +12,34 @@ import { AuthService } from '../services/auth.service';
 export class StageComponent implements OnInit, AfterViewInit {
   @ViewChild('scroller') scroller: ElementRef;
 
+  id; 
+
   currentSegment = 'test';
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private route: ActivatedRoute, private chatService: ChatService) { 
+    this.route.params.subscribe(params => this.id = params.id);
+  }
 
   ngOnInit() {
-     console.log('init')
      this.authService.signInAnonymously();
   }
 
   ngAfterViewInit() {
-    console.log('scroll top ', this.scroller.nativeElement.scrollTop);
-    console.log('scroll height ', this.scroller.nativeElement.clientHeight);
     this.scrollToBottom();
-    console.log('scroll top ', this.scroller.nativeElement.scrollTop);
   }
 
   onFinishTyping(segment) {
-    console.log("finshed: ", segment)
-      this.scrollToBottom();
-      console.log('scroll top ', this.scroller.nativeElement.scrollTop); 
+    this.scrollToBottom();
   }
 
   scrollToBottom() {
     this.scroller.nativeElement.scrollTop = this.scroller.nativeElement.scrollHeight;
-    console.log('scroll top ', this.scroller.nativeElement.scrollTop); 
   }
 
   onAdvanceScroll(boolean) {
-    console.log("ADVANCE SCROLL");
     this.scrollToBottom();
+  }
+
+  submit(message) {
+    this.chatService.sendMessage(message.value, this.id);
   }
 }

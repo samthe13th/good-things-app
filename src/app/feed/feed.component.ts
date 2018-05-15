@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, EventEmitter, Output, HostBinding } from '@angular/core';
+import { Component, OnInit, OnChanges, EventEmitter, Output, HostBinding, Input } from '@angular/core';
 import { StoryService } from '../services/story.service';
 import { Observable } from 'rxjs/Observable';
 import { StorySegment } from '../interfaces/story-segment.interface';
@@ -12,6 +12,9 @@ import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/d
 export class FeedComponent implements OnInit, OnChanges {
   @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
   @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
+
+  @Input() user: string;
+
   feed: FirebaseListObservable<StorySegment[]>;
   currentSegment:  FirebaseListObservable<StorySegment[]>;
 

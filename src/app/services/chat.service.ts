@@ -39,14 +39,13 @@ userName: string;
     return this.db.list(path);
   }
 
-  sendMessage(msg: string) {
-    const timestamp = this.getTimeStamp();
+  sendMessage(message, id) {
+    console.log('id: ', id);
+    this.chatMessages = this.db.list('messages');
     this.chatMessages.push({
-      message: msg,
-      timeSent: timestamp,
-      userName: this.userName,
+      message, 
+      id
     });
-    console.log('send message');
   }
 
   getTimeStamp() {

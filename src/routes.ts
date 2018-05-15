@@ -13,5 +13,6 @@ export const appRoutes: Routes = [
     { path: 'chat', component: ChatRoomComponent },
     { path: 'admin', component: ControlPanelComponent },
     { path: '', component: SurveyComponent },
-    { path: 'stage', component: StageComponent }
+    { path: 'stage', component: StageComponent },
+    { path: 'stage/:id', component: StageComponent }
 ];

@@ -48,6 +48,11 @@ export class StoryService {
         this.storyBlocks.push(block);
     }
 
+    chat(message) {
+        this.storyBlocks = this.getStory();
+        this.storyBlocks.push(message);
+    }
+
     clear() {
         this.db.list('story').remove();
     }

@@ -26,18 +26,20 @@
     </div>
   </div>
   <div class="control-panel__main">
-      <div style="color: white" class="control-panel__views">
-          <span *ngIf="mode === 'story'">Autotyping story block...</span>
+      <div style="color: white; flex-shrink: 0" class="control-panel__views"></div>
+    <div class="control-panel__stage-wrapper">
+        <div style="font-size: 16px; padding: 10px; background: lightblue">
+          <span  *ngIf="mode === 'story'">Autotyping story block...</span>
           <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
-          <span *ngIf="mode === 'chat'">Typing-mode on (manually enter text)</span>
+          <span  *ngIf="mode === 'chat'">Typing-mode on (manually enter text)</span>
+        </div>
+      <div class="control-panel__stage">
+        <app-feed [user]='user' (finishedTyping)="onFinishTyping($event)" ></app-feed>
       </div>
-    <div class="control-panel__stage">
-      <!--<story (finishedTyping)="onFinishTyping($event)" [segments]="feed | async"></story>-->
-      <app-feed (finishedTyping)="onFinishTyping($event)" ></app-feed>
+      <div class="control-panel__feedback">
+          <input #input class="control-panel__feedback-input">
+          <button [disabled]="mode !== 'chat'" class="control-panel__feedback-btn" (click)="submit(input)">TYPE</button>
+      </div>
     </div>
-  </div>
-  <div class="control-panel__feedback">
-    <input #input class="control-panel__feedback-input">
-    <button [disabled]="mode !== 'chat'" class="control-panel__feedback-btn" (click)="submit(input)">SEND</button>
   </div>
 </div>

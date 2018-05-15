@@ -4,6 +4,15 @@ export const STORY = [
         value: ""
     },
     {
+        type: 'story',
+        value: 'Are you there?'
+    },
+    {
+        type: "chat",
+        value: "",
+        isPrivate: true,
+    },
+    {
         type: "story",
         value: "You're here./I can't believe you're here./Um,** I don't even know what to say./Or, \"say\".**  Whatever this is./I'm just a little/It's just* a lot/You know?/I know you know.**  I hope it wasn't* hard to get here today/Literally,* or otherwise*/Figuratively/Both legitimate*/I'm nervous/Sorry."
     },
