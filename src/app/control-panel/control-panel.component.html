@@ -30,7 +30,9 @@
       <div style="display: flex; height: 100%; background: grey">
         <div style="display: flex; flex-direction: column; padding: 4px">
           <div *ngFor="let user of users | async" style="position: relative">
-            <button style="width: 50px; height: 50px; font-size: 16px; cursor: pointer" [style.background]="chatUser.id === user.id ? user.color : 'white'"
+            <button 
+            style="width: 50px; height: 50px; font-size: 16px; cursor: pointer" 
+            [style.background]="chatUser.id === user.id ? user.color : 'white'"
               (click)="filterChat(user)">
                   {{ user.id }}
               </button>

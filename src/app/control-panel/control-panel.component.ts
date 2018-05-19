@@ -39,7 +39,7 @@ export class ControlPanelComponent implements OnInit {
 
   feed: FirebaseListObservable<StorySegment[]>;
   users: FirebaseListObservable<any[]>;
-  id;
+  id = 'admin';
 
   constructor(
     private authService: AuthService,
@@ -157,13 +157,19 @@ export class ControlPanelComponent implements OnInit {
   }
 
   submit(input){
-    this.storyService.tellStory({ ...this.currentBlock, type: 'story', isPrivate: false, value: input.value, user: this.user });
+    this.storyService.tellStory({ ...this.currentBlock, type: 'chat', isPrivate: false, value: input.value, user: this.user });
     input.value = '';
   }
 
   chat(input) {
     console.log('chat! ', input.value)
-    this.storyService.chat({ ...this.currentBlock, value: input.value, user: this.user });
+    this.chatService.sendMessage(input.value, this.chatUser.id, 'admin');
+    this.storyService.tellStory({
+      isPrivate: true,
+      value: input.value,
+      type: 'chat',
+      canView: this.chatUser.id,
+    })
     input.value = '';
   }
 
