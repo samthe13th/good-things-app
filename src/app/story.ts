@@ -4,10 +4,6 @@ export const STORY = [
         value: ""
     },
     {
-        type: 'story',
-        value: 'Are you there?'
-    },
-    {
         type: "chat",
         value: "",
         isPrivate: true,
@@ -61,3 +57,11 @@ export const STORY = [
         value: "Welcome back./So, I have this recurring dream./I've had it for a long time, like, most of my life./I think I started getting it when I was 8 years old./I know a lot of people have recurring dreams, so you're probably like, why are you telling me this?/Well./I don't wanna be weird, but/I'm telling you this because you're in it./Do you remember?/Probably not. I guess that's not really how dreams work. Well I'm gonna tell you about it, okay?/Okay."
     }
 ]
+
+export const SHOW = {
+    users: [
+        { id: '1', color: '#9b00ff', unread: false },
+        { id: '2', color: '#008079', unread: false  },
+        { id: '3', color: '#da664d', unread: false  },
+    ]
+}

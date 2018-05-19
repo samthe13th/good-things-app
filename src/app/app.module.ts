@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { ChatFormComponent } from './chat-form/chat-form.component';
 import { ChatRoomComponent } from './chat-room/chat-room.component';
 import { FeedComponent } from './feed/feed.component';
+import { ChatFeedComponent } from './chat-feed/chat-feed.component';
 import { MessageComponent } from './message/message.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SignupFormComponent } from './signup-form/signup-form.component';
@@ -42,6 +43,7 @@ import { RemoveSpecialCharactersPipe } from './pipes/remove-special-chars.pipe'
     ChatFormComponent,
     ChatRoomComponent,
     FeedComponent,
+    ChatFeedComponent,
     MessageComponent,
     LoginFormComponent,
     SignupFormComponent,

@@ -1,0 +1,4 @@
+
+<div [style.color]="color" style="padding: 15px" *ngFor="let message of chatFeed | async">
+    {{ message.user }}: {{ message.message }}
+</div>

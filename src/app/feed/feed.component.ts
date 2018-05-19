@@ -12,6 +12,7 @@ import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/d
 export class FeedComponent implements OnInit, OnChanges {
   @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
   @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
+  @Output() currentBlock: EventEmitter<any> = new EventEmitter();
 
   @Input() user: string;
 
@@ -42,5 +43,11 @@ export class FeedComponent implements OnInit, OnChanges {
   onAdvanceScroll(boolean) {
     console.log("@feed advance");
     this.advanceScroll.emit(boolean);
+  }
+
+  onCurrentBlockChange(block) {
+    this.currentBlock.emit(block)
+    console.log("CURRENT BLOCK: ", block)
+
   }
 }

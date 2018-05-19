@@ -8,11 +8,13 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angu
 export class StoryComponent {
  @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
  @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
+ @Output() currentBlock: EventEmitter<any> = new EventEmitter();
  @Input() user: string;
  @Input() 
   set segments(value) {
     console.log('segments: ', value)
     console.log('user: ', this.user)
+    this.currentBlock.emit(value[value.length - 1]);
     this._segments = value;
   }
   get segments(){

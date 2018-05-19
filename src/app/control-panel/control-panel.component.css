@@ -1,4 +1,25 @@
 
+
+.user-badge {
+    width: 16px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 3px;
+    margin: -4px;
+    border-radius: 100%;
+    font-size: 14px;
+}
+
+.chat-feed {
+    height: 100%;
+    width: 100%;
+    background: #333333;
+    overflow: scroll;
+}
+
 .control-panel {
     display: flex;
     flex-direction: column;
@@ -6,11 +27,15 @@
     height: 100vh;
     width: 100%;
     overflow: hidden;
+    font-family: Helvetica;
+    font-weight: 100;
 }
 
 .control-panel__timeline {
+    height: 150px;
     white-space: nowrap;
-    overflow: scroll;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
 
 .control-panel__main {
@@ -22,6 +47,8 @@
     height: 60px;
     width: 100%;
     display: flex; 
+    flex-shrink: 0;
+    transition: margin-bottom 500ms ease;
 }
 
 .control-panel__feedback-btn {
@@ -46,25 +73,29 @@
 .control-panel__story-block {
     width: 150px;
     height: 150px;
-    background: #666666;
-    margin-left: 2px;
+    background: lightgray;
     display: inline-block;
-    overflow: scroll;
+    overflow: hidden;
     position: relative;
+    box-sizing: border-box;
+    border-color: white;
+    border-style: solid;
+    border-right: 0;
 }
 
 .control-panel__story-block--select {
-    background: #0499CC;
+    background: #73cceb;
 }
 
 .control-panel__story-block--read {
-    background: #324960;
+    background: #0499cc;
 }
 
 .control-panel__views {
-    width: 300px;
+    display: flex;
+    flex-direction: column; 
+    width: 400px;
     box-sizing: border-box;
-    padding: 10px;
 }
 
 .control-panel__stage {
@@ -90,9 +121,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 300px;
+    width: 250px;
     flex-shrink: 0;
-    background: #339966;
+    background: #5cc18a;
 }
 
 .top-bar {
