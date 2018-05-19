@@ -1,5 +1,6 @@
 <story 
     [user]="user"
+    (currentBlock)="onCurrentBlockChange($event)"
     (advanceScroll)="onAdvanceScroll($event)"
     (finishedTyping)="onFinishTyping($event)"
     [segments]="feed | async">

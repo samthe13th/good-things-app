@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../services/chat.service';
+import { StoryService } from '../services/story.service';
 import { StorySegment } from '../interfaces/story-segment.interface';
+import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 
 @Component({
   selector: 'app-stage',
@@ -11,16 +13,23 @@ import { StorySegment } from '../interfaces/story-segment.interface';
 })
 export class StageComponent implements OnInit, AfterViewInit {
   @ViewChild('scroller') scroller: ElementRef;
-
+  currentSegment:  FirebaseListObservable<StorySegment[]>;
+  currentBlock: any;
   id; 
 
-  currentSegment = 'test';
-  constructor(private authService: AuthService, private route: ActivatedRoute, private chatService: ChatService) { 
+  constructor(private authService: AuthService, private route: ActivatedRoute, private chatService: ChatService, private story: StoryService) { 
     this.route.params.subscribe(params => this.id = params.id);
   }
 
   ngOnInit() {
+    setTimeout(() => {
      this.authService.signInAnonymously();
+    })
+       this.currentSegment = this.story.getCurrentSegment();
+  }
+
+  ngOnChanges() {
+     this.currentSegment = this.story.getCurrentSegment();
   }
 
   ngAfterViewInit() {
@@ -39,7 +48,18 @@ export class StageComponent implements OnInit, AfterViewInit {
     this.scrollToBottom();
   }
 
-  submit(message) {
-    this.chatService.sendMessage(message.value, this.id);
+  submit(input) {
+    this.chatService.sendMessage(input.value, this.id, this.id);
+    this.story.tellStory({
+      isPrivate: true,
+      value: input.value,
+      type: 'chat',
+      canView: this.id,
+    })
+    input.value = '';
+  }
+
+  onCurrentBlockChange(block) {
+    this.currentBlock = block
   }
 }

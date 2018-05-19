@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { STORY } from '../story'
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { STORY, SHOW } from '../story'
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { StoryService } from '../services/story.service';
 import { StorySegment } from '../interfaces/story-segment.interface';
+import { ChatService } from '../services/chat.service';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-control-panel',
@@ -10,6 +14,8 @@ import { StorySegment } from '../interfaces/story-segment.interface';
   styleUrls: ['./control-panel.component.css']
 })
 export class ControlPanelComponent implements OnInit {
+
+  @ViewChild('input') inputRef: ElementRef;
 
   story = STORY;
   storyIndex = 0;
@@ -21,38 +27,90 @@ export class ControlPanelComponent implements OnInit {
   currentSegment = '';
   segment = '';
   storyMode = false;
-  mode = 'chat';
+  mode = 'start';
   time = '00:00';
   clock = 0;
   user = 'admin'
+  clockRunning = false;
+  chatUser;
 
   storyBlocks;
   storySegment; 
 
   feed: FirebaseListObservable<StorySegment[]>;
+  users: FirebaseListObservable<any[]>;
+  id = 'admin';
 
-  constructor(private storyService: StoryService) { }
+  constructor(
+    private authService: AuthService,
+     private route: ActivatedRoute,
+    private storyService: StoryService,
+    private chatService: ChatService) { 
+     this.route.params.subscribe(params => this.id = params.id);
+  }
 
   ngOnInit() {
+    this.chatUser = SHOW.users[0];
+    console.log('chat user: ', this.chatUser);
     const block = this.story[this.storyIndex].value;
     this.lastBlock = [];
     this.currentBlock = { type: 'story', value: block, canView: 'all' };
-    this.storyService.clear();
-    this.storyService.tellStory(this.currentBlock);;
+    this.storyService.tellStory(this.currentBlock);
     this.storyFeed = this.storyService.getStory();
     this.feed = this.storyService.getStory();
+    this.resetUserList()
+    setTimeout(() => {
+      console.log('sign in')
+     this.authService.signInAnonymously();
+    })
   }
 
+  resetUserList() {
+    _.each(SHOW.users, (user) => {
+      this.chatService.addUser(user);
+    })
+    this.users = this.chatService.getUserList();
+  }
+
+  reset() {
+    if (confirm("This will reset the show and delete all chat conversations. Are you sureeeee you want to do this??")) {
+      this.storyService.clear();
+      this.clockRunning = false;
+      this.clock = 0;
+      this.time = '00:00'
+      this.lastBlock = [];
+      this.storyIndex = 0;
+      this.mode = 'start';
+      this.chatService.clear();
+      this.resetUserList();
+    }
+    setTimeout(() => {
+     this.authService.signInAnonymously();
+    })
+  }
 
   ngOnChanges() {
     console.log('change');
     this.feed = this.storyService.getStory();
+    this.users = this.chatService.getUserList();
+  }
+
+  filterChat(user) {
+    if (this.chatUser){
+      this.chatService.setUnreads(this.chatUser.id, false);
+    }
+    console.log('filter chat: ', user.id)
+    this.chatUser = user;
+    this.chatService.setUnreads(user.id, false);
   }
 
   startClock() {
     setInterval(() => {
-      this.clock++;
-      this.updateTime(this.clock);
+      if (this.clockRunning){
+        console.log('clock running? ', this.clockRunning)
+        this.clock++;
+        this.updateTime(this.clock);
+      }
     }, 1000);
   }
 
@@ -72,13 +130,13 @@ export class ControlPanelComponent implements OnInit {
   }
 
   interval(char) {
-    return (char === '*') ? 500 : (Math.random() * 80 + 30);
+    return (char === '*') ? 400 : (Math.random() * 60 + 20);
   }
 
   advanceStory() {
     this.feed = this.storyService.getStory();
-    console.log('advance')
-    if (this.clock === 0) {
+    if (!this.clockRunning) {
+      this.clockRunning = true;
       this.startClock();
     }
     this.segIndex = 0;
@@ -91,20 +149,28 @@ export class ControlPanelComponent implements OnInit {
     this.storyBlocks = this.storyService.getStory();
     this.storySegment = this.storyBlocks.push();
     this.storyService.tellStory(this.currentBlock);
-
-    console.log('current block: ', this.currentBlock);
     this.autoTypeBlock();
   }
 
   setMode() {
-    console.log("MODE: ", this.story[this.storyIndex].type);
     this.mode = this.story[this.storyIndex].type;
   }
 
   submit(input){
-    console.log('submit: ', input.value );
-    console.log('current: ', this.currentBlock);
-    this.storyService.chat({ ...this.currentBlock, value: input.value, canView: '4', user: this.user });
+    this.storyService.tellStory({ ...this.currentBlock, type: 'chat', isPrivate: false, value: input.value, user: this.user });
+    input.value = '';
+  }
+
+  chat(input) {
+    console.log('chat! ', input.value)
+    this.chatService.sendMessage(input.value, this.chatUser.id, 'admin');
+    this.storyService.tellStory({
+      isPrivate: true,
+      value: input.value,
+      type: 'chat',
+      canView: this.chatUser.id,
+    })
+    input.value = '';
   }
 
   onFinishTyping(segment) {

@@ -5,40 +5,59 @@
         <div class="clock">{{ time }}</div>
         <div class="tally">{{ storyIndex + 1 }}/{{ story.length }}</div>
       </div>
-      <button class="advance-btn" [disabled]="mode === 'story'" (click)="advanceStory()">
-        <span *ngIf="clock === 0">START</span>
-        <span *ngIf="clock !== 0">NEXT</span>
-      </button>
+      <div style="display: flex; flex-direction: row; height: 60px">
+        <button class="advance-btn" (click)="reset()">RESET</button>
+        <button class="advance-btn" [disabled]="mode === 'story'" (click)="advanceStory()">
+          <span *ngIf="clock === 0">START</span>
+          <span *ngIf="clock !== 0">NEXT</span>
+        </button>
+      </div>
     </div>
-    <div class="control-panel__timeline" >
-        <div
-          class="control-panel__story-block" 
-          *ngFor="let n of story; let i = index" 
-          [ngClass]="{ 
+    <div class="control-panel__timeline">
+      <div class="control-panel__story-block" *ngFor="let n of story; let i = index" [ngClass]="{ 
             'control-panel__story-block--select': (storyIndex === i),
             'control-panel__story-block--read': (storyIndex > i)
             }">
-          <div class="block-number">{{ i + 1 }}</div>
-          <img *ngIf="n.type === 'start'" src="../../assets/icons/start-icon.png">
-          <img *ngIf="n.type === 'story'" src="../../assets/icons/book-icon.png">
-          <img *ngIf="n.type === 'chat'" src="../../assets/icons/chat-icon.png">
-        </div>
+        <div class="block-number">{{ i + 1 }}</div>
+        <img *ngIf="n.type === 'start'" src="../../assets/icons/start-icon.png">
+        <img *ngIf="n.type === 'story'" src="../../assets/icons/book-icon.png">
+        <img *ngIf="n.type === 'chat'" src="../../assets/icons/chat-icon.png">
+      </div>
     </div>
   </div>
   <div class="control-panel__main">
-      <div style="color: white; flex-shrink: 0" class="control-panel__views"></div>
-    <div class="control-panel__stage-wrapper">
-        <div style="font-size: 16px; padding: 10px; background: lightblue">
-          <span  *ngIf="mode === 'story'">Autotyping story block...</span>
-          <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
-          <span  *ngIf="mode === 'chat'">Typing-mode on (manually enter text)</span>
+    <div style="color: white; flex-shrink: 0" class="control-panel__views">
+      <div style="display: flex; height: 100%; background: grey">
+        <div style="display: flex; flex-direction: column; padding: 4px">
+          <div *ngFor="let user of users | async" style="position: relative">
+            <button 
+            style="width: 50px; height: 50px; font-size: 16px; cursor: pointer" 
+            [style.background]="chatUser.id === user.id ? user.color : 'white'"
+              (click)="filterChat(user)">
+                  {{ user.id }}
+              </button>
+            <div *ngIf="user.unread === true && chatUser.id !== user.id" [style.background]="user.color" class="user-badge">!</div>
+          </div>
         </div>
-      <div class="control-panel__stage">
-        <app-feed [user]='user' (finishedTyping)="onFinishTyping($event)" ></app-feed>
+        <chat-feed class="chat-feed" [chatFilter]="chatUser.id"></chat-feed>
       </div>
-      <div class="control-panel__feedback">
-          <input #input class="control-panel__feedback-input">
-          <button [disabled]="mode !== 'chat'" class="control-panel__feedback-btn" (click)="submit(input)">TYPE</button>
+      <div class="control-panel__feedback" [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" >
+        <input #chatInput class="control-panel__feedback-input">
+        <button [disabled]="mode !== 'chat'" class="control-panel__feedback-btn" (click)="chat(chatInput)">SEND</button>
+      </div>
+    </div>
+    <div class="control-panel__stage-wrapper">
+      <div style="font-size: 16px; padding: 10px; background: #ededed; height: 38px; box-sizing: border-box">
+        <span *ngIf="mode === 'story'">Autotyping story block...</span>
+        <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
+        <span *ngIf="mode === 'chat'">Typing-mode on (manually enter text)</span>
+      </div>
+      <div class="control-panel__stage">
+        <app-feed [user]='user' (finishedTyping)="onFinishTyping($event)"></app-feed>
+      </div>
+      <div [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" class="control-panel__feedback">
+        <input #input class="control-panel__feedback-input">
+        <button [disabled]="mode !== 'chat'" class="control-panel__feedback-btn" (click)="submit(input)">TYPE</button>
       </div>
     </div>
   </div>

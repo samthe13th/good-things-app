@@ -15,6 +15,7 @@ export class StoryBlockComponent implements OnInit {
   @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
   @Input()
   set block(_block) {
+    console.log('story block: ', _block)
     this._block = _block
   }
   get block() {
@@ -23,11 +24,12 @@ export class StoryBlockComponent implements OnInit {
   private _block;
 
   ngOnInit() {
-    if (this.staticBlock){
+    console.log('STORY BLOCK')
+    this.segmentList = this.block.value.split('/');
+        if (this.staticBlock){
       this.segmentList = this.segmentList.replace(/\*/g,'');
       console.log('list: ', this.segmentList);
     }
-    this.segmentList = this.block.value.split('/');
     this.cue.push({ type: this.block.type, value: this.segmentList[0] });
   }
 

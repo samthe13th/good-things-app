@@ -21,16 +21,16 @@ userName: string;
         this.user = auth;
       }   
       
-      this.getUser().subscribe(a => {
-        this.userName = a.displayName;
-      })
-      
     });
   }
 
-  getUser() {
-    const userId = this.user.uid;
-    const path = `/users/${userId}`;
+  clear() {
+    this.db.list('messages').remove();
+    this.db.list('users').remove();
+  }
+
+  getUser(id) {
+    const path = `/users/${id}`;
     return this.db.object(path);
   }
 
@@ -39,13 +39,32 @@ userName: string;
     return this.db.list(path);
   }
 
-  sendMessage(message, id) {
-    console.log('id: ', id);
-    this.chatMessages = this.db.list('messages');
+  sendMessage(message, id, user) {
+    console.log('send message: ', message, id, user)
+    this.chatMessages = this.getMessages(id);
     this.chatMessages.push({
       message, 
-      id
+      id, 
+      user
     });
+    this.setUnreads(id, true);
+  }
+
+  setUnreads(id, value) {
+    this.db.object(`/users/${id}/unread`).set(value)
+  }
+
+  getUserList() {
+    return this.db.list('users')
+  }
+
+  addUser(user) {
+    const userList = this.getUserList();
+    userList.set(user.id, user);
+  }
+
+  getMessages(user) {
+    return this.db.list(`messages/${user}`);
   }
 
   getTimeStamp() {
