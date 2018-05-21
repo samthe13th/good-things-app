@@ -61,7 +61,7 @@ export class StageComponent implements OnInit, AfterViewInit {
   submit(input) {
     this.chatService.sendMessage(input.value, this.id, this.id);
     this.story.tellStory({
-      isPrivate: true,
+      isPrivate: false,
       value: input.value,
       type: 'chat',
       canView: this.id,

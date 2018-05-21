@@ -2,7 +2,7 @@
 <div *ngFor="let segment of segments; let i = index">
   <div *ngIf="segment.value !== ''" class="story__typed-segment">
     <story-block 
-      *ngIf="(segment.canView === undefined || segment.canView === user)" 
+      *ngIf="(segment.canView === undefined || segment.canView === user || segment.isPrivate === false)" 
       (advanceScroll)="onAdvanceScroll($event)" 
       (finishedTyping)="onFinishTyping($event)" 
       [block]="segment" 

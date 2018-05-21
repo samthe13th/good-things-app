@@ -51,8 +51,8 @@ export class ControlPanelComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.instantiateClock();
     this.chatUser = SHOW.users[0];
-    console.log('chat user: ', this.chatUser);
     const block = this.story[this.storyIndex].value;
     this.lastBlock = [];
     this.currentBlock = { type: 'story', value: block, canView: 'all' };
@@ -102,7 +102,7 @@ export class ControlPanelComponent implements OnInit {
     this.chatService.setUnreads(user.id, false);
   }
 
-  startClock() {
+  instantiateClock() {
     setInterval(() => {
       if (this.clockRunning){
         this.clock++;
@@ -134,7 +134,6 @@ export class ControlPanelComponent implements OnInit {
     this.feed = this.storyService.getStory();
     if (!this.clockRunning) {
       this.clockRunning = true;
-      this.startClock();
     }
     this.segIndex = 0;
     this.storyMode = true;

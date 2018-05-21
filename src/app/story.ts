@@ -199,6 +199,63 @@ export const STORY = [
     {
         type: "story", 
         value: "Or even if we just heard each other’s voices or names/There would be a billion things between us/Maybe not good things/All the hard things that keep us from each other"
+    }, 
+    {
+        type: "story",
+        value: "But I’m stuck here/Deep below the surface/And I keep waiting for your hand to appear/For you to pull me out and set me on my way"
+    },
+    {
+        type: "story", 
+        value: "So I wanted to ask you something."
+    },
+    {
+        type: "story", 
+        value: "I want you to teach me your magic./Teach me how to save myself./Let’s make a list of good things to do – how about 20 of them?/Push those buttons and make some words that I know"
+    }, 
+    {
+        type: "story", 
+        value: "Maybe like/1.     Clean sheets/2.     Holding open a door/3.     Messing up a joke but everyone still laughs (even if its kinda at you instead of with you)"
+    },
+    {
+        type: "story",
+        value: "Okay?/Are you ready?/GO:/1."
+    }, 
+    {
+        type: "chat", 
+        isPrivate: false,
+        vale: ""
+    }, 
+    {
+        type: "story", 
+        value: "Thank you./Those are lovely./And I know that it won’t be enough./It’s not really that easy"
+    }, 
+    {
+        type: "story", 
+        value: "The world out there is many things/It is hard/It is random and confusing/Sometimes it is very unfair/The waking world out there has made us into a thousand things we were never meant to be/Some not so good things, sometimes."
+    }, 
+    {
+        type: "story", 
+        value: "I know you know this/But just in case no one has ever told you/It’s real.  And you’re right./The world is hard, but we are soft, somewhere./And one day I’ll make it to the surface of the water./You will too."
+    }, 
+    {
+        type: "story", 
+        value: "That’s what you did for me./And this where we start./But right now – relax.  Close your eyes.  I’ll bring you back with this sound."
+    }, 
+    {
+        type: "story", 
+        value: "It’s time to go, now./I know, I don’t want you to go, but we have to. It’s time to wake up./It would be no good to stay sleeping./Remember that little notebook?  Go to the page you wrote on, and rip it out.  Look at it./This thing that’s troubling you."
+    }, 
+    {
+        type: "story", 
+        value: "I want to help you with it./The way you helped me./I wish I could take it away.  I can’t./But I’ve left you a little something outside that might help./Take it - and leave that little paper behind in its place."
+    }, 
+    {
+        type: "story",
+        value: "Okay, for real now./When you’re ready, you can come out/I love you."
+    }, 
+    {
+        type: "story", 
+        value: "Goodnight. Good morning. Goodbye."
     }
 ]
 
