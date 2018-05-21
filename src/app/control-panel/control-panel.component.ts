@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 export class ControlPanelComponent implements OnInit {
 
   @ViewChild('input') inputRef: ElementRef;
+  @ViewChild('feed') feedWrapper: ElementRef;
 
   story = STORY;
   storyIndex = 0;
@@ -60,7 +61,6 @@ export class ControlPanelComponent implements OnInit {
     this.feed = this.storyService.getStory();
     this.resetUserList()
     setTimeout(() => {
-      console.log('sign in')
      this.authService.signInAnonymously();
     })
   }
@@ -90,7 +90,6 @@ export class ControlPanelComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log('change');
     this.feed = this.storyService.getStory();
     this.users = this.chatService.getUserList();
   }
@@ -99,7 +98,6 @@ export class ControlPanelComponent implements OnInit {
     if (this.chatUser){
       this.chatService.setUnreads(this.chatUser.id, false);
     }
-    console.log('filter chat: ', user.id)
     this.chatUser = user;
     this.chatService.setUnreads(user.id, false);
   }
@@ -107,7 +105,6 @@ export class ControlPanelComponent implements OnInit {
   startClock() {
     setInterval(() => {
       if (this.clockRunning){
-        console.log('clock running? ', this.clockRunning)
         this.clock++;
         this.updateTime(this.clock);
       }
@@ -162,13 +159,13 @@ export class ControlPanelComponent implements OnInit {
   }
 
   chat(input) {
-    console.log('chat! ', input.value)
     this.chatService.sendMessage(input.value, this.chatUser.id, 'admin');
     this.storyService.tellStory({
       isPrivate: true,
       value: input.value,
       type: 'chat',
       canView: this.chatUser.id,
+      user: 'admin',
     })
     input.value = '';
   }
@@ -176,6 +173,11 @@ export class ControlPanelComponent implements OnInit {
   onFinishTyping(segment) {
     if (this.mode !== 'chat') {
       this.mode = 'wait';
+      this.scrollToBottom();
     }
+  }
+
+  scrollToBottom() {
+    this.feedWrapper.nativeElement.scrollTop = this.feedWrapper.nativeElement.scrollHeight;
   }
 }

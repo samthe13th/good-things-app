@@ -8,7 +8,6 @@ import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/d
   selector: 'auto-type',
   template: `
     <span *ngFor="let segment of segments">{{ segment.value }}</span>
-    <br>
     {{ stream }}
   `,
   styleUrls: ['./auto-type.component.css']
@@ -37,7 +36,7 @@ export class AutoTypeComponent {
     }
     private _typeString: string;
 
-    interval = char => (char === '*') ? 500 : (Math.random() * 80 + 20);
+    interval = char => (char === '*') ? 500 : (Math.random() * 40 + 1);
 
     autoType() {
         if (this.typeString[this.charIndex] !== '*') {

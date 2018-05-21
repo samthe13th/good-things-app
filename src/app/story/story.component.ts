@@ -14,8 +14,10 @@ export class StoryComponent {
   set segments(value) {
     console.log('segments: ', value)
     console.log('user: ', this.user)
+    if (value){
     this.currentBlock.emit(value[value.length - 1]);
     this._segments = value;
+    }
   }
   get segments(){
     return this._segments;

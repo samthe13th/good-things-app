@@ -1,14 +1,17 @@
 import { Component, OnInit, OnChanges, Input, EventEmitter, Output } from '@angular/core';
+import { map } from 'lodash';
 
 @Component({
   selector: 'story-block',
   templateUrl: './story-block.component.html',
+  styleUrls: ['./story-block.component.css']
 })
 export class StoryBlockComponent implements OnInit {
 
   segment;
   segmentList;
   cue = [];
+  staticBlocks;
 
   @Input() staticBlock = true;
   @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
@@ -24,12 +27,10 @@ export class StoryBlockComponent implements OnInit {
   private _block;
 
   ngOnInit() {
-    console.log('STORY BLOCK')
     this.segmentList = this.block.value.split('/');
-        if (this.staticBlock){
-      this.segmentList = this.segmentList.replace(/\*/g,'');
-      console.log('list: ', this.segmentList);
-    }
+    this.staticBlocks = map(this.segmentList, (segment) => {
+      return { ...this.block, value: segment }
+    });
     this.cue.push({ type: this.block.type, value: this.segmentList[0] });
   }
 

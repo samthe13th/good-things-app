@@ -1,11 +1,13 @@
-<div style="height: 30%"></div>      
-<div class="control-panel__stage--typed-segement" *ngFor="let segment of segments; let i = index">
-        <story-block 
-          *ngIf="segment.canView === undefined || segment.canView === user"
-          (advanceScroll)="onAdvanceScroll($event)"
-          (finishedTyping)="onFinishTyping($event)" 
-          [block]="segment" 
-          [staticBlock]="i < (segments.length - 1)">
-        </story-block>
-      </div>
-<div style="height: 30%"></div>   
+<div style="height: 30%"></div>
+<div *ngFor="let segment of segments; let i = index">
+  <div *ngIf="segment.value !== ''" class="story__typed-segment">
+    <story-block 
+      *ngIf="(segment.canView === undefined || segment.canView === user)" 
+      (advanceScroll)="onAdvanceScroll($event)" 
+      (finishedTyping)="onFinishTyping($event)" 
+      [block]="segment" 
+      [staticBlock]="i < (segments.length - 1)">
+    </story-block>
+  </div>
+</div>
+<div style="height: 30%"></div>

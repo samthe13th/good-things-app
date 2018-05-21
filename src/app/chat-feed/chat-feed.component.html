@@ -1,4 +1,7 @@
 
-<div [style.color]="color" style="padding: 15px" *ngFor="let message of chatFeed | async">
-    {{ message.user }}: {{ message.message }}
+<div 
+[ngClass]="{ 'chat-admin': message.user === 'admin', 'chat-tent': message.user !== 'admin' }"
+[style.background-color]="message.user !== 'admin' ? user.color : null"
+*ngFor="let message of chatFeed | async">
+    {{ message.message }}
 </div>

@@ -1,7 +1,8 @@
 <div class="mainContent" id="scroller">
   <div class="fade-out"></div>
   <div class="feedWrapper" #scroller>
-    <app-feed [user]="id" 
+    <app-feed 
+      [user]="id" 
       (advanceScroll)="onAdvanceScroll($event)" 
       (finishedTyping)="onFinishTyping($event)" 
       (currentBlock)="onCurrentBlockChange($event)">

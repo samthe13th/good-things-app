@@ -11,18 +11,18 @@ import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/d
 export class ChatFeedComponent implements OnInit, OnChanges {
   chatFeed: FirebaseListObservable<any[]>;
 
-  @Input() chatFilter: string;
+  @Input() user: any;
   @Input() color: string;
 
   constructor(private chatService: ChatService) { 
   }
 
   ngOnInit() {
-  console.log('init chat feed')
-   this.chatFeed = this.chatService.getMessages(this.chatFilter);
+   console.log('init chat feed')
+   this.chatFeed = this.chatService.getMessages(this.user.id);
   }
 
   ngOnChanges() {
-   this.chatFeed = this.chatService.getMessages(this.chatFilter);
+   this.chatFeed = this.chatService.getMessages(this.user.id);
   }
 }

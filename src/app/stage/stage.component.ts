@@ -14,10 +14,16 @@ import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/d
 export class StageComponent implements OnInit, AfterViewInit {
   @ViewChild('scroller') scroller: ElementRef;
   currentSegment:  FirebaseListObservable<StorySegment[]>;
+  userObservable: FirebaseObjectObservable<any>;
+
   currentBlock: any;
   id; 
 
-  constructor(private authService: AuthService, private route: ActivatedRoute, private chatService: ChatService, private story: StoryService) { 
+  constructor (
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private chatService: ChatService,
+    private story: StoryService ) { 
     this.route.params.subscribe(params => this.id = params.id);
   }
 
@@ -25,11 +31,15 @@ export class StageComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
      this.authService.signInAnonymously();
     })
-       this.currentSegment = this.story.getCurrentSegment();
+    this.currentSegment = this.story.getCurrentSegment();
+    this.userObservable = this.chatService.getUser(this.id);
+    console.log('user observable: ', this.userObservable);
   }
 
   ngOnChanges() {
      this.currentSegment = this.story.getCurrentSegment();
+     this.userObservable = this.chatService.getUser(this.id);
+     console.log('user observable: ', this.userObservable);
   }
 
   ngAfterViewInit() {

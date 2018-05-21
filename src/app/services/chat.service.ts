@@ -57,7 +57,7 @@ userName: string;
   getUserList() {
     return this.db.list('users')
   }
-
+  
   addUser(user) {
     const userList = this.getUserList();
     userList.set(user.id, user);

@@ -31,15 +31,17 @@
         <div style="display: flex; flex-direction: column; padding: 4px">
           <div *ngFor="let user of users | async" style="position: relative">
             <button 
-            style="width: 50px; height: 50px; font-size: 16px; cursor: pointer" 
-            [style.background]="chatUser.id === user.id ? user.color : 'white'"
+              style="width: 50px; height: 50px; font-size: 16px; cursor: pointer" 
+              [style.background]="chatUser.id === user.id ? user.color : 'white'"
               (click)="filterChat(user)">
-                  {{ user.id }}
-              </button>
-            <div *ngIf="user.unread === true && chatUser.id !== user.id" [style.background]="user.color" class="user-badge">!</div>
+                {{ user.id }}
+            </button>
+            <div *ngIf="user.unread === true && chatUser.id !== user.id" 
+            [style.background]="user.color" 
+            class="user-badge">!</div>
           </div>
         </div>
-        <chat-feed class="chat-feed" [chatFilter]="chatUser.id"></chat-feed>
+        <chat-feed class="chat-feed" [user]="chatUser"></chat-feed>
       </div>
       <div class="control-panel__feedback" [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" >
         <input #chatInput class="control-panel__feedback-input">
@@ -52,12 +54,8 @@
         <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
         <span *ngIf="mode === 'chat'">Typing-mode on (manually enter text)</span>
       </div>
-      <div class="control-panel__stage">
+      <div class="control-panel__stage" #feed>
         <app-feed [user]='user' (finishedTyping)="onFinishTyping($event)"></app-feed>
-      </div>
-      <div [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" class="control-panel__feedback">
-        <input #input class="control-panel__feedback-input">
-        <button [disabled]="mode !== 'chat'" class="control-panel__feedback-btn" (click)="submit(input)">TYPE</button>
       </div>
     </div>
   </div>
