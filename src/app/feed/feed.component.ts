@@ -19,19 +19,14 @@ export class FeedComponent implements OnInit, OnChanges {
   feed: FirebaseListObservable<StorySegment[]>;
   currentSegment:  FirebaseListObservable<StorySegment[]>;
 
-  constructor(private story: StoryService) { 
-    console.log('construct')
-   // this.currentSegment = db.object('currentSegment').valueChanges();
-  }
+  constructor(private story: StoryService) { }
 
   ngOnInit() {
-   console.log('init')
    this.feed = this.story.getStory();
    this.currentSegment = this.story.getCurrentSegment();
   }
 
   ngOnChanges() {
-    console.log('change');
     this.feed = this.story.getStory();
     this.currentSegment = this.story.getCurrentSegment();
   }
@@ -41,13 +36,10 @@ export class FeedComponent implements OnInit, OnChanges {
   }
 
   onAdvanceScroll(boolean) {
-    console.log("@feed advance");
     this.advanceScroll.emit(boolean);
   }
 
   onCurrentBlockChange(block) {
     this.currentBlock.emit(block)
-    console.log("CURRENT BLOCK: ", block)
-
   }
 }

@@ -30,7 +30,6 @@ export class StoryComponent {
   }
 
   onAdvanceScroll(boolean) {
-    console.log('@story advance')
     this.advanceScroll.emit(boolean);
   }
 }

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { StoryService } from '../services/story.service';
 import { StorySegment } from '../interfaces/story-segment.interface';
+import { SHOW } from '../story'
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 
 @Component({
@@ -15,7 +16,6 @@ export class StageComponent implements OnInit, AfterViewInit {
   @ViewChild('scroller') scroller: ElementRef;
   currentSegment:  FirebaseListObservable<StorySegment[]>;
   userObservable: FirebaseObjectObservable<any>;
-
   currentBlock: any;
   id; 
 
@@ -28,18 +28,15 @@ export class StageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    console.log("CURRENT BLOCK: ", this.currentBlock);
     setTimeout(() => {
      this.authService.signInAnonymously();
     })
     this.currentSegment = this.story.getCurrentSegment();
-    this.userObservable = this.chatService.getUser(this.id);
-    console.log('user observable: ', this.userObservable);
   }
 
   ngOnChanges() {
      this.currentSegment = this.story.getCurrentSegment();
-     this.userObservable = this.chatService.getUser(this.id);
-     console.log('user observable: ', this.userObservable);
   }
 
   ngAfterViewInit() {
@@ -61,11 +58,12 @@ export class StageComponent implements OnInit, AfterViewInit {
   submit(input) {
     this.chatService.sendMessage(input.value, this.id, this.id);
     this.story.tellStory({
-      isPrivate: false,
+      isPrivate: this.currentBlock.isPrivate,
       value: input.value,
       type: 'chat',
       canView: this.id,
-    })
+      color: SHOW.users[parseInt(this.id) - 1].color,
+    });
     input.value = '';
   }
 

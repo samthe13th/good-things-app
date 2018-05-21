@@ -50,6 +50,7 @@ export const STORY = [
     },
     {  
         type: "chat",
+        isPrivate: true,
         value: "",
     },
     { 
@@ -261,8 +262,8 @@ export const STORY = [
 
 export const SHOW = {
     users: [
-        { id: '1', color: '#9b00ff', unread: false },
-        { id: '2', color: '#008079', unread: false  },
-        { id: '3', color: '#da664d', unread: false  },
+        { id: '1', color: '#f3bf03', unread: false },
+        { id: '2', color: '#57b3d2', unread: false  },
+        { id: '3', color: '#7f7be8', unread: false  },
     ]
 }

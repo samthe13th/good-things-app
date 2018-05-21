@@ -1,10 +1,10 @@
 
   <div class="segment-wrapper" *ngFor="let segment of staticBlocks" >
-    <div *ngIf="staticBlock && block.canView && block.user !== 'admin'" style="display: inline-block; background: #308e9a; color: white;  padding: 2px 12px; border-radius: 10px">{{ segment.value }}</div>
+    <div [style.background]="block.color" *ngIf="staticBlock && block.canView && block.user !== 'admin'" style="display: inline-block; color: white;  padding: 2px 12px; border-radius: 10px">{{ segment.value }}</div>
     <div *ngIf="staticBlock && segment.canView === undefined">{{ segment.value }}</div>
   </div>
   <div class="segment-wrapper" *ngFor="let segment of cue">
-    <div *ngIf="!staticBlock && block.canView && block.user !== 'admin'" style="display: inline-block; background: #308e9a; color: white; padding: 2px 12px; border-radius: 10px">{{ segment.value }}</div>
+    <div [style.background]="block.color" *ngIf="!staticBlock && block.canView && block.user !== 'admin'" style="display: inline-block; color: white; padding: 2px 12px; border-radius: 10px">{{ segment.value }}</div>
     <auto-type 
       *ngIf="!staticBlock && block.canView === undefined || block.user === 'admin'"
       (typedSegment)="onFinishTyping($event)"

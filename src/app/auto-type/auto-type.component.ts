@@ -22,12 +22,11 @@ export class AutoTypeComponent {
 
     @Input()
     set typeString(value) {
-        console.log('autotype: ', value)
         this.stream = '';
         this.charIndex = 0;
         this._typeString = value;
         this.length = value.length;
-        if (value !== ''){
+        if (value !== '') {
         this.autoType();
         }
     }
@@ -36,7 +35,16 @@ export class AutoTypeComponent {
     }
     private _typeString: string;
 
-    interval = char => (char === '*') ? 500 : (Math.random() * 40 + 1);
+    interval(char){
+        if (char === '.' || char === '?' || char === '!') {
+            return 500;
+        } else if (char === '-') {
+            return 400
+        } else if (char === ',') {
+            return 300
+        } 
+        return (Math.random() * 50 + 10)
+    }
 
     autoType() {
         if (this.typeString[this.charIndex] !== '*') {

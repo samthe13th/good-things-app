@@ -18,7 +18,7 @@ export class ControlPanelComponent implements OnInit {
   @ViewChild('input') inputRef: ElementRef;
   @ViewChild('feed') feedWrapper: ElementRef;
 
-  story = STORY;
+  story: any = STORY;
   storyIndex = 0;
   segIndex = 0;
   charIndex = 0;
@@ -53,7 +53,7 @@ export class ControlPanelComponent implements OnInit {
   ngOnInit() {
     this.instantiateClock();
     this.chatUser = SHOW.users[0];
-    const block = this.story[this.storyIndex].value;
+    const block: any = this.story[this.storyIndex].value;
     this.lastBlock = [];
     this.currentBlock = { type: 'story', value: block, canView: 'all' };
     this.storyService.tellStory(this.currentBlock);
