@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class StoryService {
-    story = STORY;
+    story: any = STORY;
     storyIndex = 0;
     segIndex = 0;
     charIndex = 0;
