@@ -1,28 +1,35 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+// Modules
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
-import { environment } from '../environments/environment';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+// Components
+import { AdminComponent } from './pages/admin/admin.component';
 import { AppComponent } from './app.component';
-import { FeedComponent } from './feed/feed.component';
-import { ChatFeedComponent } from './chat-feed/chat-feed.component';
-import { LoginFormComponent } from './login-form/login-form.component';
-import { SignupFormComponent } from './signup-form/signup-form.component';
-import { StageComponent } from './stage/stage.component';
-import { AutoTypeComponent } from './auto-type/auto-type.component';
-import { StoryComponent } from './story/story.component';
-import { StoryBlockComponent } from './story-block/story-block.component';
-import { ChatService } from './services/chat.service';
+import { AutoTypeComponent } from './shared-components/auto-type/auto-type.component';
+import { ChatFeedComponent } from './pages/admin/chat-feed/chat-feed.component';
+import { FeedComponent } from './shared-components/feed/feed.component';
+import { LoginFormComponent } from './pages/login-form/login-form.component';
+import { SignupFormComponent } from './pages/signup-form/signup-form.component';
+import { StoryBlockComponent } from './shared-components/feed/story/story-block/story-block.component';
+import { StageComponent } from './pages/stage/stage.component';
+import { StoryComponent } from './shared-components/feed/story/story.component';
+import { SurveyComponent } from './pages/survey/survey.component';
+
+// Services
 import { AuthService } from './services/auth.service';
+import { ChatService } from './services/chat.service';
 import { StoryService } from './services/story.service';
+
+// Other
 import { appRoutes } from '../routes';
-import { ControlPanelComponent } from './control-panel/control-panel.component';
-import { SurveyComponent } from './survey/survey.component';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -31,7 +38,7 @@ import { SurveyComponent } from './survey/survey.component';
     ChatFeedComponent,
     LoginFormComponent,
     SignupFormComponent,
-    ControlPanelComponent,
+    AdminComponent,
     SurveyComponent,
     StageComponent,
     AutoTypeComponent,

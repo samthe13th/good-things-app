@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { StoryService } from '../services/story.service';
+import { StoryService } from '../../services/story.service';
 import { Observable } from 'rxjs/Observable';
-import { StorySegment } from '../interfaces/story-segment.interface';
+import { StorySegment } from '../../interfaces/story-segment.interface';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 
 @Component({

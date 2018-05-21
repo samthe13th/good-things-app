@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/take'
 import { STORY } from '../story'
 import * as firebase from 'firebase/app';
 import * as _ from 'lodash';
@@ -25,8 +26,6 @@ export class StoryService {
 
     testBlock = '';
 
-    $segment; 
-
     constructor(private db: AngularFireDatabase) { }
 
     ngOnInit() {
@@ -46,6 +45,24 @@ export class StoryService {
     tellStory(block) {
         this.storyBlocks = this.getStory();
         this.storyBlocks.push(block);
+    }
+
+    getIndex() {
+        return this.db.object('timeline/index');
+    }
+
+    updateIndex(i) {
+        const index = this.getIndex();
+        index.set(i);
+    }
+
+    getClock() {
+        return this.db.object('timeline/clock');
+    }
+
+    updateClock(time) {
+        const clock = this.getClock();
+        clock.set(time);
     }
 
     chat(message) {

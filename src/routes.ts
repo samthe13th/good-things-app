@@ -1,15 +1,15 @@
 
 import { Routes } from '@angular/router';
-import { SignupFormComponent } from './app/signup-form/signup-form.component';
-import { LoginFormComponent } from './app/login-form/login-form.component';
-import { ControlPanelComponent } from './app/control-panel/control-panel.component';
-import { SurveyComponent } from './app/survey/survey.component';
-import { StageComponent } from './app/stage/stage.component';
+import { SignupFormComponent } from './app/pages/signup-form/signup-form.component';
+import { LoginFormComponent } from './app/pages/login-form/login-form.component';
+import { AdminComponent } from './app/pages/admin/admin.component';
+import { SurveyComponent } from './app/pages/survey/survey.component';
+import { StageComponent } from './app/pages/stage/stage.component';
 
 export const appRoutes: Routes = [
     { path: 'signup', component: SignupFormComponent },
     { path: 'login', component: LoginFormComponent },
-    { path: 'admin', component: ControlPanelComponent },
+    { path: 'admin', component: AdminComponent },
     { path: '', component: SurveyComponent },
     { path: 'stage', component: StageComponent },
     { path: 'stage/:id', component: StageComponent }

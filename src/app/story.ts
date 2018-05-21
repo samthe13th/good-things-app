@@ -1,3 +1,16 @@
+export const SHOW = {
+    users: [
+        { id: '1', color: '#f36464', unread: false },
+        { id: '2', color: '#fc994d', unread: false },
+        { id: '3', color: '#f4c942', unread: false },
+        { id: '4', color: '#5cc18a', unread: false },
+        { id: '5', color: '#64cdbf', unread: false },
+        { id: '6', color: '#7ac5f6', unread: false },
+        { id: '7', color: '#649df3', unread: false },
+        { id: '8', color: '#7d7bc3', unread: false },
+    ]
+}
+
 export const STORY = [
     {
         type: "start", 
@@ -67,7 +80,7 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "I’m in a field. A field of crisp green grass.  Dotted through the field are little white daisies. I’m small, wearing cotton play clothes and bare feet. It’s sunny and the air is cool and fresh and I’m just walking through the field picking daisies, and I hear a voice – I think it’s my voice – singing a beautiful song. No words. Just a melody."
+        value: "I’m in a field. A field of crisp green grass. Dotted through the field are little white daisies. I’m small, wearing cotton play clothes and bare feet. It’s sunny and the air is cool and fresh and I’m just walking through the field picking daisies, and I hear a voice – I think it’s my voice – singing a beautiful song. No words. Just a melody."
     },
     {
         type: "story",
@@ -215,7 +228,7 @@ export const STORY = [
     }, 
     {
         type: "story", 
-        value: "Maybe like/1.     Clean sheets/2.     Holding open a door/3.     Messing up a joke but everyone still laughs (even if its kinda at you instead of with you)"
+        value: "Maybe like/1.    Clean sheets/2.    Holding open a door/3.    Messing up a joke but everyone still laughs (even if its kinda at you instead of with you)"
     },
     {
         type: "story",
@@ -236,19 +249,19 @@ export const STORY = [
     }, 
     {
         type: "story", 
-        value: "I know you know this/But just in case no one has ever told you/It’s real.  And you’re right./The world is hard, but we are soft, somewhere./And one day I’ll make it to the surface of the water./You will too."
+        value: "I know you know this/But just in case no one has ever told you/It’s real. And you’re right./The world is hard, but we are soft, somewhere./And one day I’ll make it to the surface of the water./You will too."
     }, 
     {
         type: "story", 
-        value: "That’s what you did for me./And this where we start./But right now – relax.  Close your eyes.  I’ll bring you back with this sound."
+        value: "That’s what you did for me./And this where we start./But right now – relax. Close your eyes. I’ll bring you back with this sound."
     }, 
     {
         type: "story", 
-        value: "It’s time to go, now./I know, I don’t want you to go, but we have to. It’s time to wake up./It would be no good to stay sleeping./Remember that little notebook?  Go to the page you wrote on, and rip it out.  Look at it./This thing that’s troubling you."
+        value: "It’s time to go, now./I know, I don’t want you to go, but we have to. It’s time to wake up./It would be no good to stay sleeping./Remember that little notebook? Go to the page you wrote on, and rip it out. Look at it./This thing that’s troubling you."
     }, 
     {
         type: "story", 
-        value: "I want to help you with it./The way you helped me./I wish I could take it away.  I can’t./But I’ve left you a little something outside that might help./Take it - and leave that little paper behind in its place."
+        value: "I want to help you with it./The way you helped me./I wish I could take it away. I can’t./But I’ve left you a little something outside that might help./Take it - and leave that little paper behind in its place."
     }, 
     {
         type: "story",
@@ -259,16 +272,3 @@ export const STORY = [
         value: "Goodnight. Good morning. Goodbye."
     }
 ]
-
-export const SHOW = {
-    users: [
-        { id: '1', color: '#f36464', unread: false },
-        { id: '2', color: '#fc994d', unread: false  },
-        { id: '3', color: '#f4c942', unread: false  },
-        { id: '4', color: '#5cc18a', unread: false },
-        { id: '5', color: '#64cdbf', unread: false },
-        { id: '6', color: '#7ac5f6', unread: false },
-        { id: '7', color: '#649df3', unread: false },
-        { id: '8', color: '#7d7bc3', unread: false },
-    ]
-}

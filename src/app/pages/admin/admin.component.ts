@@ -1,20 +1,19 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { STORY, SHOW } from '../story'
+import { STORY, SHOW } from '../../story'
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
-import { StoryService } from '../services/story.service';
-import { StorySegment } from '../interfaces/story-segment.interface';
-import { ChatService } from '../services/chat.service';
-import { AuthService } from '../services/auth.service';
+import { StoryService } from '../../services/story.service';
+import { StorySegment } from '../../interfaces/story-segment.interface';
+import { ChatService } from '../../services/chat.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'app-control-panel',
-  templateUrl: './control-panel.component.html',
-  styleUrls: ['./control-panel.component.css']
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css']
 })
-export class ControlPanelComponent implements OnInit {
-
+export class AdminComponent implements OnInit {
   @ViewChild('input') inputRef: ElementRef;
   @ViewChild('feed') feedWrapper: ElementRef;
 
@@ -23,7 +22,6 @@ export class ControlPanelComponent implements OnInit {
   segIndex = 0;
   charIndex = 0;
   storyFeed;
-  lastBlock = [];
   currentBlock;
   currentSegment = '';
   segment = '';
@@ -33,33 +31,42 @@ export class ControlPanelComponent implements OnInit {
   clock = 0;
   user = 'admin'
   clockRunning = false;
-  chatUser;
 
+  chatUser;
   storyBlocks;
   storySegment; 
 
   feed: FirebaseListObservable<StorySegment[]>;
   users: FirebaseListObservable<any[]>;
+
   id = 'admin';
 
   constructor(
     private authService: AuthService,
-     private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private storyService: StoryService,
     private chatService: ChatService) { 
      this.route.params.subscribe(params => this.id = params.id);
   }
 
   ngOnInit() {
-    this.instantiateClock();
     this.chatUser = SHOW.users[0];
-    const block: any = this.story[this.storyIndex].value;
-    this.lastBlock = [];
-    this.currentBlock = { type: 'story', value: block, canView: 'all' };
-    this.storyService.tellStory(this.currentBlock);
     this.storyFeed = this.storyService.getStory();
     this.feed = this.storyService.getStory();
+    this.currentBlock = this.story[0]
     this.resetUserList()
+    this.storyService.getIndex().take(1).subscribe((index) => {
+      this.storyIndex = index.$value;
+      this.currentBlock = this.story[this.storyIndex];
+      this.mode = this.currentBlock.type;
+    })
+    this.storyService.getClock().take(1).subscribe((clock) => {
+      if (clock.$value > 0){
+        this.clock = clock.$value;
+        this.clockRunning = true;
+      }
+    this.instantiateClock();
+    })
     setTimeout(() => {
      this.authService.signInAnonymously();
     })
@@ -77,8 +84,8 @@ export class ControlPanelComponent implements OnInit {
       this.storyService.clear();
       this.clockRunning = false;
       this.clock = 0;
+      this.storyService.updateClock(0);
       this.time = '00:00'
-      this.lastBlock = [];
       this.storyIndex = 0;
       this.mode = 'start';
       this.chatService.clear();
@@ -107,6 +114,7 @@ export class ControlPanelComponent implements OnInit {
       if (this.clockRunning){
         this.clock++;
         this.updateTime(this.clock);
+        this.storyService.updateClock(this.clock);
       }
     }, 1000);
   }
@@ -126,10 +134,6 @@ export class ControlPanelComponent implements OnInit {
     }
   }
 
-  interval(char) {
-    return (char === '*') ? 400 : (Math.random() * 60 + 20);
-  }
-
   advanceStory() {
     this.feed = this.storyService.getStory();
     if (!this.clockRunning) {
@@ -139,6 +143,7 @@ export class ControlPanelComponent implements OnInit {
     this.storyMode = true;
     this.mode = 'story';
     this.storyIndex += 1;
+    this.storyService.updateIndex(this.storyIndex);
     this.currentBlock = this.story[this.storyIndex];
     this.setMode();
 
@@ -171,7 +176,12 @@ export class ControlPanelComponent implements OnInit {
 
   onFinishTyping(segment) {
     if (this.mode !== 'chat') {
-      this.mode = 'wait';
+      console.log('next: ', this.story[this.storyIndex + 1].type)
+      if (this.story[this.storyIndex + 1] && this.story[this.storyIndex + 1].type === 'chat'){
+        this.advanceStory();
+      } else {
+        this.mode = 'wait';
+      }
       this.scrollToBottom();
     }
   }

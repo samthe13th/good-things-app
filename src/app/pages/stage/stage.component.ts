@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { ChatService } from '../services/chat.service';
-import { StoryService } from '../services/story.service';
-import { StorySegment } from '../interfaces/story-segment.interface';
-import { SHOW } from '../story'
+import { ChatService } from '../../services/chat.service';
+import { StoryService } from '../../services/story.service';
+import { StorySegment } from '../../interfaces/story-segment.interface';
+import { SHOW } from '../../story'
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 
 @Component({
@@ -28,7 +28,6 @@ export class StageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log("CURRENT BLOCK: ", this.currentBlock);
     setTimeout(() => {
      this.authService.signInAnonymously();
     })

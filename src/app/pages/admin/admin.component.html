@@ -3,7 +3,7 @@
     <div class="controls">
       <div class="position">
         <div class="clock">{{ time }}</div>
-        <div class="tally">{{ storyIndex + 1 }}/{{ story.length }}</div>
+        <div class="tally">{{ storyIndex }}/{{ story.length }}</div>
       </div>
       <div style="display: flex; flex-direction: row; height: 60px">
         <button class="advance-btn" (click)="reset()">RESET</button>
@@ -18,7 +18,7 @@
             'control-panel__story-block--select': (storyIndex === i),
             'control-panel__story-block--read': (storyIndex > i)
             }">
-        <div class="block-number">{{ i + 1 }}</div>
+        <div class="block-number" *ngIf="i > 0">{{ i }}</div>
         <img *ngIf="n.type === 'start'" src="../../assets/icons/start-icon.png">
         <img *ngIf="n.type === 'story'" src="../../assets/icons/book-icon.png">
         <img *ngIf="n.type === 'chat'" src="../../assets/icons/chat-icon.png">
@@ -62,7 +62,7 @@
         <span *ngIf="mode === 'chat'">Chat Mode</span>
       </div>
       <div class="control-panel__stage" #feed>
-        <app-feed [user]='user' (finishedTyping)="onFinishTyping($event)"></app-feed>
+        <feed [user]='user' (finishedTyping)="onFinishTyping($event)"></feed>
       </div>
     </div>
 

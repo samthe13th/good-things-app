@@ -1,12 +1,12 @@
 <div class="mainContent" id="scroller">
   <div class="fade-out"></div>
   <div class="feedWrapper" #scroller>
-    <app-feed 
+    <feed 
       [user]="id" 
       (advanceScroll)="onAdvanceScroll($event)" 
       (finishedTyping)="onFinishTyping($event)" 
       (currentBlock)="onCurrentBlockChange($event)">
-    </app-feed>
+    </feed>
   </div>
   <div class="fade-out--bottom"></div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, EventEmitter, Output, HostBinding, Input } from '@angular/core';
-import { ChatService } from '../services/chat.service';
+import { ChatService } from '../../../services/chat.service';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
 
