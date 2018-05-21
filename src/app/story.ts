@@ -262,8 +262,13 @@ export const STORY = [
 
 export const SHOW = {
     users: [
-        { id: '1', color: '#f3bf03', unread: false },
-        { id: '2', color: '#57b3d2', unread: false  },
-        { id: '3', color: '#7f7be8', unread: false  },
+        { id: '1', color: '#f36464', unread: false },
+        { id: '2', color: '#fc994d', unread: false  },
+        { id: '3', color: '#f4c942', unread: false  },
+        { id: '4', color: '#5cc18a', unread: false },
+        { id: '5', color: '#64cdbf', unread: false },
+        { id: '6', color: '#7ac5f6', unread: false },
+        { id: '7', color: '#649df3', unread: false },
+        { id: '8', color: '#7d7bc3', unread: false },
     ]
 }
