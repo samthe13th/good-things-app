@@ -1,11 +1,12 @@
 .program {
+    overflow: auto;
    height: 100vh;
    background-image: url(./fog.jpg);
    background-repeat: no-repeat;
    background-size: cover;
    font-family: sans-serif;
-   padding: 30px 50px;
    font-weight: 200;
+   padding: 20px;
 }
 
 .program__base {
@@ -16,6 +17,8 @@
     width: 200px;
     padding: 5px;
     font-size: 20px;
+       position: fixed;
+       margin: 20px;
 }
 
  .program__contents--select {
@@ -38,20 +41,38 @@
 }
 
 .program__main {
-    flex: 1;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    margin-left: 250px;
+    padding: 40px;
      overflow: auto;
      height: 100%;
      margin-right: 60px;
      font-size: 20px;
      font-weight: 200;
      line-height: 24px;
+     overflow: scroll;
+     height: 100%;
 }
 
 h1 {
     font-weight: 100;
-    font-size: 36px;
+    font-size: 31px;
+    margin-top: 0;
 }
 
 h4 {
+    margin-top: 0;
     font-weight: 400;
+}
+
+p {
+    margin-top: 0;
+}
+
+hr {
+    margin-top: 35px;
+    margin-bottom: 30px;
+    margin-right: 15px;
 }

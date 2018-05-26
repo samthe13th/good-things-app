@@ -1,7 +1,8 @@
 <div class="program">
-    <h1>Good Things To Do</h1>
     <div class="program__base">
         <div class="program__contents">
+            <h1>Good Things To Do</h1>
+            <hr>
             <div [ngClass]="{ 'program__contents--select': (section === 'about') }" (click)="select('about')">About</div>
             <div [ngClass]="{ 'program__contents--select': (section === 'makers') }" (click)="select('makers')">The Makers</div>
             <div [ngClass]="{ 'program__contents--select': (section === 'thanks') }" (click)="select('thanks')">Thank yous</div>
