@@ -10,7 +10,7 @@
   </div>
   <div class="fade-out--bottom"></div>
 </div>
-<div *ngIf="currentBlock" [style.marginBottom.px]="(mode !== 'chat') ? -120 : 0" class="stage__chat-wrapper">
+<div (keyup.enter)="submit(input)" *ngIf="currentBlock" [style.marginBottom.px]="(mode !== 'chat') ? -120 : 0" class="stage__chat-wrapper">
   <input [disabled]="mode !== 'chat'"  #input class="stage__chat-input" placeholder="Type something">
   <button class="stage__chat-button" (click)="submit(input)">SEND</button>
 </div>

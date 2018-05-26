@@ -47,7 +47,7 @@
         <chat-feed class="chat-feed" [user]="chatUser"></chat-feed>
       </div>
 
-      <div class="control-panel__feedback" [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" >
+      <div (keyup.enter)="chat(chatInput)" class="control-panel__feedback" [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" >
         <input #chatInput class="control-panel__feedback-input">
         <button [disabled]="mode !== 'chat'" class="control-panel__feedback-btn" (click)="chat(chatInput)">SEND</button>
       </div>
