@@ -1,0 +1,88 @@
+<div class="program">
+    <h1>Good Things To Do</h1>
+    <div class="program__base">
+        <div class="program__contents">
+            <div [ngClass]="{ 'program__contents--select': (section === 'about') }" (click)="select('about')">About</div>
+            <div [ngClass]="{ 'program__contents--select': (section === 'makers') }" (click)="select('makers')">The Makers</div>
+            <div [ngClass]="{ 'program__contents--select': (section === 'thanks') }" (click)="select('thanks')">Thank yous</div>
+            <div [ngClass]="{ 'program__contents--select': (section === 'next') }" (click)="select('next')">Up Next</div>
+        </div>
+
+        <div class="program__main">
+            <div class="program__section" *ngIf="section === 'about'">
+                <p>This performance is dedicated to you.</p>
+                <p>I started creating this strange little creature in the middle of winter, 2016. The world was starting to
+                    feel a little much. It emerged as a reaction to the world's darkness, a perceived saturation in political,
+                    physical and emotional violence. I have seen a lot of artists react to this by making work that reflects
+                    the brutality of the world - while this response makes sense to me and feels important, I personally
+                    struggle to receive these pieces when I feel I'm already maxed out. I gathered some collaborators together
+                    to help make a piece that aims to be empowering and restorative - to offer an audience a chance to be
+                    soft in a hard world.</p>
+                <p>I didn't know what was to come when I started making this. Globally, in my community, personally. I didn't
+                    know I'd be constantly redefining what is 'survivable'. I spend a lot of my time as a human trying to
+                    alert myself and others to the brutality that permeates our lives. It's proven a lot more challenging
+                    to make something that is restorative, that can leave others feeling more resilient and ready to face
+                    the world. It's important to stay awake and aware. But if we don't use our muscles for recovery and resilience,
+                    they will atrophy. They will die.</p>
+                <p>This performance is dedicated to you, who can survive brutalities that are systemic or circumstantial, catastrophic
+                    or ongoing, death by a thousand cuts or one crushing blow. This is for you, who deserves a precious moment
+                    with yourself, whose gifts are essential to the world and must be kept available. This is our offering.</p>
+                <p>This is for you.</p>
+                <p style="font-size: 16px"><em> - Christine Quintana and the Good Things Collective </em></p>
+            </div>
+
+            <div class="program__section" *ngIf="section === 'makers'">
+                <h4><strong>Christine Quintana</strong><em> - creator</em></h4>
+                <p>Christine is a playwright, actor, and co-artistic director of Delinquent Theatre (delinquenttheatre.com).
+                    She is a graduate of UBC's BFA Acting Program and the 2017 Siminovitch Protégée Prize winner for Playwriting.
+                    christinequintana.ca</p>
+
+                <h4><strong>Molly MacKinnon</strong><em> - collaborator, live music+concept</em></h4>
+                <p>Molly is a freelance violinist and collaborative artist based out of Vancouver, BC. She is Artistic Associate
+                    of The Little Chamber Music Series That Could, an innovative music series that highlights new works by
+                    Vancouver artists with a focus on multi-arts pollination, community engagement, and local history. mollymackinnon.ca.</p>
+
+                <h4><strong>Sam MacKinnon</strong><em> - collaborator, digital design</em></h4>
+                <p>Sam is a software engineer, musician, and animator. He currently works at Copperleaf Technologies as a UI/UX
+                    developer and plays drums for the band YAWN. He is always on the lookout for interesting creative collaborations.</p>
+
+                <h4><strong>Mishelle Cuttler</strong><em> - collaborator, recorded sound</em></h4>
+                <p>Mishelle is a composer, sound designer and musician. This summer she will be creating and performing music
+                    for Lysistrata at Bard on the Beach. She has an MFA in Musical Theatre Composition from NYU. www.mishellecuttler.com</p>
+
+                <h4><strong>Kaitlin Williams</strong><em> - collaborator, host</em></h4>
+                <p>Kaitlin Williams is a theatre artist and works as an actor, director and designer. She previously worked
+                    with Christine as the costume designer for Delinquent Theatre's Jessie award winning production of Stationary:
+                    A Recession Era Musical. www.kaitlinwilliams.com.</p>
+
+                <h4><strong>Llowyn Ball</strong><em> - musician</em></h4>
+            </div>
+
+            <div class="program__section" *ngIf="section === 'thanks'">
+                <p>Thank you to the Coast Salish people who host us on their land - we are grateful to draw inspiration from
+                    the traditional and unceded territories of the Musqueam, Squamish and Tsleil-Waututh nations, and stand
+                    in solidarity with their continued efforts to protect the land and water we live on.</p>
+
+                <p>Thank you to Upintheair Theatre for the rEvolver Theatre Festival, and the tireless work of Dan, Dave, and
+                    Pippa.</p>
+
+                <p>Thank you to Boca del Lupo, who supported this production through their Artist Residency Program.</p>
+
+                <p>Thank you to Meg Roe, Kimberley Brower, and Genevieve Fleming for literally getting us here. Sasha Singer-Wilson
+                    for her contributions to the development of this piece.</p>
+
+                <p>Thank you to our July 2017 pilot test audience: Pedro Chamale, Conor Wylie, Gilles Poulin-Denis, Genevieve
+                    Fleming, Conor Moore, Ray Hsu, Milton Lim, Sherry Yoon, Tony Kastelic, Jamie King, Rhiannon Collett,
+                    Brian Cochrane, Mark Haney, Elliot Vaughn, Martin Reisle, Dani Fecko, Chelsea Haberlin, Theresa Lei,
+                    Joel Klein, Laura McLean, and Derek Chan.</p>
+            </div>
+
+            <div class="program__section" *ngIf="section === 'next'">
+                <p>We are excited to journey to Kingston ON for the first ever Festival of Live Digital Arts. Details here:
+                    <a target="_blank" href="https://www.folda.ca/">https://www.folda.ca/</a></p>
+
+                <p>If you'd like to tell us about your experience with Good Things To Do, please email us at goodthingsperformance@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</div>

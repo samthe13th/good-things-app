@@ -21,6 +21,7 @@ import { StoryBlockComponent } from './shared-components/feed/story/story-block/
 import { StageComponent } from './pages/stage/stage.component';
 import { StoryComponent } from './shared-components/feed/story/story.component';
 import { SurveyComponent } from './pages/survey/survey.component';
+import { ProgramComponent } from './pages/program/program.component';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -44,6 +45,7 @@ import { environment } from '../environments/environment';
     AutoTypeComponent,
     StoryComponent,
     StoryBlockComponent,
+    ProgramComponent,
   ],
   imports: [
     BrowserModule,

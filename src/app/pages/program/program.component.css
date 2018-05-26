@@ -1,0 +1,57 @@
+.program {
+   height: 100vh;
+   background-image: url(./fog.jpg);
+   background-repeat: no-repeat;
+   background-size: cover;
+   font-family: sans-serif;
+   padding: 30px 50px;
+   font-weight: 200;
+}
+
+.program__base {
+   display: flex;
+}
+
+.program__contents {
+    width: 200px;
+    padding: 5px;
+    font-size: 20px;
+}
+
+ .program__contents--select {
+     font-weight: bold;
+ }
+
+.program__contents div {
+    cursor: pointer;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    line-height: 24px;
+}
+
+.program__contents div:hover {
+    font-weight: bold;
+}
+
+.program__contents div:active {
+    font-weight: bold;
+}
+
+.program__main {
+    flex: 1;
+     overflow: auto;
+     height: 100%;
+     margin-right: 60px;
+     font-size: 20px;
+     font-weight: 200;
+     line-height: 24px;
+}
+
+h1 {
+    font-weight: 100;
+    font-size: 36px;
+}
+
+h4 {
+    font-weight: 400;
+}
