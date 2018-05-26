@@ -72,7 +72,11 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "Okay. I'm going to remind you./Before I tell you this story, I'm going to ask you to close your eyes for a little bit. Do you hear this sound? When you hear that sound, it's time to open your eyes again./Ready?/Close your eyes."
+        value: "Okay. I'm going to remind you./Before I tell you this story, I'm going to ask you to close your eyes for a little bit. Do you hear this sound?"
+    },
+    {
+        type: "story",
+        value: "When you hear that sound, it's time to open your eyes again./Ready?/Close your eyes."
     },
     {
         type: "story",

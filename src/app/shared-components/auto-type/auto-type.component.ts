@@ -37,13 +37,13 @@ export class AutoTypeComponent {
 
     interval(char){
         if (char === '.' || char === '?' || char === '!') {
-            return 500;
+            return 800;
         } else if (char === '-') {
-            return 400
+            return 800
         } else if (char === ',') {
-            return 300
+            return 400
         } 
-        return (Math.random() * 50 + 25);
+        return (Math.random() * 70 + 15);
     }
 
     autoType() {
