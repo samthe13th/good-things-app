@@ -18,6 +18,7 @@ export class StageComponent implements OnInit, AfterViewInit {
   userObservable: FirebaseObjectObservable<any>;
   currentBlock: any;
   id; 
+  mode; 
 
   constructor (
     private authService: AuthService,
@@ -25,6 +26,9 @@ export class StageComponent implements OnInit, AfterViewInit {
     private chatService: ChatService,
     private story: StoryService ) { 
     this.route.params.subscribe(params => this.id = params.id);
+    this.story.getBlockType().subscribe((mode) => {
+      this.mode = mode.$value;
+    })
   }
 
   ngOnInit() {

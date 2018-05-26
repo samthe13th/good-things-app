@@ -34,18 +34,20 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FeedComponent,
-    ChatFeedComponent,
-    LoginFormComponent,
-    SignupFormComponent,
     AdminComponent,
-    SurveyComponent,
-    StageComponent,
+    AppComponent,
     AutoTypeComponent,
+    ChatFeedComponent,
+    FeedComponent,
+    LoginFormComponent,
+    ProgramComponent,
+    SignupFormComponent,
+    StoryBlockComponent,
+    StageComponent,
     StoryComponent,
     StoryBlockComponent,
     ProgramComponent,
+    SurveyComponent,
   ],
   imports: [
     BrowserModule,

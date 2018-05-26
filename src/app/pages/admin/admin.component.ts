@@ -25,7 +25,6 @@ export class AdminComponent implements OnInit {
   currentBlock;
   currentSegment = '';
   segment = '';
-  storyMode = false;
   mode = 'start';
   time = '00:00';
   clock = 0;
@@ -61,7 +60,7 @@ export class AdminComponent implements OnInit {
       this.mode = this.currentBlock.type;
     })
     this.storyService.getClock().take(1).subscribe((clock) => {
-      if (clock.$value > 0){
+      if (clock.$value > 0) {
         this.clock = clock.$value;
         this.clockRunning = true;
       }
@@ -134,16 +133,20 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  advanceStory() {
+  advanceStory(n) {
+    console.log('advance... ')
     this.feed = this.storyService.getStory();
     if (!this.clockRunning) {
       this.clockRunning = true;
     }
     this.segIndex = 0;
-    this.storyMode = true;
-    this.mode = 'story';
-    this.storyIndex += 1;
+    console.log('index: ', this.storyIndex);
+    this.storyIndex += n;
+    console.log('index: ', this.storyIndex);
+    this.mode = this.story[this.storyIndex].type;
+
     this.storyService.updateIndex(this.storyIndex);
+    this.storyService.updateBlockType(this.mode);
     this.currentBlock = this.story[this.storyIndex];
     this.setMode();
 
@@ -178,7 +181,7 @@ export class AdminComponent implements OnInit {
     if (this.mode !== 'chat') {
       console.log('next: ', this.story[this.storyIndex + 1].type)
       if (this.story[this.storyIndex + 1] && this.story[this.storyIndex + 1].type === 'chat'){
-        this.advanceStory();
+        this.advanceStory(1);
       } else {
         this.mode = 'wait';
       }

@@ -43,7 +43,7 @@ export class AutoTypeComponent {
         } else if (char === ',') {
             return 300
         } 
-        return (Math.random() * 50 + 10)
+        return (Math.random() * 50 + 25);
     }
 
     autoType() {

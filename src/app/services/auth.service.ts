@@ -5,12 +5,15 @@ import { AngularFireDatabase } from 'angularfire2/database-deprecated';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../interfaces/user.interface';
+import { SHOW } from '../story';
+import { each } from 'lodash';
 
 @Injectable()
 export class AuthService {
 
   private user: Observable<firebase.User>;
   private authState: any;
+  private users: any;
 
   constructor(private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
@@ -44,6 +47,10 @@ export class AuthService {
         const status = 'online';
         this.setUserData(email, displayName, status);
       }).catch(error => console.log(error));
+  }
+
+  getConnectedState() {
+    return this.db.object('/info/connected');
   }
 
   logout() {

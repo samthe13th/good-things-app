@@ -47,13 +47,22 @@ export class StoryService {
         this.storyBlocks.push(block);
     }
 
+    updateIndex(i) {
+        const index = this.getIndex();
+        index.set(i);
+    }
+
     getIndex() {
         return this.db.object('timeline/index');
     }
 
-    updateIndex(i) {
-        const index = this.getIndex();
-        index.set(i);
+    getBlockType() {
+        return this.db.object('timeline/blockType');
+    }
+
+    updateBlockType(type) {
+        const blockType = this.getBlockType();
+        blockType.set(type);
     }
 
     getClock() {

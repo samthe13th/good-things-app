@@ -1,16 +1,8 @@
 <div class="program">
     <div class="program__base">
-        <div class="program__contents">
-            <h1>Good Things To Do</h1>
-            <hr>
-            <div [ngClass]="{ 'program__contents--select': (section === 'about') }" (click)="select('about')">About</div>
-            <div [ngClass]="{ 'program__contents--select': (section === 'makers') }" (click)="select('makers')">The Makers</div>
-            <div [ngClass]="{ 'program__contents--select': (section === 'thanks') }" (click)="select('thanks')">Thank yous</div>
-            <div [ngClass]="{ 'program__contents--select': (section === 'next') }" (click)="select('next')">Up Next</div>
-        </div>
-
         <div class="program__main">
-            <div class="program__section" *ngIf="section === 'about'">
+            <h2>About <em>Good Things To Do</em></h2>
+            <div class="program__section">
                 <p>This performance is dedicated to you.</p>
                 <p>I started creating this strange little creature in the middle of winter, 2016. The world was starting to
                     feel a little much. It emerged as a reaction to the world's darkness, a perceived saturation in political,
@@ -32,7 +24,8 @@
                 <p style="font-size: 16px"><em> - Christine Quintana and the Good Things Collective </em></p>
             </div>
 
-            <div class="program__section" *ngIf="section === 'makers'">
+            <h2>The Makers</h2>
+            <div class="program__section">
                 <h4><strong>Christine Quintana</strong><em> - creator</em></h4>
                 <p>Christine is a playwright, actor, and co-artistic director of Delinquent Theatre (delinquenttheatre.com).
                     She is a graduate of UBC's BFA Acting Program and the 2017 Siminovitch Protégée Prize winner for Playwriting.
@@ -49,17 +42,18 @@
 
                 <h4><strong>Mishelle Cuttler</strong><em> - collaborator, recorded sound</em></h4>
                 <p>Mishelle is a composer, sound designer and musician. This summer she will be creating and performing music
-                    for Lysistrata at Bard on the Beach. She has an MFA in Musical Theatre Composition from NYU. www.mishellecuttler.com</p>
+                    for Lysistrata at Bard on the Beach. She has an MFA in Musical Theatre Composition from NYU. <a target="_blank" href="mishellecuttler.com">mishellecuttler.com</a></p>
 
                 <h4><strong>Kaitlin Williams</strong><em> - collaborator, host</em></h4>
                 <p>Kaitlin Williams is a theatre artist and works as an actor, director and designer. She previously worked
                     with Christine as the costume designer for Delinquent Theatre's Jessie award winning production of Stationary:
-                    A Recession Era Musical. www.kaitlinwilliams.com.</p>
+                    A Recession Era Musical.  <a target="_blank" href="www.kaitlinwilliams.com">www.kaitlinwilliams.com</a>.</p>
 
                 <h4><strong>Llowyn Ball</strong><em> - musician</em></h4>
             </div>
 
-            <div class="program__section" *ngIf="section === 'thanks'">
+            <h2>Thank yous</h2>
+            <div class="program__section">
                 <p>Thank you to the Coast Salish people who host us on their land - we are grateful to draw inspiration from
                     the traditional and unceded territories of the Musqueam, Squamish and Tsleil-Waututh nations, and stand
                     in solidarity with their continued efforts to protect the land and water we live on.</p>
@@ -78,7 +72,8 @@
                     Joel Klein, Laura McLean, and Derek Chan.</p>
             </div>
 
-            <div class="program__section" *ngIf="section === 'next'">
+            <h2>Up Next</h2>
+            <div class="program__section">
                 <p>We are excited to journey to Kingston ON for the first ever Festival of Live Digital Arts. Details here:
                     <a target="_blank" href="https://www.folda.ca/">https://www.folda.ca/</a></p>
 

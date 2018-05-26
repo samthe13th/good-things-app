@@ -6,11 +6,18 @@
    background-size: cover;
    font-family: sans-serif;
    font-weight: 200;
-   padding: 20px;
+   padding: 30px;
+}
+
+.program__section {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 40px 40px 20px 40px;
 }
 
 .program__base {
    display: flex;
+   margin-bottom: 100px;
 }
 
 .program__contents {
@@ -42,13 +49,9 @@
 
 .program__main {
     margin: 20px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    margin-left: 250px;
-    padding: 40px;
+    padding: 20px;
      overflow: auto;
      height: 100%;
-     margin-right: 60px;
      font-size: 20px;
      font-weight: 200;
      line-height: 24px;
@@ -58,14 +61,24 @@
 
 h1 {
     font-weight: 100;
-    font-size: 31px;
+    font-size: 40px;
     margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
+h2 {
+    font-size: 24px;
+    font-weight: 100;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    text-align: center;
+}
 h4 {
     margin-top: 0;
     font-weight: 400;
 }
+
 
 p {
     margin-top: 0;

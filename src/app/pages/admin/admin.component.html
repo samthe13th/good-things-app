@@ -3,11 +3,11 @@
     <div class="controls">
       <div class="position">
         <div class="clock">{{ time }}</div>
-        <div class="tally">{{ storyIndex }}/{{ story.length }}</div>
+        <div class="tally">{{ storyIndex }}/{{ story.length - 1}}</div>
       </div>
       <div style="display: flex; flex-direction: row; height: 60px">
         <button class="advance-btn" (click)="reset()">RESET</button>
-        <button class="advance-btn" [disabled]="mode === 'story'" (click)="advanceStory()">
+        <button class="advance-btn" [disabled]="mode === 'story'" (click)="advanceStory(1)">
           <span *ngIf="clock === 0">START</span>
           <span *ngIf="clock !== 0">NEXT</span>
         </button>
@@ -60,6 +60,7 @@
         <span *ngIf="mode === 'story'">Autotyping story block...</span>
         <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
         <span *ngIf="mode === 'chat'">Chat Mode</span>
+        <button (click)="advanceStory(1)">Force Advance</button>
       </div>
       <div class="control-panel__stage" #feed>
         <feed [user]='user' (finishedTyping)="onFinishTyping($event)"></feed>
