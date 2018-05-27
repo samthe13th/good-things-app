@@ -265,7 +265,7 @@ export const STORY = [
     }, 
     {
         type: "story", 
-        value: "I want to help you with it./The way you helped me./I wish I could take it away. I can’t./But I’ve left you a little something outside that might help./Take it - and leave that little paper behind in its place."
+        value: "I want to help you with it./The way you helped me./I wish I could take it away. I can’t./But I’ve left you a little something outside that might help./When you leave your space, take it, and leave that little paper behind in its place."
     }, 
     {
         type: "story",
