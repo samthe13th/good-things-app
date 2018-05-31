@@ -65,6 +65,20 @@ export class StoryService {
         blockType.set(type);
     }
 
+    getPrivacy() {
+        return this.db.object('timeline/isPrivate');
+    }
+
+    updatePrivacy(_boolean) {
+        console.log('update isPrivate: ', _boolean)
+        const isPrivate = this.getPrivacy();
+        let boolean = true;
+        if (_boolean !== undefined){
+            boolean = _boolean
+        }
+        isPrivate.set(boolean);
+    }
+
     getClock() {
         return this.db.object('timeline/clock');
     }

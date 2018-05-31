@@ -26,6 +26,7 @@ export class AdminComponent implements OnInit {
   currentSegment = '';
   segment = '';
   mode = 'start';
+  isPrivate = true;
   time = '00:00';
   clock = 0;
   user = 'admin'
@@ -144,9 +145,12 @@ export class AdminComponent implements OnInit {
     this.storyIndex += n;
     console.log('index: ', this.storyIndex);
     this.mode = this.story[this.storyIndex].type;
+    console.log("isPrivate? ", this.story[this.storyIndex].isPrivate )
+    this.isPrivate = this.story[this.storyIndex].isPrivate ? this.story[this.storyIndex].isPrivate : true;
 
     this.storyService.updateIndex(this.storyIndex);
     this.storyService.updateBlockType(this.mode);
+    this.storyService.updatePrivacy(this.story[this.storyIndex].isPrivate );
     this.currentBlock = this.story[this.storyIndex];
     this.setMode();
 

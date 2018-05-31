@@ -19,6 +19,7 @@ export class StageComponent implements OnInit, AfterViewInit {
   currentBlock: any;
   id; 
   mode; 
+  isPrivate;
 
   constructor (
     private authService: AuthService,
@@ -28,6 +29,9 @@ export class StageComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(params => this.id = params.id);
     this.story.getBlockType().subscribe((mode) => {
       this.mode = mode.$value;
+    })
+    this.story.getPrivacy().subscribe((privacy) => {
+      this.isPrivate = privacy.$value;
     })
   }
 
@@ -61,7 +65,7 @@ export class StageComponent implements OnInit, AfterViewInit {
   submit(input) {
     this.chatService.sendMessage(input.value, this.id, this.id);
     this.story.tellStory({
-      isPrivate: this.currentBlock.isPrivate,
+      isPrivate: this.isPrivate,
       value: input.value,
       type: 'chat',
       canView: this.id,

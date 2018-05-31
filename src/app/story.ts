@@ -2,7 +2,7 @@ export const SHOW = {
     users: [
         { id: '1', color: '#f36464', unread: false },
         { id: '2', color: '#fc994d', unread: false },
-        { id: '3', color: '#f4c942', unread: false },
+        { id: '3', color: '#e5ac00', unread: false },
         { id: '4', color: '#5cc18a', unread: false },
         { id: '5', color: '#64cdbf', unread: false },
         { id: '6', color: '#7ac5f6', unread: false },
