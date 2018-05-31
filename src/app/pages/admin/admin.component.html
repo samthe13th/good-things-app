@@ -56,11 +56,11 @@
 
     <div class="control-panel__stage-wrapper">
       <div style="font-size: 16px; padding: 10px; background: #ededed; height: 38px; box-sizing: border-box">
+                <button (click)="advanceStory(1)">Force Advance</button>
         <span *ngIf="mode === 'start'">Press start to begin show</span>
         <span *ngIf="mode === 'story'">Autotyping story block...</span>
         <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
         <span *ngIf="mode === 'chat'">Chat Mode</span>
-        <button (click)="advanceStory(1)">Force Advance</button>
       </div>
       <div class="control-panel__stage" #feed>
         <feed [user]='user' (finishedTyping)="onFinishTyping($event)"></feed>

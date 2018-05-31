@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 
 // Components
 import { AdminComponent } from './pages/admin/admin.component';
+import { AllTheThingsComponent } from './pages/allthethings/allthethings.component';
 import { AppComponent } from './app.component';
 import { AutoTypeComponent } from './shared-components/auto-type/auto-type.component';
 import { ChatFeedComponent } from './pages/admin/chat-feed/chat-feed.component';
@@ -35,6 +36,7 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AdminComponent,
+    AllTheThingsComponent,
     AppComponent,
     AutoTypeComponent,
     ChatFeedComponent,

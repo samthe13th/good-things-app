@@ -120,7 +120,11 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "It’s you./I try to say something and you look at me and smile and cover your mouth, like duh, you’re underwater, don’t try to talk./Suddenly opening my mouth underwater seems like a really, really weird choice to make."
+        value: "It’s you."
+    },
+    {
+        type: "story",
+        value: "I try to say something and you look at me and smile and cover your mouth, like duh, you’re underwater, don’t try to talk./Suddenly opening my mouth underwater seems like a really, really weird choice to make."
     },
     {
         type: "story",
@@ -245,8 +249,12 @@ export const STORY = [
     }, 
     {
         type: "story", 
-        value: "Thank you./Those are lovely./And I know that it won’t be enough./It’s not really that easy"
+        value: "Thank you./Those are lovely."
     }, 
+    {
+        type: "story",
+        value: "And I know that it won’t be enough./It’s not really that easy"
+    },
     {
         type: "story", 
         value: "The world out there is many things/It is hard/It is random and confusing/Sometimes it is very unfair/The waking world out there has made us into a thousand things we were never meant to be/Some not so good things, sometimes."
@@ -269,10 +277,6 @@ export const STORY = [
     }, 
     {
         type: "story",
-        value: "Okay, for real now./When you’re ready, you can come out/I love you."
-    }, 
-    {
-        type: "story", 
-        value: "Goodnight. Good morning. Goodbye."
+        value: "Okay, for real now./When you’re ready, you can come out/I love you./Goodnight./Good morning./Goodbye."
     }
 ]

@@ -3,6 +3,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service';
+import { each } from 'lodash';
 import * as firebase from 'firebase/app';
 
 @Injectable()
@@ -20,7 +21,6 @@ userName: string;
       if (auth !== undefined && auth !== null) {
         this.user = auth;
       }   
-      
     });
   }
 
@@ -39,8 +39,19 @@ userName: string;
     return this.db.list(path);
   }
 
+  getMasterList() {
+    return this.db.list('goodthings');
+  }
+
+  getMasterListObject() {
+    return this.db.object('goodthings');
+  }
+
+  updateMasterList(list) {
+    this.db.object('goodthings').set(list)
+  }
+
   sendMessage(message, id, user) {
-    console.log('send message: ', message, id, user)
     this.chatMessages = this.getMessages(id);
     this.chatMessages.push({
       message, 

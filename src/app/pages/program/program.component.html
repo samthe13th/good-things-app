@@ -29,7 +29,7 @@
                 <h4><strong>Christine Quintana</strong><em> - creator</em></h4>
                 <p>Christine is a playwright, actor, and co-artistic director of Delinquent Theatre (<a target="_blank" href="https://delinquenttheatre.com">delinquenttheatre.com</a>).
                     She is a graduate of UBC's BFA Acting Program and the 2017 Siminovitch Protégée Prize winner for Playwriting.
-                    <a target="_blank" href="https://christinequintana.ca">christinequintana.ca</a></p>
+                    <a target="_blank" href="https://christinequintana.ca">christinequintana.ca</a>.</p>
 
                 <h4><strong>Molly MacKinnon</strong><em> - collaborator, live music+concept</em></h4>
                 <p>Molly is a freelance violinist and collaborative artist based out of Vancouver, BC. She is Artistic Associate
@@ -38,11 +38,11 @@
 
                 <h4><strong>Sam MacKinnon</strong><em> - collaborator, digital design</em></h4>
                 <p>Sam is a software engineer, musician, and animator. He currently works at Copperleaf Technologies as a UI/UX
-                    developer and plays drums for the band YAWN. He is always on the lookout for interesting creative collaborations.<a target="_blank" href="http://www.sammackinnon.ca/portfolio">www.sammackinnon.ca</a></p>
+                    developer and plays drums for the band YAWN. He is always on the lookout for interesting creative collaborations. <a target="_blank" href="http://www.sammackinnon.ca/portfolio">www.sammackinnon.ca</a>.</p>
 
                 <h4><strong>Mishelle Cuttler</strong><em> - collaborator, recorded sound</em></h4>
                 <p>Mishelle is a composer, sound designer and musician. This summer she will be creating and performing music
-                    for Lysistrata at Bard on the Beach. She has an MFA in Musical Theatre Composition from NYU. <a target="_blank" href="https://mishellecuttler.com">mishellecuttler.com</a></p>
+                    for Lysistrata at Bard on the Beach. She has an MFA in Musical Theatre Composition from NYU. <a target="_blank" href="https://mishellecuttler.com">mishellecuttler.com</a>.</p>
 
                 <h4><strong>Kaitlin Williams</strong><em> - collaborator, host</em></h4>
                 <p>Kaitlin Williams is a theatre artist and works as an actor, director and designer. She previously worked
@@ -63,6 +63,8 @@
 
                 <p>Thank you to Boca del Lupo, who supported this production through their Artist Residency Program.</p>
 
+                <p>Thank you to Free Geek for supplying us with laptops - check out their website and the great things they do at <a target="_blank" href="https:freegeekvancouver.org">freegeekvancouver.org</a>.</p>
+
                 <p>Thank you to Meg Roe, Kimberley Brower, and Genevieve Fleming for literally getting us here. Sasha Singer-Wilson
                     for her contributions to the development of this piece.</p>
 
@@ -70,6 +72,7 @@
                     Fleming, Conor Moore, Ray Hsu, Milton Lim, Sherry Yoon, Tony Kastelic, Jamie King, Rhiannon Collett,
                     Brian Cochrane, Mark Haney, Elliot Vaughn, Martin Reisle, Dani Fecko, Chelsea Haberlin, Theresa Lei,
                     Joel Klein, Laura McLean, and Derek Chan.</p>
+
             </div>
 
             <h2>Up Next</h2>
@@ -77,6 +80,11 @@
                 <p>We are excited to journey to Kingston ON for the first ever Festival of Live Digital Arts. Details here:
                     <a target="_blank" href="https://www.folda.ca/">https://www.folda.ca/</a></p>
                 <p style="font-size: 16px">If you'd like to tell us about your experience with Good Things To Do, please email us at goodthingsperformance@gmail.com</p>
+            </div>
+
+            <h2>Good Things</h2>
+            <div class="program__section">
+                <div *ngFor="let thing of goodthings | async">- {{ thing.$value }}</div>        
             </div>
         </div>
     </div>
