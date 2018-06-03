@@ -43,6 +43,7 @@ export class StageComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges() {
+     this.scrollToBottom();
      this.currentSegment = this.story.getCurrentSegment();
   }
 
@@ -75,6 +76,7 @@ export class StageComponent implements OnInit, AfterViewInit {
   }
 
   onCurrentBlockChange(block) {
-    this.currentBlock = block
+    this.currentBlock = block;
+    this.scrollToBottom();
   }
 }

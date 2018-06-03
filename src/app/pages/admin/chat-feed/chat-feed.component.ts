@@ -23,6 +23,7 @@ export class ChatFeedComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    console.log("CHANGE")
    this.chatFeed = this.chatService.getMessages(this.user.id);
   }
 }
