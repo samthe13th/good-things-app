@@ -1,0 +1,12 @@
+<div style="padding: 5px; font-weight: 200; font-size: 20px; padding: 8%; position: fixed; width: 100vw; height: 100vh; box-sizing: border-box">
+    <div *ngIf="!editing" style="height: 100%; width: 100%">
+        <ul style="margin: 0; padding: 5px; width: 100%; height: 100%; border: solid 1px; overflow: auto; font-family: sans-serif">
+           <li *ngFor="let thing of goodthings$ | async">- {{ thing }}</li>
+        </ul>
+        <button style="margin-top: 5px; font-size: 16px; width: 80px; height: 30px;  border: none; background: lightblue" (click)="edit()">edit</button>
+    </div>
+    <div *ngIf="editing" style="height: 100%; width: 100%">
+        <textarea #list style="margin: 0; padding: 5px; border: solid 2px grey; width: 100%; height: 100%; font-size: 20px"></textarea>
+        <button style="font-size: 16px; width: 80px; height: 30px; border: none; background: lightgreen" (click)="updateList(list)">update</button>
+    </div>
+</div>

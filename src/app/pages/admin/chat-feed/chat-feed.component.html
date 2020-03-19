@@ -1,0 +1,7 @@
+
+<div 
+[ngClass]="{ 'chat-admin': message.user === 'admin', 'chat-tent': message.user !== 'admin' }"
+[style.background-color]="message.user !== 'admin' ? user.color : null"
+*ngFor="let message of chatFeed | async">
+    {{ message.message }}
+</div>

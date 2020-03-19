@@ -1,0 +1,96 @@
+.mainContent{
+    display: flex;
+    flex-direction: column;
+    font-family: Helvetica, Arial, sans-serif;
+    height: 85vh;
+    font-size: 22px;
+    margin: auto;
+    line-height: 1.4;
+    background: white;
+    color: #26323d;
+    font-weight: 100;
+}
+
+.userListWrapper {
+    background-color: #2A2845;
+    color: #fff;
+    display: flex;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.2em;
+    height: 150px;
+    padding:20px 0px 40px 30px;
+    border-right: 1px solid #222;
+}
+
+.feedWrapper {
+    height: 100%;
+    overflow: scroll;
+    padding-left: 15%;
+    padding-right: 15%;
+    width: 70%;
+}
+
+.chatFormWrapper {
+    display: flex;
+    height: 50px;
+    background-color: #eee;
+    z-index: 3;
+}
+
+#scroll-style::-webkit-scrollbar-track
+{
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+app-user-list {
+    width: 100%;
+}
+
+.fade-out {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(rgba(255, 255, 255,1), rgba(222, 208, 208,0));
+    position: absolute;
+}
+
+.fade-out--bottom {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient( rgba(222, 208, 208,0), rgba(255, 255, 255,1));
+    position: absolute;
+    bottom: 0;
+}
+
+.stage__chat-wrapper {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 110px;
+    padding: 0 12% 60px 12%;
+    box-sizing: border-box;
+    transition: margin 1s ease;
+}
+
+.stage__chat-input {
+    flex: 1;
+    border-radius: 5px 0 0 5px;
+    border: solid 1px lightgrey;
+    font-size: 22px;
+    font-weight: 200;
+    padding: 4px;
+}
+
+.stage__chat-button {
+    background-color: white;
+    width: 80px;
+    background: #24aacd;
+    border: 0;
+    font-size: 15px;
+    color: white;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    outline: none;
+}

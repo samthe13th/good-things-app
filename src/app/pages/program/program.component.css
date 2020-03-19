@@ -1,0 +1,89 @@
+.program {
+    overflow: auto;
+   height: 100vh;
+   background-image: url(./fog.jpg);
+   background-repeat: no-repeat;
+   background-size: cover;
+   font-family: sans-serif;
+   font-weight: 200;
+   padding: 2% 5%;
+}
+
+.program__section {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 40px 40px 20px 40px;
+}
+
+.program__base {
+   display: flex;
+   margin-bottom: 100px;
+}
+
+.program__contents {
+    width: 200px;
+    padding: 5px;
+    font-size: 1em;
+       position: fixed;
+       margin: 20px;
+}
+
+ .program__contents--select {
+     font-weight: bold;
+ }
+
+.program__contents div {
+    cursor: pointer;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    line-height: 24px;
+}
+
+.program__contents div:hover {
+    font-weight: bold;
+}
+
+.program__contents div:active {
+    font-weight: bold;
+}
+
+.program__main {
+     overflow: auto;
+     height: 100%;
+     font-size: 20px;
+     font-weight: 200;
+     line-height: 24px;
+     overflow: scroll;
+     height: 100%;
+}
+
+h1 {
+    font-weight: 100;
+    font-size: 40px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 300;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+h4 {
+    margin-top: 0;
+    font-weight: 400;
+}
+
+
+p {
+    margin-top: 0;
+}
+
+hr {
+    margin-top: 35px;
+    margin-bottom: 30px;
+    margin-right: 15px;
+}
