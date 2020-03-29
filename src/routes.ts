@@ -11,7 +11,6 @@ export const appRoutes: Routes = [
   { path: 'signup', component: SignupFormComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'admin', component: AdminComponent },
-  { path: '', component: SurveyComponent },
   { path: 'stage', component: StageComponent },
   { path: 'stage/:id', component: StageComponent },
   { path: 'program', component: ProgramComponent },

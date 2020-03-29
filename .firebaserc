@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "goodthings-b114c",
+    "goodthings": "goodthings-b114c"
+  },
+  "targets": {
+    "goodthings-b114c": {
+      "hosting": {
+        "good-things": [
+          "goodthings-b114c"
+        ]
+      }
+    }
+  }
+}
