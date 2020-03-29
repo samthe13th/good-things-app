@@ -1,7 +1,8 @@
-
-<div 
-[ngClass]="{ 'chat-admin': message.user === 'admin', 'chat-tent': message.user !== 'admin' }"
-[style.background-color]="message.user !== 'admin' ? user.color : null"
-*ngFor="let message of chatFeed | async">
+<div style="display: flex; flex-direction: column; width: 100%">
+  <h3 [style.background]="user.color" style="color: white; margin: 0; padding: 10px; margin-bottom: 10px">{{ user.id }}</h3>
+  <div [ngClass]="{ 'chat-admin': message.user === 'admin', 'chat-tent': message.user !== 'admin' }"
+    [style.background-color]="message.user !== 'admin' ? user.color : null"
+    *ngFor="let message of chatFeed | async">
     {{ message.message }}
-</div>
+  </div>
+<div>

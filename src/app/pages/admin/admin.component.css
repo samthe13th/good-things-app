@@ -112,7 +112,8 @@
 .admin__chat-panel-feed {
     display: flex;
     flex-direction: column;
-    padding: 4px;
+    width: 60px;
+    overflow: scroll;
 }
 
 .admin__stage {

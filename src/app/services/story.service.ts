@@ -39,11 +39,13 @@ export class StoryService {
   }
 
   tellStory(block) {
+    console.log('tell story: ', block)
     this.storyBlocks = this.getStory();
     this.storyBlocks.push(block);
   }
 
   updateIndex(i) {
+    console.log('index: ', i);
     const index = this.getIndex();
     index.set(i);
   }
@@ -66,7 +68,6 @@ export class StoryService {
   }
 
   updatePrivacy(_boolean) {
-    console.log('update isPrivate: ', _boolean)
     const isPrivate = this.getPrivacy();
     let boolean = true;
     if (_boolean !== undefined){
@@ -94,7 +95,6 @@ export class StoryService {
   }
 
   updateCurrentSegment(segment) {
-    console.log('update ', segment)
     const segment$ = this.db.object('currentSegment')
     segment$.set(segment);
   }

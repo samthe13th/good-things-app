@@ -5,6 +5,7 @@ import { ChatService } from '../../services/chat.service';
 import { StoryService } from '../../services/story.service';
 import { SHOW } from '../../story'
 import { Observable } from 'rxjs';
+import { debounceTime } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-stage',
@@ -19,6 +20,7 @@ export class StageComponent implements OnInit, AfterViewInit, OnChanges {
   id;
   mode;
   isPrivate;
+  debounceTime = 200;
 
   constructor (
     private authService: AuthService,
@@ -26,10 +28,16 @@ export class StageComponent implements OnInit, AfterViewInit, OnChanges {
     private chatService: ChatService,
     private story: StoryService ) {
     this.route.params.subscribe(params => this.id = params.id);
-    this.story.getBlockType().valueChanges().subscribe((mode) => {
+    this.story.getBlockType()
+      .valueChanges()
+      .pipe(debounceTime(this.debounceTime))
+      .subscribe((mode) => {
       this.mode = mode;
     });
-    this.story.getPrivacy().valueChanges().subscribe((privacy) => {
+    this.story.getPrivacy()
+      .valueChanges()
+      .pipe(debounceTime(this.debounceTime))
+      .subscribe((privacy) => {
       this.isPrivate = privacy;
     });
   }
@@ -37,13 +45,13 @@ export class StageComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
     setTimeout(() => {
      this.authService.signInAnonymously();
-    })
+    });
     this.currentSegment = this.story.getCurrentSegment();
   }
 
   ngOnChanges() {
-     this.scrollToBottom();
-     this.currentSegment = this.story.getCurrentSegment();
+    this.scrollToBottom();
+    this.currentSegment = this.story.getCurrentSegment();
   }
 
   ngAfterViewInit() {
@@ -69,6 +77,7 @@ export class StageComponent implements OnInit, AfterViewInit, OnChanges {
       value: input.value,
       type: 'chat',
       canView: this.id,
+      user: this.id,
       color: SHOW.users[parseInt(this.id) - 1].color,
     });
     input.value = '';

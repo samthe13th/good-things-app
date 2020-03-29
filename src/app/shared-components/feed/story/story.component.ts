@@ -11,6 +11,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         (advanceScroll)="onAdvanceScroll($event)"
         (finishedTyping)="onFinishTyping($event)"
         [block]="segment"
+        [user]="user"
         [staticBlock]="i < (segments.length - 1)">
       </story-block>
     </div>
@@ -25,11 +26,9 @@ export class StoryComponent {
  @Input() user: string;
  @Input()
   set segments(value) {
-    console.log('segments: ', value)
-    console.log('user: ', this.user)
-    if (value){
-    this.currentBlock.emit(value[value.length - 1]);
-    this._segments = value;
+    if (value) {
+      this.currentBlock.emit(value[value.length - 1]);
+      this._segments = value;
     }
   }
   get segments(){
@@ -38,7 +37,6 @@ export class StoryComponent {
   private _segments;
 
   onFinishTyping(segment) {
-    console.log('finish typing block: ', segment)
     this.finishedTyping.emit(true);
   }
 

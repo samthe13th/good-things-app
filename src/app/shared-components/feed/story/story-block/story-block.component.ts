@@ -7,11 +7,11 @@ import { map } from 'lodash';
 <div class="segment-wrapper" *ngFor="let segment of staticBlocks" >
   <div
     [style.background]="block.color"
-    *ngIf="staticBlock && block.canView && block.user !== 'admin'"
+    *ngIf="staticBlock && block.canView && block.user === user"
     style="display: inline-block; color: white;  padding: 2px 12px; border-radius: 10px">
     {{ segment.value }}
   </div>
-  <div *ngIf="staticBlock && segment.canView === undefined">{{ segment.value }}</div>
+  <div *ngIf="staticBlock && block.user !== user">{{ segment.value }}</div>
 </div>
 
 <div class="segment-wrapper" *ngFor="let segment of cue">
@@ -35,11 +35,11 @@ export class StoryBlockComponent implements OnInit {
   staticBlocks;
 
   @Input() staticBlock = true;
+  @Input() user: string;
   @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
   @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
   @Input()
   set block(_block) {
-    console.log('story block: ', _block)
     this._block = _block
   }
   get block() {
@@ -50,14 +50,16 @@ export class StoryBlockComponent implements OnInit {
   ngOnInit() {
     this.segmentList = this.block.value.split('/');
     this.staticBlocks = map(this.segmentList, (segment) => {
-      return { ...this.block, value: segment }
+      return { ...this.block, value: segment };
     });
-    console.log('blocks: ', this.staticBlocks)
-    this.cue.push({ type: this.block.type, value: this.segmentList[0] });
+    console.log(' static blocks: ', this.staticBlocks)
+    if (this.staticBlock === false) {
+      this.cue.push({ type: this.block.type, value: this.segmentList[0] });
+    }
+    console.log('cue: ', this.cue)
   }
 
   onFinishTyping(segment) {
-    console.log('@storyblock advance');
     this.advanceScroll.emit(true);
     if (this.cue.length < this.segmentList.length) {
       this.cue.push({ type: this.block.type, value: this.segmentList[this.cue.length] });

@@ -4,6 +4,7 @@
   <div class="feedWrapper" #scroller>
     <feed
       [user]="id"
+      [feedDebounce]="debounceTime"
       (advanceScroll)="onAdvanceScroll($event)"
       (finishedTyping)="onFinishTyping($event)"
       (currentBlock)="onCurrentBlockChange($event)">

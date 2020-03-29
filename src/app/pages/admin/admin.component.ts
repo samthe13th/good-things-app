@@ -44,20 +44,20 @@ import { Observable } from 'rxjs';
       <div class="admin__chat-panel-main">
 
         <div class="admin__chat-panel-feed">
-          <div *ngFor="let user of users | async" style="position: relative">
+          <div *ngFor="let user of users | async; let i = index" style="position: relative">
             <button
-              style="width: 50px; height: 50px; font-size: 16px; cursor: pointer"
+              style="width: 40px; height: 40px; font-size: 16px; cursor: pointer"
               [style.background]="chatUser.id === user.id ? user.color : 'white'"
               (click)="filterChat(user)">
-              {{ user.id }}
+              {{ user.id.slice(0,2) }}
             </button>
             <div *ngIf="user.unread === true && chatUser.id !== user.id"
               [style.background]="user.color"
               class="user-badge">!</div>
           </div>
         </div>
-
-        <chat-feed class="chat-feed" [user]="chatUser"></chat-feed>
+        
+          <chat-feed class="chat-feed" [user]="chatUser"></chat-feed>
       </div>
 
       <div (keyup.enter)="chat(chatInput)" class="admin__feedback"
@@ -122,25 +122,23 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log(this.story)
     this.chatUser = SHOW.users[0];
     this.storyFeed = this.storyService.getStory();
     this.feed = this.storyService.getStory().valueChanges();
-    this.currentBlock = this.story[0]
-    this.resetUserList()
+    this.currentBlock = this.story[0];
+    this.resetUserList();
     this.storyService.getIndex().valueChanges().subscribe((index: any) => {
       this.storyIndex = index;
-      console.log('block: ', this.story[this.storyIndex])
       this.currentBlock = this.story[this.storyIndex];
       this.mode = this.currentBlock.type;
-    })
+    });
     this.storyService.getClock().valueChanges().take(1).subscribe((clock: any) => {
-    if (clock > 0) {
-      this.clock = clock;
-      this.clockRunning = true;
-    }
-    this.instantiateClock();
-    })
+      if (clock > 0) {
+        this.clock = clock;
+        this.clockRunning = true;
+      }
+      this.instantiateClock();
+    });
     setTimeout(() => {
      this.authService.signInAnonymously();
     });
@@ -149,7 +147,7 @@ export class AdminComponent implements OnInit, OnChanges {
   resetUserList() {
     _.each(SHOW.users, (user) => {
       this.chatService.addUser(user);
-    })
+    });
     this.users = this.chatService.getUserList().valueChanges();
   }
 
@@ -159,8 +157,9 @@ export class AdminComponent implements OnInit, OnChanges {
       this.clockRunning = false;
       this.clock = 0;
       this.storyService.updateClock(0);
-      this.time = '00:00'
+      this.time = '00:00';
       this.storyIndex = 0;
+      this.storyService.updateIndex(this.storyIndex);
       this.mode = 'start';
       this.chatService.clear();
       this.resetUserList();
@@ -202,25 +201,22 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   autoTypeBlock() {
-    console.log('type... ', this.currentBlock, this.segIndex);
+    console.log('AUTOTYPE')
     if (this.segIndex < this.currentBlock.length) {
+      console.log('autotype ', this.currentBlock)
       this.storyService.updateCurrentSegment({ type: 'story', value: this.currentBlock});
       this.segment = this.currentBlock;
     }
   }
 
   advanceStory(n) {
-    console.log('advance... ')
     this.feed = this.storyService.getStory().valueChanges();
     if (!this.clockRunning) {
       this.clockRunning = true;
     }
     this.segIndex = 0;
-    console.log('index: ', this.storyIndex);
     this.storyIndex += n;
-    console.log('index: ', this.storyIndex);
     this.mode = this.story[this.storyIndex].type;
-    console.log("isPrivate? ", this.story[this.storyIndex].isPrivate )
     this.isPrivate = this.story[this.storyIndex].isPrivate ? this.story[this.storyIndex].isPrivate : true;
 
     this.storyService.updateIndex(this.storyIndex);
@@ -231,9 +227,10 @@ export class AdminComponent implements OnInit, OnChanges {
 
     this.storyBlocks = this.storyService.getStory();
     this.storySegment = this.storyBlocks.push();
-    console.log('story blocks: ', this.storyBlocks)
-    this.storyService.tellStory(this.currentBlock);
-    this.autoTypeBlock();
+    if (this.currentBlock.type === 'story') {
+      this.storyService.tellStory(this.currentBlock);
+      this.autoTypeBlock();
+    }
   }
 
   setMode() {
@@ -259,7 +256,6 @@ export class AdminComponent implements OnInit, OnChanges {
 
   onFinishTyping(segment) {
     if (this.mode !== 'chat') {
-      console.log('next: ', this.story[this.storyIndex + 1].type);
       if (this.story[this.storyIndex + 1] && this.story[this.storyIndex + 1].type === 'chat'){
         this.advanceStory(1);
       } else {

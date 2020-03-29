@@ -17,7 +17,6 @@ export class ChatFeedComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-   console.log('init chat feed')
    this.chatFeed = this.chatService.getMessages(this.user.id).valueChanges();
   }
 
