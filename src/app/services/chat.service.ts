@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { each } from 'lodash';
 import * as firebase from 'firebase/app';
@@ -40,7 +40,7 @@ userName: string;
   }
 
   getMasterList(): Observable<any[]> {
-    return this.db.list('goodthings').valueChanges()
+    return this.db.list('goodthings').valueChanges();
   }
 
   getMasterListObject() {
@@ -58,11 +58,14 @@ userName: string;
       id,
       user
     });
+    console.log('send msg: ', id)
     this.setUnreads(id, true);
   }
 
   setUnreads(id, value) {
-    this.db.object(`/users/${id}/unread`).set(value)
+    if (id !== undefined) {
+      this.db.object(`/users/${id}/unread`).set(value)
+    }
   }
 
   getUserList() {

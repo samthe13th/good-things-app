@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { ChatService } from '../../../services/chat.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'chat-feed',

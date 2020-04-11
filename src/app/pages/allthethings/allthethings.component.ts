@@ -3,6 +3,7 @@ import { map, filter, each } from 'lodash';
 import { ChatService } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'allthethings',
@@ -28,17 +29,17 @@ export class AllTheThingsComponent implements OnInit {
   edit() {
       this.editableList = '';
       this.editing = true;
-      this.goodthings$.take(1).subscribe((things: any) => {
+      this.goodthings$.pipe(take(1)).subscribe((things: any) => {
           each(things, (thing, index) => {
               this.editableList = `${this.editableList}- ${thing}`;
               if (parseInt(index, 10) !== (things.length - 1)) {
                   this.editableList += '\n';
               }
-          })
-      })
+          });
+      });
       setTimeout(() => {
           this.things.nativeElement.value = this.editableList;
-      })
+      });
   }
 
   updateList(list) {

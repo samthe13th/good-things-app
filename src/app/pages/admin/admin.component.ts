@@ -7,6 +7,8 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators'
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
   selector: 'app-admin',
@@ -41,15 +43,16 @@ import { Observable } from 'rxjs';
 
   <div class="admin__main">
     <div class="admin__chat-panel">
-      <div class="admin__chat-panel-main">
+      <div *ngIf="!chatUser">Waiting for users....</div>
+      <div class="admin__chat-panel-main" *ngIf="chatUser" >
 
-        <div class="admin__chat-panel-feed">
+        <div class="admin__chat-panel-feed" *ngIf="users | async" >
           <div *ngFor="let user of users | async; let i = index" style="position: relative">
             <button
               style="width: 40px; height: 40px; font-size: 16px; cursor: pointer"
               [style.background]="chatUser.id === user.id ? user.color : 'white'"
               (click)="filterChat(user)">
-              {{ user.id.slice(0,2) }}
+              {{ i + 1 }}
             </button>
             <div *ngIf="user.unread === true && chatUser.id !== user.id"
               [style.background]="user.color"
@@ -57,10 +60,10 @@ import { Observable } from 'rxjs';
           </div>
         </div>
         
-          <chat-feed class="chat-feed" [user]="chatUser"></chat-feed>
+        <chat-feed class="chat-feed" [user]="chatUser"></chat-feed>
       </div>
 
-      <div (keyup.enter)="chat(chatInput)" class="admin__feedback"
+      <div *ngIf="chatUser" (keyup.enter)="chat(chatInput)" class="admin__feedback"
         [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" >
         <input #chatInput class="admin__feedback-input">
         <button [disabled]="mode !== 'chat'" class="admin__feedback-btn"
@@ -71,7 +74,8 @@ import { Observable } from 'rxjs';
 
     <div class="admin__stage-wrapper">
       <div style="font-size: 16px; padding: 10px; background: #ededed; height: 38px; box-sizing: border-box">
-        <button (click)="advanceStory(1)">Force Advance</button>
+        <button (click)="advanceStory(1)" [style.margin-right.px]="20">Force Advance</button>
+        <button (click)="configDelay()" [style.margin-right.px]="20">Config Delay</button>
         <span *ngIf="mode === 'start'">Press start to begin show</span>
         <span *ngIf="mode === 'story'">Autotyping story block...</span>
         <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
@@ -88,7 +92,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit, OnChanges {
-  @ViewChild('input') inputRef: ElementRef;
+  @ViewChild('chatInput') chatInput: ElementRef;
   @ViewChild('feed') feedWrapper: ElementRef;
 
   story: any = STORY;
@@ -101,7 +105,7 @@ export class AdminComponent implements OnInit, OnChanges {
   isPrivate = true;
   time = '00:00';
   clock = 0;
-  user = 'admin'
+  user = 'admin';
   clockRunning = false;
 
   chatUser;
@@ -114,6 +118,7 @@ export class AdminComponent implements OnInit, OnChanges {
   id = 'admin';
 
   constructor(
+    private db: AngularFireDatabase,
     private authService: AuthService,
     private route: ActivatedRoute,
     private storyService: StoryService,
@@ -122,17 +127,24 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.chatUser = SHOW.users[0];
+    console.log('admin: ', this.story)
+    this.resetUserList();
+    this.users.subscribe((users) => {
+      if (users.length > 0 && !this.chatUser) {
+        this.chatUser = users[0];
+      }
+    });
     this.storyFeed = this.storyService.getStory();
     this.feed = this.storyService.getStory().valueChanges();
     this.currentBlock = this.story[0];
-    this.resetUserList();
     this.storyService.getIndex().valueChanges().subscribe((index: any) => {
       this.storyIndex = index;
       this.currentBlock = this.story[this.storyIndex];
       this.mode = this.currentBlock.type;
     });
-    this.storyService.getClock().valueChanges().take(1).subscribe((clock: any) => {
+    this.storyService.getClock().valueChanges().pipe(
+      take(1)
+    ).subscribe((clock: any) => {
       if (clock > 0) {
         this.clock = clock;
         this.clockRunning = true;
@@ -145,10 +157,13 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   resetUserList() {
-    _.each(SHOW.users, (user) => {
-      this.chatService.addUser(user);
-    });
     this.users = this.chatService.getUserList().valueChanges();
+  }
+
+  configDelay() {
+    this.storyService.getClock().valueChanges().pipe(take(1)).subscribe((value) => {
+      this.db.object('configDelayStartTime').set(value)
+    });
   }
 
   reset() {
@@ -163,6 +178,11 @@ export class AdminComponent implements OnInit, OnChanges {
       this.mode = 'start';
       this.chatService.clear();
       this.resetUserList();
+      this.db.object('showStarted').set(false);
+      this.db.object('theme').set('light');
+      this.currentBlock = this.story[this.storyIndex];
+      this.storyService.tellStory(this.currentBlock);
+      this.autoTypeBlock();
     }
     setTimeout(() => {
      this.authService.signInAnonymously();
@@ -175,7 +195,8 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   filterChat(user) {
-    if (this.chatUser){
+    this.chatInput.nativeElement.focus();
+    if (this.chatUser) {
       this.chatService.setUnreads(this.chatUser.id, false);
     }
     this.chatUser = user;
@@ -210,6 +231,9 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   advanceStory(n) {
+    console.log('advance.. ', n)
+    console.log('clock: ', this.storyService.getClock());
+
     this.feed = this.storyService.getStory().valueChanges();
     if (!this.clockRunning) {
       this.clockRunning = true;
@@ -231,6 +255,11 @@ export class AdminComponent implements OnInit, OnChanges {
       this.storyService.tellStory(this.currentBlock);
       this.autoTypeBlock();
     }
+    if (this.currentBlock.changeTheme) {
+      console.log("set theme: ", this.currentBlock.changeTheme);
+      this.db.object('theme').set(this.currentBlock.changeTheme);
+    }
+    this.db.object('showStarted').set(true)
   }
 
   setMode() {

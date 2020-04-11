@@ -1,7 +1,7 @@
 .program {
-    overflow: auto;
+  overflow: auto;
    height: 100vh;
-   background-image: url(./fog.jpg);
+   background-image: url(./mountains.jpg);
    background-repeat: no-repeat;
    background-size: cover;
    font-family: sans-serif;
@@ -48,6 +48,8 @@
 }
 
 .program__main {
+     max-width: 1000px;
+     margin: auto;
      overflow: auto;
      height: 100%;
      font-size: 20px;
@@ -71,6 +73,7 @@ h2 {
     margin-top: 50px;
     margin-bottom: 40px;
     text-align: center;
+  color: white;
 }
 h4 {
     margin-top: 0;

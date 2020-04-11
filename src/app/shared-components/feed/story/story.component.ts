@@ -12,7 +12,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         (finishedTyping)="onFinishTyping($event)"
         [block]="segment"
         [user]="user"
-        [staticBlock]="i < (segments.length - 1)">
+        [staticBlock]="segment.type === 'start' || (i < (segments.length - 1))">
       </story-block>
     </div>
   </div>
@@ -20,21 +20,22 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./story.component.css']
 })
 export class StoryComponent {
+ initialized = false;
+
  @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
  @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
  @Output() currentBlock: EventEmitter<any> = new EventEmitter();
  @Input() user: string;
+
+ private _segments;
  @Input()
+  get segments() { return this._segments }
   set segments(value) {
     if (value) {
       this.currentBlock.emit(value[value.length - 1]);
       this._segments = value;
     }
   }
-  get segments(){
-    return this._segments;
-  }
-  private _segments;
 
   onFinishTyping(segment) {
     this.finishedTyping.emit(true);

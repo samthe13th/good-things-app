@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { map } from 'lodash';
+import { StoryService } from '../../../../services/story.service';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
   selector: 'story-block',
@@ -28,11 +30,13 @@ import { map } from 'lodash';
   styleUrls: ['./story-block.component.css']
 })
 export class StoryBlockComponent implements OnInit {
-
   segment;
   segmentList;
   cue = [];
   staticBlocks;
+  showStarted = false;
+
+  constructor(private db: AngularFireDatabase) {}
 
   @Input() staticBlock = true;
   @Input() user: string;

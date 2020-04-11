@@ -30,6 +30,7 @@ import { StoryService } from './services/story.service';
 import { appRoutes } from '../routes';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { LandingComponent } from './pages/landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     StoryBlockComponent,
     ProgramComponent,
     SurveyComponent,
+    LandingComponent,
   ],
   imports: [
     BrowserModule,

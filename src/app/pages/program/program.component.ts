@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'program',

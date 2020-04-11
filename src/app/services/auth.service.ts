@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import * as firebase from 'firebase/app';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { User } from '../interfaces/user.interface';
 import { SHOW } from '../story';
 import { each } from 'lodash';
