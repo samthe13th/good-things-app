@@ -9,10 +9,11 @@ import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators'
 import { AngularFireDatabase } from '@angular/fire/database';
+import { ModalComponent } from '../../shared-components/modal/modal.component';
 
 @Component({
   selector: 'app-admin',
-  template: `
+  template: `    
 <div class="admin">
   <div class="top-bar">
     <div class="controls">
@@ -66,8 +67,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
       <div *ngIf="chatUser" (keyup.enter)="chat(chatInput)" class="admin__feedback"
         [style.marginBottom.px]="currentBlock.type !== 'chat' ? -120 : 0" >
         <input #chatInput class="admin__feedback-input">
-        <button [disabled]="mode !== 'chat'" class="admin__feedback-btn"
-          (click)="chat(chatInput)">SEND</button>
+        <button [disabled]="mode !== 'chat'" class="admin__feedback-btn" (click)="chat(chatInput)">SEND</button>
       </div>
 
     </div>
@@ -76,6 +76,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
       <div style="font-size: 16px; padding: 10px; background: #ededed; height: 38px; box-sizing: border-box">
         <button (click)="advanceStory(1)" [style.margin-right.px]="20">Force Advance</button>
         <button (click)="configDelay()" [style.margin-right.px]="20">Config Delay</button>
+        <button (click)="openThemeModal()" [style.margin-right.px]="20">Theme</button>
         <span *ngIf="mode === 'start'">Press start to begin show</span>
         <span *ngIf="mode === 'story'">Autotyping story block...</span>
         <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
@@ -88,12 +89,25 @@ import { AngularFireDatabase } from '@angular/fire/database';
 
   </div>
 </div>
+<modal title="Change theme" (actionEvent)="updateTheme()" #themeModal>
+  <div 
+    *ngFor="let _theme of themes"
+    (click)="selectTheme(_theme)"
+    class="admin-theme"
+    [class.selected]="_theme.name === pendingTheme"
+    [style.background]="_theme.background"
+    [style.color]="_theme.color"
+  >
+    {{ _theme.name }}
+  </div>
+</modal>
 `,
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit, OnChanges {
   @ViewChild('chatInput') chatInput: ElementRef;
   @ViewChild('feed') feedWrapper: ElementRef;
+  @ViewChild('themeModal') themeModal: ModalComponent;
 
   story: any = STORY;
   storyIndex = 0;
@@ -116,6 +130,10 @@ export class AdminComponent implements OnInit, OnChanges {
   users: Observable<any[]>;
 
   id = 'admin';
+
+  themes = SHOW.themes;
+  currentTheme = 'light';
+  pendingTheme = 'light';
 
   constructor(
     private db: AngularFireDatabase,
@@ -194,6 +212,10 @@ export class AdminComponent implements OnInit, OnChanges {
     this.users = this.chatService.getUserList().valueChanges();
   }
 
+  openThemeModal() {
+    this.themeModal.open();
+  }
+
   filterChat(user) {
     this.chatInput.nativeElement.focus();
     if (this.chatUser) {
@@ -219,6 +241,16 @@ export class AdminComponent implements OnInit, OnChanges {
 
   twoDigitFormat(number) {
     return (number > 9) ? String(number) : `0${String(number)}`;
+  }
+
+  updateTheme() {
+    console.log('update theme');
+    this.db.object('theme').set(this.pendingTheme);
+  }
+
+  selectTheme(theme) {
+    console.log('select: ', theme);
+    this.pendingTheme = theme.name;
   }
 
   autoTypeBlock() {
@@ -254,10 +286,6 @@ export class AdminComponent implements OnInit, OnChanges {
     if (this.currentBlock.type === 'story') {
       this.storyService.tellStory(this.currentBlock);
       this.autoTypeBlock();
-    }
-    if (this.currentBlock.changeTheme) {
-      console.log("set theme: ", this.currentBlock.changeTheme);
-      this.db.object('theme').set(this.currentBlock.changeTheme);
     }
     this.db.object('showStarted').set(true)
   }

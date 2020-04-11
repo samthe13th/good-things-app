@@ -31,6 +31,7 @@ import { appRoutes } from '../routes';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { LandingComponent } from './pages/landing/landing.component';
+import { ModalComponent } from './shared-components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { LandingComponent } from './pages/landing/landing.component';
     ProgramComponent,
     SurveyComponent,
     LandingComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,

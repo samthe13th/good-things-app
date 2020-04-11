@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnChanges } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
 import { StoryService } from '../../services/story.service';
@@ -13,11 +13,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
   selector: 'app-stage',
   templateUrl: './stage.component.html',
   styleUrls: ['./stage.component.css'],
-  host: {
-    '(keydown)': 'onKeyDown($event)'
-  }
 })
-export class StageComponent implements OnInit, AfterViewInit, OnChanges {
+export class StageComponent implements AfterViewInit, OnChanges {
   @ViewChild('scroller') scroller: ElementRef;
   @ViewChild('input') chatInput: ElementRef;
 
@@ -39,52 +36,49 @@ export class StageComponent implements OnInit, AfterViewInit, OnChanges {
     private authService: AuthService,
     private chatService: ChatService,
     private story: StoryService ) {
-    this.story.getBlockType()
-      .valueChanges()
-      .pipe(debounceTime(this.debounceTime))
-      .subscribe((mode) => {
-      this.mode = mode;
-    });
-    this.story.getPrivacy()
-      .valueChanges()
-      .pipe(debounceTime(this.debounceTime))
-      .subscribe((privacy) => {
-        this.isPrivate = privacy;
-    });
-    this.story.getBlockType()
-      .valueChanges()
-      .pipe(debounceTime(this.debounceTime))
-      .subscribe((type) => {
-        if (type === 'chat') {
-          console.log('focus chat');
-          setTimeout(() => {
-            this.chatInput.nativeElement.focus();
-          });
-        }
+
+      this.story.getBlockType()
+        .valueChanges()
+        .pipe(debounceTime(this.debounceTime))
+        .subscribe((mode) => {
+        this.mode = mode;
       });
 
-    this.db.object('theme')
-      .valueChanges()
-      .subscribe((value) => {
-        this.showRamp = false;
-        setTimeout(() => {
-          this.theme = value;
-          this.showRamp = true;
-        }, 2000);
+      this.story.getPrivacy()
+        .valueChanges()
+        .pipe(debounceTime(this.debounceTime))
+        .subscribe((privacy) => {
+          this.isPrivate = privacy;
       });
-  }
 
-  ngOnInit() {
-  }
+      this.story.getBlockType()
+        .valueChanges()
+        .pipe(debounceTime(this.debounceTime))
+        .subscribe((type) => {
+          if (type === 'chat') {
+            setTimeout(() => {
+              this.chatInput.nativeElement.focus();
+            });
+          }
+        });
 
-  onKeyDown(event) {
-    console.log('key down')
+      this.db.object('theme')
+        .valueChanges()
+        .subscribe((value: string) => {
+          if (value !== undefined) {
+            this.showRamp = false;
+            console.log(this.theme);
+            setTimeout(() => {
+              this.theme = value;
+              this.showRamp = true;
+            }, 2000);
+          }
+        });
   }
 
   initUser() {
     setTimeout(() => {
       this.authService.signInAnonymously();
-      console.log('add user... ', this.id)
       this.chatService.addUser({
         id: this.id,
         color: SHOW.users[_.toNumber(this.id.slice(0, 2))].color,
@@ -98,7 +92,6 @@ export class StageComponent implements OnInit, AfterViewInit, OnChanges {
     this.db.object('showCodes').valueChanges()
       .pipe(take(1))
       .subscribe((codes) => {
-        console.log(codes, this.landing, this.id)
         if (_.includes(codes, code)) {
           this.landing = false;
           this.id = code;
@@ -158,7 +151,9 @@ export class StageComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   onCurrentBlockChange(block) {
-    this.currentBlock = block;
-    this.scrollToBottom();
+    setTimeout(() => {
+      this.currentBlock = block;
+      this.scrollToBottom();
+    })
   }
 }

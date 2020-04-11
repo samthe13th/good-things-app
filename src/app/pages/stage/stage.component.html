@@ -60,8 +60,9 @@
     </div>
   </div>
 
-  <div (keyup.enter)="submit(input)"
+  <div
     *ngIf="currentBlock"
+    (keyup.enter)="submit(input)"
     [style.marginBottom.px]="(mode !== 'chat') ? -120 : 0"
     class="stage__chat-wrapper">
     <input [disabled]="mode !== 'chat'" #input class="stage__chat-input" placeholder="Type something">

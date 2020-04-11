@@ -42,17 +42,27 @@ export const SHOW = {
       '#a8614f',
       '#6281a1',
       '#8ea27a'
+    ],
+    themes: [
+      {
+        name: 'light',
+        background: '#f5f7f9',
+        color: '#567492'
+      },
+      {
+        name: 'dark',
+        background: '#0f4d56',
+        color: '#b9d5f2'
+      }
     ]
 }
 
 export const STORY = [
     {
-        changeTheme: 'light',
         type: "start",
         value: "Hey - ­while you're waiting to begin, take a look around your space./See if you can notice something you haven't noticed before./How does this space make you feel?/Just make a note of it. I'll be with you soon."
     },
     {
-        changeTheme: 'dark',
         type: "story",
         value: "Hi - are you there?"
     },
@@ -62,7 +72,6 @@ export const STORY = [
         isPrivate: true,
     },
     {
-        changeTheme: 'light',
         type: "story",
         value: "Okay wow./You're here./I can't believe you're here./Um, I don't even know what to say./Or, \"say\". Whatever this is./I'm just a little/It's just a lot/You know?/I know you know. I hope it wasn't hard for you to be here today/Literally, or otherwise/Figuratively/Both legitimate/I'm nervous/Sorry."
     },
