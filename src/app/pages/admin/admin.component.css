@@ -5,8 +5,8 @@
     text-align: center;
     color: white;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 5px;
+    top: 5px;
     padding: 3px;
     margin: -4px;
     border-radius: 100%;
@@ -96,25 +96,44 @@
     width: 100%;
 }
 
+.admin__toolbar {
+  padding-left: 10px;
+  font-size: 16px;
+  padding: 5px;
+  background: white;
+  border-bottom: 1px solid lightgrey;
+  height: 42px;
+  box-sizing: border-box;
+}
+
+.admin__toolbar button {
+  border-image: none;
+  height: 100%;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
 .admin__story-block {
+    color: #9a9898;
     width: 150px;
     height: 150px;
-    background: lightgray;
+    background: #f0eeee;
     display: inline-block;
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
-    border-color: white;
-    border-style: solid;
-    border-right: 0;
+    border-left: solid white;
 }
 
 .admin__story-block--select {
     background: #73cceb;
+    color: white;
 }
 
 .admin__story-block--read {
     background: #0499cc;
+    color: white;
 }
 
 .admin__chat-panel {
@@ -126,17 +145,36 @@
     box-sizing: border-box;
 }
 
+.admin__chat-panel-button {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  cursor: pointer;
+  background: white;
+  background-image: none;
+  border: none;
+  border-image: none;
+  border-radius: 5px;
+  margin: 5px 10px;
+  color: white;
+  outline: none;
+}
+
+.admin__chat-panel-button:hover {
+  opacity: 0.8;
+}
+
 .admin__chat-panel-main {
     display: flex;
     height: 100%;
-    background: grey;
+    background: #f0eeee;
     overflow: hidden;
 }
 
 .admin__chat-panel-feed {
     display: flex;
     flex-direction: column;
-    width: 60px;
+    width: 70px;
     overflow: scroll;
 }
 
@@ -167,7 +205,7 @@
     justify-content: center;
     width: 250px;
     flex-shrink: 0;
-    background: #5cc18a;
+    background: #323232;
 }
 
 .top-bar {
@@ -186,9 +224,8 @@
     right: 5px;
     top: 5px;
     font-family: sans-serif;
-    font-size: 12;
+    font-size: 12px;
     font-weight: 100;
-    color: white;
 }
 
 .advance-btn {
@@ -196,6 +233,7 @@
     width: 100%;
     font-size: 24px;
     cursor: pointer;
+    border-image: none;
 }
 
 .position {

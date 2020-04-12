@@ -6,7 +6,7 @@ import { SHOW } from '../../story';
 import { Observable } from 'rxjs';
 import * as _ from 'lodash';
 import { debounceTime } from 'rxjs/internal/operators';
-import { take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
@@ -30,6 +30,9 @@ export class StageComponent implements AfterViewInit, OnChanges {
   landing = true;
   theme = 'light';
   showRamp = true;
+  invalidCode = false;
+  audioCheck;
+
 
   constructor (
     private db: AngularFireDatabase,
@@ -41,6 +44,7 @@ export class StageComponent implements AfterViewInit, OnChanges {
         .valueChanges()
         .pipe(debounceTime(this.debounceTime))
         .subscribe((mode) => {
+        console.log('mode: ', mode)
         this.mode = mode;
       });
 
@@ -55,7 +59,7 @@ export class StageComponent implements AfterViewInit, OnChanges {
         .valueChanges()
         .pipe(debounceTime(this.debounceTime))
         .subscribe((type) => {
-          if (type === 'chat') {
+          if (this.chatInput && type === 'chat') {
             setTimeout(() => {
               this.chatInput.nativeElement.focus();
             });
@@ -79,11 +83,7 @@ export class StageComponent implements AfterViewInit, OnChanges {
   initUser() {
     setTimeout(() => {
       this.authService.signInAnonymously();
-      this.chatService.addUser({
-        id: this.id,
-        color: SHOW.users[_.toNumber(this.id.slice(0, 2))].color,
-        unread: false
-      });
+      this.chatService.addUser(this.id);
     });
     this.currentSegment = this.story.getCurrentSegment();
   }
@@ -93,9 +93,12 @@ export class StageComponent implements AfterViewInit, OnChanges {
       .pipe(take(1))
       .subscribe((codes) => {
         if (_.includes(codes, code)) {
+          this.invalidCode = false;
           this.landing = false;
           this.id = code;
           this.initUser();
+        } else {
+          this.invalidCode = true;
         }
       });
   }
@@ -106,15 +109,13 @@ export class StageComponent implements AfterViewInit, OnChanges {
   }
 
   configDelay() {
-    this.db.object('timeline/clock').valueChanges()
+    this.db.object('delayTimer').valueChanges()
       .pipe(take(1))
-      .subscribe((value) => {
-       const time = value;
-       this.db.object('configDelayStartTime').valueChanges().pipe(take(1)).subscribe((start) => {
-         this.delay = _.toNumber(time) - _.toNumber(start);
-         this.db.object(`users/${this.id}`).update({delay: this.delay});
-         this.debounceTime = this.delay * 1000;
-       });
+      .subscribe((delay) => {
+        this.delay = _.toNumber(delay);
+        const userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay })
+        this.db.object(`users/${this.id}`).update(userConfig);
+        this.debounceTime = this.delay * 1000;
     });
   }
 
@@ -127,7 +128,9 @@ export class StageComponent implements AfterViewInit, OnChanges {
   }
 
   scrollToBottom() {
-    this.scroller.nativeElement.scrollTop = this.scroller.nativeElement.scrollHeight;
+    if (this.scroller) {
+      this.scroller.nativeElement.scrollTop = this.scroller.nativeElement.scrollHeight;
+    }
   }
 
   onAdvanceScroll(boolean) {
@@ -155,5 +158,10 @@ export class StageComponent implements AfterViewInit, OnChanges {
       this.currentBlock = block;
       this.scrollToBottom();
     })
+  }
+
+  hearsAudio(canHear) {
+    console.log("can hear? ", canHear)
+    this.db.object(`users/${this.id}/canHear`).set(canHear);
   }
 }

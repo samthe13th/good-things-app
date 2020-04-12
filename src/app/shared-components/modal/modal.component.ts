@@ -7,13 +7,15 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
       <div class="modal">
         <div class="modal-header">
           <span class="modal-header__title">{{ title }}</span>
-          <button class="modal-header__close" (click)="close()">×</button>
+          <button class="modal-header__close" (click)="beforeClose($event)">×</button>
         </div>
         <div class="modal-content">
           <ng-content></ng-content>
         </div>
-        <div class="modal-footer">
-          <button class="modal-footer__btn" (click)="fireAction($event)">{{ actionButton }}</button>
+        <div class="modal-footer" *ngIf="actionButton">
+          <button
+            class="modal-footer__btn"
+            (click)="fireAction($event)">{{ actionButtonTitle }}</button>
         </div>
       </div>
     </div>
@@ -22,10 +24,18 @@ import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/co
 })
 export class ModalComponent {
   @Input() title: string;
-  @Input() actionButton = 'Update';
-  @Output() actionEvent = new EventEmitter<any>();
+  @Input() actionButtonTitle = 'Update';
+  @Input() actionButton = true;
 
-  hidden = false;
+  @Output() actionEvent = new EventEmitter<any>();
+  @Output() closeEvent = new EventEmitter<any>();
+
+  hidden = true;
+
+  beforeClose(e) {
+    this.closeEvent.emit(e);
+    this.close();
+  }
 
   close() {
     console.log('close: ');

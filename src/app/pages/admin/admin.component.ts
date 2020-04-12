@@ -50,10 +50,10 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
         <div class="admin__chat-panel-feed" *ngIf="users | async" >
           <div *ngFor="let user of users | async; let i = index" style="position: relative">
             <button
-              style="width: 40px; height: 40px; font-size: 16px; cursor: pointer"
-              [style.background]="chatUser.id === user.id ? user.color : 'white'"
+              class="admin__chat-panel-button"
+              [style.background]="chatUser.id === user.id ? user.color : 'black'"
               (click)="filterChat(user)">
-              {{ i + 1 }}
+              {{ user.id.slice(0,2) }}
             </button>
             <div *ngIf="user.unread === true && chatUser.id !== user.id"
               [style.background]="user.color"
@@ -73,10 +73,10 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
     </div>
 
     <div class="admin__stage-wrapper">
-      <div style="font-size: 16px; padding: 10px; background: #ededed; height: 38px; box-sizing: border-box">
-        <button (click)="advanceStory(1)" [style.margin-right.px]="20">Force Advance</button>
-        <button (click)="configDelay()" [style.margin-right.px]="20">Config Delay</button>
-        <button (click)="openThemeModal()" [style.margin-right.px]="20">Theme</button>
+      <div class="admin__toolbar">
+        <button (click)="advanceStory(1)">Force Advance</button>
+        <button (click)="openDelayModal()">Config Delay</button>
+        <button (click)="openThemeModal()">Theme</button>
         <span *ngIf="mode === 'start'">Press start to begin show</span>
         <span *ngIf="mode === 'story'">Autotyping story block...</span>
         <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
@@ -89,7 +89,8 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
 
   </div>
 </div>
-<modal title="Change theme" (actionEvent)="updateTheme()" #themeModal>
+
+<modal title="Theme" (actionEvent)="updateTheme()" (closeEvent)="resetPendingTheme()" #themeModal>
   <div 
     *ngFor="let _theme of themes"
     (click)="selectTheme(_theme)"
@@ -101,13 +102,38 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
     {{ _theme.name }}
   </div>
 </modal>
+
+<modal title="Delay" [actionButton]="false" #delayModal>
+  <button (click)="toggleDelayTimer()">{{ !delayTimerRunning ? 'Start Timer' : 'Reset Timer' }}</button>
+  <div>Delay Timer: {{ delayTimer }}</div>
+  <table>
+    <tr>
+      <th>User</th>
+      <th>Hears audio</th>
+      <th>Delay</th>
+      <th>Reset Delay</th>
+    </tr>
+    <tr *ngFor="let user of users | async">
+      <td>{{ user.id }}</td>
+      <td>{{ user.canHear || 'waiting for response...' }}</td>
+      <td><span *ngIf="user.delay">{{user.delay}}</span><span *ngIf="!user.delay">waiting for response...</span></td>
+      <td><button>Reset</button></td>
+    </tr>
+  </table>
+  <div>
+  </div>
+ 
+</modal>
 `,
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit, OnChanges {
   @ViewChild('chatInput') chatInput: ElementRef;
   @ViewChild('feed') feedWrapper: ElementRef;
+
+  // Modals
   @ViewChild('themeModal') themeModal: ModalComponent;
+  @ViewChild('delayModal') delayModal: ModalComponent;
 
   story: any = STORY;
   storyIndex = 0;
@@ -119,8 +145,10 @@ export class AdminComponent implements OnInit, OnChanges {
   isPrivate = true;
   time = '00:00';
   clock = 0;
+  delayTimer = 0;
   user = 'admin';
   clockRunning = false;
+  delayTimerRunning = false;
 
   chatUser;
   storyBlocks;
@@ -172,16 +200,11 @@ export class AdminComponent implements OnInit, OnChanges {
     setTimeout(() => {
      this.authService.signInAnonymously();
     });
+    this.instantiateDelayTimer();
   }
 
   resetUserList() {
     this.users = this.chatService.getUserList().valueChanges();
-  }
-
-  configDelay() {
-    this.storyService.getClock().valueChanges().pipe(take(1)).subscribe((value) => {
-      this.db.object('configDelayStartTime').set(value)
-    });
   }
 
   reset() {
@@ -190,6 +213,7 @@ export class AdminComponent implements OnInit, OnChanges {
       this.clockRunning = false;
       this.clock = 0;
       this.storyService.updateClock(0);
+      this.storyService.updateBlockType('start');
       this.time = '00:00';
       this.storyIndex = 0;
       this.storyService.updateIndex(this.storyIndex);
@@ -216,8 +240,14 @@ export class AdminComponent implements OnInit, OnChanges {
     this.themeModal.open();
   }
 
+  openDelayModal() {
+    this.delayModal.open();
+  }
+
   filterChat(user) {
-    this.chatInput.nativeElement.focus();
+    if (this.currentBlock.type === 'chat') {
+      this.chatInput.nativeElement.focus();
+    }
     if (this.chatUser) {
       this.chatService.setUnreads(this.chatUser.id, false);
     }
@@ -245,7 +275,12 @@ export class AdminComponent implements OnInit, OnChanges {
 
   updateTheme() {
     console.log('update theme');
-    this.db.object('theme').set(this.pendingTheme);
+    this.currentTheme = this.pendingTheme;
+    this.db.object('theme').set(this.currentTheme);
+  }
+
+  resetPendingTheme() {
+    this.pendingTheme = this.currentTheme;
   }
 
   selectTheme(theme) {
@@ -254,18 +289,13 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   autoTypeBlock() {
-    console.log('AUTOTYPE')
     if (this.segIndex < this.currentBlock.length) {
-      console.log('autotype ', this.currentBlock)
       this.storyService.updateCurrentSegment({ type: 'story', value: this.currentBlock});
       this.segment = this.currentBlock;
     }
   }
 
   advanceStory(n) {
-    console.log('advance.. ', n)
-    console.log('clock: ', this.storyService.getClock());
-
     this.feed = this.storyService.getStory().valueChanges();
     if (!this.clockRunning) {
       this.clockRunning = true;
@@ -324,5 +354,27 @@ export class AdminComponent implements OnInit, OnChanges {
 
   scrollToBottom() {
     this.feedWrapper.nativeElement.scrollTop = this.feedWrapper.nativeElement.scrollHeight;
+  }
+
+  instantiateDelayTimer() {
+    setInterval(() => {
+      if (this.delayTimerRunning) {
+        this.delayTimer++;
+        console.log(this.delayTimer);
+        this.db.object('delayTimer').set(this.delayTimer);
+        // this.updateTime(this.delayTime);
+        // this.storyService.updateClock(this.clock);
+      }
+    }, 1000);
+  }
+
+  toggleDelayTimer() {
+    if (this.delayTimerRunning ) {
+      this.delayTimerRunning = false;
+      this.delayTimer = 0;
+      this.db.object('delayTimer').set(this.delayTimer);
+      return;
+    }
+    this.delayTimerRunning = true;
   }
 }

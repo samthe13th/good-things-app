@@ -19,7 +19,9 @@ export const SHOW = {
         { id: '17qqq', color: '#9c6b52', unread: false },
         { id: '18rrr', color: '#a8614f', unread: false },
         { id: '19sss', color: '#6281a1', unread: false },
-        { id: '20ttt', color: '#8ea27a', unread: false },
+        { id: '21mishelle', color: '#9ca2a2', unread: false },
+        { id: '22sam', color: '#9ca2a2', unread: false },
+        { id: '23jiv', color: '#9ca2a2', unread: false }
     ],
     colors: [
       '#b4564c',
@@ -41,7 +43,10 @@ export const SHOW = {
       '#9c6b52',
       '#a8614f',
       '#6281a1',
-      '#8ea27a'
+      '#8ea27a',
+      '#9ca2a2',
+      '#9ca2a2',
+      '#9ca2a2'
     ],
     themes: [
       {

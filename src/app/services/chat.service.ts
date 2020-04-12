@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
-import { each } from 'lodash';
+import { each, toNumber } from 'lodash';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { SHOW } from '../story';
 
 @Injectable()
 export class ChatService {
@@ -26,7 +27,7 @@ userName: string;
 
   clear() {
     this.db.list('messages').remove();
-    this.db.list('users').remove();
+    //this.db.list('users').remove();
   }
 
   getUser(id) {
@@ -64,17 +65,28 @@ userName: string;
 
   setUnreads(id, value) {
     if (id !== undefined) {
-      this.db.object(`/users/${id}/unread`).set(value)
+      const userConfig = this.getUserConfig(id, { unread: value })
+      this.db.object(`/users/${id}`).update(userConfig);
     }
+  }
+
+  getUserConfig(id: string, updates = {}) {
+    const defaults = {
+      unread: true,
+      id,
+      color: SHOW.colors[toNumber(id.slice(0, 2))]
+    };
+    return { ...defaults, ...updates };
   }
 
   getUserList() {
     return this.db.list('users')
   }
 
-  addUser(user) {
+  addUser(id: string) {
     const userList = this.getUserList();
-    userList.set(user.id, user);
+    const userConfig = this.getUserConfig(id);
+    userList.set(id, userConfig);
   }
 
   getMessages(user) {
