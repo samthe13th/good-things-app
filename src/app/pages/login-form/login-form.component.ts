@@ -21,7 +21,6 @@ export class LoginFormComponent {
   }
 
   logout() {
-    console.log('log out')
     this.authService.logout();
   }
 }

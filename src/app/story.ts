@@ -21,7 +21,10 @@ export const SHOW = {
         { id: '19sss', color: '#6281a1', unread: false },
         { id: '21mishelle', color: '#9ca2a2', unread: false },
         { id: '22sam', color: '#9ca2a2', unread: false },
-        { id: '23jiv', color: '#9ca2a2', unread: false }
+        { id: '23jiv', color: '#9ca2a2', unread: false },
+        { id: '24molly', color: '#9ca2a2', unread: false },
+        { id: '25christine', color: '#9ca2a2', unread: false },
+        { id: '26test', color: '#9ca2a2', unread: false },
     ],
     colors: [
       '#b4564c',
@@ -44,6 +47,9 @@ export const SHOW = {
       '#a8614f',
       '#6281a1',
       '#8ea27a',
+      '#9ca2a2',
+      '#9ca2a2',
+      '#9ca2a2',
       '#9ca2a2',
       '#9ca2a2',
       '#9ca2a2'
@@ -267,7 +273,7 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "And when I woke up?/I was still there in the lake/Walking around, perfectly dry and drowning/I could hear voices, see faces from far below the surface/They could not reach me there."
+        value: "And then I woke up/I was still there in the lake/Walking around, perfectly dry and drowning/I could hear voices, see faces from far below the surface/They could not reach me there."
     },
     {
         type: "story",
@@ -353,5 +359,8 @@ export const STORY = [
     {
         type: "story",
         value: "I love you./Goodnight./Good morning./Goodbye."
+    },
+    {
+        type: "end"
     }
 ]

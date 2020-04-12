@@ -20,6 +20,7 @@ import { StageComponent } from './pages/stage/stage.component';
 import { StoryComponent } from './shared-components/feed/story/story.component';
 import { SurveyComponent } from './pages/survey/survey.component';
 import { ProgramComponent } from './pages/program/program.component';
+import { ModalComponent } from './shared-components/modal/modal.component';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -30,8 +31,6 @@ import { StoryService } from './services/story.service';
 import { appRoutes } from '../routes';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { LandingComponent } from './pages/landing/landing.component';
-import { ModalComponent } from './shared-components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +49,6 @@ import { ModalComponent } from './shared-components/modal/modal.component';
     StoryBlockComponent,
     ProgramComponent,
     SurveyComponent,
-    LandingComponent,
     ModalComponent,
   ],
   imports: [

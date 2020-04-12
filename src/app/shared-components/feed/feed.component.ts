@@ -38,7 +38,6 @@ export class FeedComponent implements OnChanges, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      console.log('fade in: ', this.visible)
       this.visible = true;
     });
   }

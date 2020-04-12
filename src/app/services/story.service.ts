@@ -39,7 +39,6 @@ export class StoryService {
   }
 
   tellStory(block) {
-    console.log('tell story: ', block)
     this.storyBlocks = this.getStory();
     this.storyBlocks.push(block);
   }

@@ -59,7 +59,6 @@ userName: string;
       id,
       user
     });
-    console.log('send msg: ', id)
     this.setUnreads(id, true);
   }
 
@@ -86,7 +85,11 @@ userName: string;
   addUser(id: string) {
     const userList = this.getUserList();
     const userConfig = this.getUserConfig(id);
-    userList.set(id, userConfig);
+    this.db.object(`users/${id}`).valueChanges().subscribe((user) => {
+      if (!user) {
+        userList.set(id, userConfig);
+      }
+    })
   }
 
   getMessages(user) {

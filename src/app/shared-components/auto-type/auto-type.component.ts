@@ -18,7 +18,6 @@ export class AutoTypeComponent {
 
     @Input()
     set typeString(value) {
-      console.log('typestring: ', value)
         this.stream = '';
         this.charIndex = 0;
         this._typeString = value;

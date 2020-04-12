@@ -17,6 +17,7 @@
 }
 
 .modal {
+  font-family: sans-serif;
   width: 800px;
   background: white;
   border-radius: 10px;

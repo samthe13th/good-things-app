@@ -32,6 +32,17 @@
     font-weight: 100;
 }
 
+.admin-delay-timer {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-image: none;
+  border-radius: 10px;
+}
+
+.admin-preshow {
+  filter: grayscale(100%);
+}
+
 .admin-theme {
   height: 100px;
   width: 100px;
@@ -52,7 +63,7 @@
   box-shadow: 3px 2px 28px -6px rgba(0,0,0,0.75);
 }
 
-.admin-theme:not(last-child) {
+.admin-theme:not(:last-child) {
   margin-right: 20px;
 }
 
@@ -61,6 +72,10 @@
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: hidden;
+}
+
+.admin__status-bar {
+  background: white;
 }
 
 .admin__main {
@@ -157,7 +172,6 @@
   border-radius: 5px;
   margin: 5px 10px;
   color: white;
-  outline: none;
 }
 
 .admin__chat-panel-button:hover {
@@ -179,6 +193,7 @@
 }
 
 .admin__stage {
+    transition: background-color 2.5s ease-in-out, color 2.5s ease-in-out;
     flex: 1;
     display: flex;
     font-size: 18px;
@@ -188,9 +203,17 @@
     flex-direction: column;
     font-size: 22px;
     line-height: 1.4;
-    background: white;
-    color: #26323d;
     font-weight: 100;
+}
+
+.theme--light {
+  background: #f5f7f9;
+  color: #567492;
+}
+
+.theme--dark {
+  background: #025168;
+  color: #b9d5f2;
 }
 
 .admin__stage--typed-segment {
@@ -249,4 +272,16 @@
     color: white;
     text-align: center;
     flex: 1;
+}
+
+.setup-stepper {
+  display: flex;
+}
+
+.setup-stepper label:not(:last-child)::after {
+  content: '⟶';
+  font-size: 24px;
+  line-height: 14px;
+  display: inline-block;
+  padding: 0 20px;
 }

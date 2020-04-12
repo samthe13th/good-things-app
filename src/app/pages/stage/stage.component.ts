@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnChanges, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
 import { StoryService } from '../../services/story.service';
@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { debounceTime } from 'rxjs/internal/operators';
 import { take, tap } from 'rxjs/operators';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { ModalComponent } from '../../shared-components/modal/modal.component';
 
 @Component({
   selector: 'app-stage',
@@ -17,6 +18,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class StageComponent implements AfterViewInit, OnChanges {
   @ViewChild('scroller') scroller: ElementRef;
   @ViewChild('input') chatInput: ElementRef;
+  @ViewChild('audioModal') audioModal: ModalComponent;
 
   currentSegment: Observable<any>;
   currentBlock: any;
@@ -32,22 +34,17 @@ export class StageComponent implements AfterViewInit, OnChanges {
   showRamp = true;
   invalidCode = false;
   audioCheck;
+  isPreShowUser = false;
+  showEnded = false;
 
+  showStage = this.db.object('showStage').valueChanges();
+  delayConfigured;
 
   constructor (
     private db: AngularFireDatabase,
     private authService: AuthService,
     private chatService: ChatService,
     private story: StoryService ) {
-
-      this.story.getBlockType()
-        .valueChanges()
-        .pipe(debounceTime(this.debounceTime))
-        .subscribe((mode) => {
-        console.log('mode: ', mode)
-        this.mode = mode;
-      });
-
       this.story.getPrivacy()
         .valueChanges()
         .pipe(debounceTime(this.debounceTime))
@@ -57,27 +54,40 @@ export class StageComponent implements AfterViewInit, OnChanges {
 
       this.story.getBlockType()
         .valueChanges()
-        .pipe(debounceTime(this.debounceTime))
+        .pipe(
+          tap((value) => {
+            if (this.mode === 'chat') {
+              this.mode = value;
+            }
+          }),
+          debounceTime(this.debounceTime)
+        )
         .subscribe((type) => {
+          this.mode = type;
           if (this.chatInput && type === 'chat') {
             setTimeout(() => {
               this.chatInput.nativeElement.focus();
             });
           }
+          if (type === 'end') {
+            this.showEnded = true;
+          }
         });
 
       this.db.object('theme')
         .valueChanges()
+        .pipe(debounceTime(this.debounceTime))
         .subscribe((value: string) => {
           if (value !== undefined) {
             this.showRamp = false;
-            console.log(this.theme);
             setTimeout(() => {
               this.theme = value;
               this.showRamp = true;
             }, 2000);
           }
         });
+
+
   }
 
   initUser() {
@@ -97,6 +107,15 @@ export class StageComponent implements AfterViewInit, OnChanges {
           this.landing = false;
           this.id = code;
           this.initUser();
+          this.db.object('preShowUsers').valueChanges()
+            .pipe(take(1))
+            .subscribe((users) => {
+              this.isPreShowUser = _.includes(users, this.id);
+            })
+
+          this.db.object(`users/${this.id}/delayConfigured`).valueChanges().subscribe((value) => {
+            this.delayConfigured = value;
+          })
         } else {
           this.invalidCode = true;
         }
@@ -113,8 +132,10 @@ export class StageComponent implements AfterViewInit, OnChanges {
       .pipe(take(1))
       .subscribe((delay) => {
         this.delay = _.toNumber(delay);
-        const userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay })
-        this.db.object(`users/${this.id}`).update(userConfig);
+        const userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay, delayConfigured: true })
+        _.forEach(userConfig, (value, key) => {
+          this.db.object(`users/${this.id}/${key}`).set(value);
+        })
         this.debounceTime = this.delay * 1000;
     });
   }
@@ -158,6 +179,10 @@ export class StageComponent implements AfterViewInit, OnChanges {
       this.currentBlock = block;
       this.scrollToBottom();
     })
+  }
+
+  openAudioModal() {
+    this.audioModal.open();
   }
 
   hearsAudio(canHear) {

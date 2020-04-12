@@ -38,12 +38,10 @@ export class ModalComponent {
   }
 
   close() {
-    console.log('close: ');
     this.hidden = true;
   }
 
   open() {
-    console.log('open... ')
     this.hidden = false;
   }
 

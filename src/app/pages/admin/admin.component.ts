@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { STORY, SHOW } from '../../story'
 import { StoryService } from '../../services/story.service';
-import { StorySegment } from '../../interfaces/story-segment.interface';
 import { ChatService } from '../../services/chat.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import * as _ from 'lodash';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators'
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -14,7 +12,7 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
 @Component({
   selector: 'app-admin',
   template: `    
-<div class="admin">
+<div class="admin" [class.admin-preshow]="showStage === 'pre'">
   <div class="top-bar">
     <div class="controls">
       <div class="position">
@@ -48,7 +46,7 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
       <div class="admin__chat-panel-main" *ngIf="chatUser" >
 
         <div class="admin__chat-panel-feed" *ngIf="users | async" >
-          <div *ngFor="let user of users | async; let i = index" style="position: relative">
+          <div class="admin__chat-panel-button-wrap" *ngFor="let user of users | async; let i = index" style="position: relative">
             <button
               class="admin__chat-panel-button"
               [style.background]="chatUser.id === user.id ? user.color : 'black'"
@@ -74,15 +72,18 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
 
     <div class="admin__stage-wrapper">
       <div class="admin__toolbar">
-        <button (click)="advanceStory(1)">Force Advance</button>
-        <button (click)="openDelayModal()">Config Delay</button>
+        <button (click)="toggleShowMode()">Mode: {{ showStage === 'pre' ? 'Pre-Show' : 'Show' }}</button>
+        <button (click)="openDelayModal()">Setup</button>
         <button (click)="openThemeModal()">Theme</button>
+        <button (click)="advanceStory(1)">Force Advance</button>
         <span *ngIf="mode === 'start'">Press start to begin show</span>
         <span *ngIf="mode === 'story'">Autotyping story block...</span>
         <span *ngIf="mode === 'wait'">Paused. Click "NEXT" to advance.</span>
         <span *ngIf="mode === 'chat'">Chat Mode</span>
       </div>
-      <div class="admin__stage" #feed>
+      <div class="admin__stage" #feed
+        [class.theme--light]="(theme | async) === 'light'"
+        [class.theme--dark]="(theme | async) === 'dark'">
         <feed [user]='user' (finishedTyping)="onFinishTyping($event)"></feed>
       </div>
     </div>
@@ -96,36 +97,58 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
     (click)="selectTheme(_theme)"
     class="admin-theme"
     [class.selected]="_theme.name === pendingTheme"
-    [style.background]="_theme.background"
-    [style.color]="_theme.color"
+    [class.theme--dark]="_theme.name === 'dark'"
+    [class.theme--light]="_theme.name === 'light'"
   >
     {{ _theme.name }}
   </div>
 </modal>
 
-<modal title="Delay" [actionButton]="false" #delayModal>
-  <button (click)="toggleDelayTimer()">{{ !delayTimerRunning ? 'Start Timer' : 'Reset Timer' }}</button>
-  <div>Delay Timer: {{ delayTimer }}</div>
-  <table>
-    <tr>
-      <th>User</th>
-      <th>Hears audio</th>
-      <th>Delay</th>
-      <th>Reset Delay</th>
-    </tr>
-    <tr *ngFor="let user of users | async">
-      <td>{{ user.id }}</td>
-      <td>{{ user.canHear || 'waiting for response...' }}</td>
-      <td><span *ngIf="user.delay">{{user.delay}}</span><span *ngIf="!user.delay">waiting for response...</span></td>
-      <td><button>Reset</button></td>
-    </tr>
-  </table>
-  <div>
-  </div>
- 
+<modal title="User Setup" [actionButton]="false" #setupModal (closeEvent)="onSetupClose()">
+  <ng-container>
+<!--    <div class="setup-stepper">
+      <label class="container">Pre-show
+        <input value="pre" id="audio-check-yes" (ngModelChange)="setShowStage('pre')" [(ngModel)]="showStage" type="radio" name="show-stage">
+        <span for="audio-check-yes" class="checkmark"></span>
+      </label>
+      <label class="container">Show
+        <input value="show" id="audio-check-no" (ngModelChange)="setShowStage('show')"  [(ngModel)]="showStage" type="radio" name="show-stage">
+        <span for="audio-check-no" class="checkmark"></span>
+      </label>
+    </div>
+
+    <ng-container *ngIf="showStage === 'pre'">
+      <h2>Pre-show</h2>
+      <p>You are in pre-show mode &#45;&#45; you can safely test things without users seeing anything.</p>
+    </ng-container>-->
+    
+      <button class="admin-delay-timer" (click)="toggleDelayTimer()">{{ !delayTimerRunning ? 'Start Timer' : 'Reset Timer' }}</button>
+      <br/>
+    
+      <div>Delay Timer: {{ delayTimer }}</div>
+      <br/>
+    
+      <table>
+        <tr>
+          <th>User</th>
+          <th>Hears audio</th>
+          <th>Delay</th>
+          <th>Set default delay</th>
+        </tr>
+        <tr *ngFor="let user of users | async">
+          <td>{{ user.id }}</td>
+          <td>{{ user.canHear || 'waiting for response...' }}</td>
+          <td><span *ngIf="user.delayConfigured">{{user.delay}}</span><span *ngIf="!user.delayConfigured">waiting for response...</span></td>
+          <td><button (click)="setDefaultDelay(user.id)">Set Default</button></td>
+        </tr>
+      </table>
+  </ng-container>
 </modal>
 `,
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
+  host: {
+    '(keydown)': 'onKeyDown($event)'
+  }
 })
 export class AdminComponent implements OnInit, OnChanges {
   @ViewChild('chatInput') chatInput: ElementRef;
@@ -133,7 +156,7 @@ export class AdminComponent implements OnInit, OnChanges {
 
   // Modals
   @ViewChild('themeModal') themeModal: ModalComponent;
-  @ViewChild('delayModal') delayModal: ModalComponent;
+  @ViewChild('setupModal') setupModal: ModalComponent;
 
   story: any = STORY;
   storyIndex = 0;
@@ -149,6 +172,7 @@ export class AdminComponent implements OnInit, OnChanges {
   user = 'admin';
   clockRunning = false;
   delayTimerRunning = false;
+  showStage;
 
   chatUser;
   storyBlocks;
@@ -162,6 +186,7 @@ export class AdminComponent implements OnInit, OnChanges {
   themes = SHOW.themes;
   currentTheme = 'light';
   pendingTheme = 'light';
+  theme = this.db.object('theme').valueChanges();
 
   constructor(
     private db: AngularFireDatabase,
@@ -173,7 +198,9 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('admin: ', this.story)
+    this.db.object('showStage').valueChanges().subscribe((value) => {
+      this.showStage = value;
+    })
     this.resetUserList();
     this.users.subscribe((users) => {
       if (users.length > 0 && !this.chatUser) {
@@ -203,6 +230,10 @@ export class AdminComponent implements OnInit, OnChanges {
     this.instantiateDelayTimer();
   }
 
+  onKeyDown(e) {
+    console.log(e)
+  }
+
   resetUserList() {
     this.users = this.chatService.getUserList().valueChanges();
   }
@@ -225,6 +256,7 @@ export class AdminComponent implements OnInit, OnChanges {
       this.currentBlock = this.story[this.storyIndex];
       this.storyService.tellStory(this.currentBlock);
       this.autoTypeBlock();
+      this.db.object('showStage').set('pre');
     }
     setTimeout(() => {
      this.authService.signInAnonymously();
@@ -241,7 +273,7 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   openDelayModal() {
-    this.delayModal.open();
+    this.setupModal.open();
   }
 
   filterChat(user) {
@@ -274,7 +306,6 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   updateTheme() {
-    console.log('update theme');
     this.currentTheme = this.pendingTheme;
     this.db.object('theme').set(this.currentTheme);
   }
@@ -284,7 +315,6 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   selectTheme(theme) {
-    console.log('select: ', theme);
     this.pendingTheme = theme.name;
   }
 
@@ -352,6 +382,11 @@ export class AdminComponent implements OnInit, OnChanges {
     }
   }
 
+  setDefaultDelay(id) {
+    this.db.object(`users/${id}/delay`).set(12);
+    this.db.object(`users/${id}/delayConfigured`).set(true);
+  }
+
   scrollToBottom() {
     this.feedWrapper.nativeElement.scrollTop = this.feedWrapper.nativeElement.scrollHeight;
   }
@@ -362,19 +397,35 @@ export class AdminComponent implements OnInit, OnChanges {
         this.delayTimer++;
         console.log(this.delayTimer);
         this.db.object('delayTimer').set(this.delayTimer);
-        // this.updateTime(this.delayTime);
-        // this.storyService.updateClock(this.clock);
       }
     }, 1000);
   }
 
+  onSetupClose() {
+    this.resetTimer();
+  }
+
+  resetTimer() {
+    this.delayTimerRunning = false;
+    this.delayTimer = 0;
+    this.db.object('delayTimer').set(this.delayTimer);
+  }
+
   toggleDelayTimer() {
-    if (this.delayTimerRunning ) {
-      this.delayTimerRunning = false;
-      this.delayTimer = 0;
-      this.db.object('delayTimer').set(this.delayTimer);
+    if (this.delayTimerRunning) {
+      this.resetTimer();
       return;
     }
     this.delayTimerRunning = true;
   }
+
+  toggleShowMode() {
+    this.showStage = (this.showStage === 'pre') ? 'show' : 'pre';
+    this.db.object('showStage').set(this.showStage);
+  }
+
+/*  setShowStage(stage) {
+    this.showStage = stage;
+    this.db.object('showStage').set(stage);
+  }*/
 }

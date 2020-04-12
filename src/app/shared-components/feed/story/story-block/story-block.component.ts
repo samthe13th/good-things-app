@@ -56,11 +56,9 @@ export class StoryBlockComponent implements OnInit {
     this.staticBlocks = map(this.segmentList, (segment) => {
       return { ...this.block, value: segment };
     });
-    console.log(' static blocks: ', this.staticBlocks)
     if (this.staticBlock === false) {
       this.cue.push({ type: this.block.type, value: this.segmentList[0] });
     }
-    console.log('cue: ', this.cue)
   }
 
   onFinishTyping(segment) {
