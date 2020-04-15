@@ -19,12 +19,12 @@ export const SHOW = {
         { id: '17qqq', color: '#9c6b52', unread: false },
         { id: '18rrr', color: '#a8614f', unread: false },
         { id: '19sss', color: '#6281a1', unread: false },
-        { id: '21mishelle', color: '#9ca2a2', unread: false },
-        { id: '22sam', color: '#9ca2a2', unread: false },
-        { id: '23jiv', color: '#9ca2a2', unread: false },
-        { id: '24molly', color: '#9ca2a2', unread: false },
-        { id: '25christine', color: '#9ca2a2', unread: false },
-        { id: '26test', color: '#9ca2a2', unread: false },
+        { id: '21mishelle', color: '#16798E', unread: false },
+        { id: '22sam', color: '#16798E', unread: false },
+        { id: '23jiv', color: '#16798E', unread: false },
+        { id: '24molly', color: '#16798E', unread: false },
+        { id: '25christine', color: '#16798E', unread: false },
+        { id: '26test', color: '#16798E', unread: false },
     ],
     colors: [
       '#b4564c',
@@ -46,13 +46,13 @@ export const SHOW = {
       '#9c6b52',
       '#a8614f',
       '#6281a1',
-      '#8ea27a',
-      '#9ca2a2',
-      '#9ca2a2',
-      '#9ca2a2',
-      '#9ca2a2',
-      '#9ca2a2',
-      '#9ca2a2'
+      '#16798E',
+      '#16798E',
+      '#16798E',
+      '#16798E',
+      '#16798E',
+      '#16798E',
+      '#16798E'
     ],
     themes: [
       {
@@ -261,7 +261,7 @@ export const STORY = [
     },
     {
         type: 'story',
-        value: "That's when I work up"
+        value: "That's when I woke up"
     },
     {
         type: "story",

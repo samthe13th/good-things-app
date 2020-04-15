@@ -20,8 +20,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./story.component.css']
 })
 export class StoryComponent {
- initialized = false;
-
  @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
  @Output() finishedTyping: EventEmitter<boolean> = new EventEmitter();
  @Output() currentBlock: EventEmitter<any> = new EventEmitter();

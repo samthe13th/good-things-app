@@ -81,7 +81,7 @@ export class StoryService {
 
   updateClock(time) {
     const clock = this.getClock();
-    clock.set(time);
+    //clock.set(time);
   }
 
   chat(message) {

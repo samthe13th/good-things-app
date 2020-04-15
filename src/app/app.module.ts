@@ -1,3 +1,5 @@
+import { AppComponent } from './app.component';
+
 // Modules
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -6,21 +8,24 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-// Components
+// Pages
 import { AdminComponent } from './pages/admin/admin.component';
 import { AllTheThingsComponent } from './pages/allthethings/allthethings.component';
-import { AppComponent } from './app.component';
+import { StageComponent } from './pages/stage/stage.component';
+import { UserPageComponent } from './pages/user-page/user-page.component';
+import { UserManagementComponent } from './pages/user-management/user-managment.component';
+import { SurveyComponent } from './pages/survey/survey.component';
+import { ProgramComponent } from './pages/program/program.component';
+
+// Components
 import { AutoTypeComponent } from './shared-components/auto-type/auto-type.component';
 import { ChatFeedComponent } from './pages/admin/chat-feed/chat-feed.component';
 import { FeedComponent } from './shared-components/feed/feed.component';
-import { LoginFormComponent } from './pages/login-form/login-form.component';
-import { SignupFormComponent } from './pages/signup-form/signup-form.component';
 import { StoryBlockComponent } from './shared-components/feed/story/story-block/story-block.component';
-import { StageComponent } from './pages/stage/stage.component';
 import { StoryComponent } from './shared-components/feed/story/story.component';
-import { SurveyComponent } from './pages/survey/survey.component';
-import { ProgramComponent } from './pages/program/program.component';
 import { ModalComponent } from './shared-components/modal/modal.component';
+import { TooltipComponent } from './shared-components/tooltip/tooltip.component';
+import { UserTableComponent } from './shared-components/user-table/user-table.component';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -31,6 +36,10 @@ import { StoryService } from './services/story.service';
 import { appRoutes } from '../routes';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { CookieComponent } from './pages/cookie/cookie.component';
+import { LoginFormComponent } from './pages/login-form/login-form.component';
+import { SignupFormComponent } from './pages/signup-form/signup-form.component';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +58,12 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
     StoryBlockComponent,
     ProgramComponent,
     SurveyComponent,
+    CookieComponent,
+    UserPageComponent,
     ModalComponent,
+    TooltipComponent,
+    UserTableComponent,
+    UserManagementComponent,
   ],
   imports: [
     BrowserModule,

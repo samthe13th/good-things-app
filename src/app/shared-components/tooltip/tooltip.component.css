@@ -1,0 +1,27 @@
+.tooltip {
+  background: #228eae;
+  padding: 20px;
+  position: fixed;
+  font-family: sans-serif;
+  z-index: 9;
+  border-radius: 8px;
+  color: white;
+  font-size: 18px;
+  width: 200px
+}
+
+.tooltip.hidden {
+  display: none;
+}
+
+.tooltip::after {
+  content: '';
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: #228eae;
+  border-width: 15px;
+  background: none;
+  position: absolute;
+  top: -30px;
+  right: 20px;
+}

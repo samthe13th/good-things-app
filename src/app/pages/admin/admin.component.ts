@@ -11,19 +11,17 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
 
 @Component({
   selector: 'app-admin',
-  template: `    
+  template: `
 <div class="admin" [class.admin-preshow]="showStage === 'pre'">
   <div class="top-bar">
     <div class="controls">
       <div class="position">
-        <div class="clock">{{ time }}</div>
         <div class="tally">{{ storyIndex }}/{{ story.length - 1}}</div>
       </div>
       <div style="display: flex; flex-direction: row; height: 60px">
         <button class="advance-btn" (click)="reset()">RESET</button>
         <button class="advance-btn" [disabled]="mode === 'story'" (click)="advanceStory(1)">
-          <span *ngIf="clock === 0">START</span>
-          <span *ngIf="clock !== 0">NEXT</span>
+          {{ (showStarted | async) ? 'NEXT' : 'START' }}
         </button>
       </div>
     </div>
@@ -91,7 +89,7 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
   </div>
 </div>
 
-<modal title="Theme" (actionEvent)="updateTheme()" (closeEvent)="resetPendingTheme()" #themeModal>
+<modal height="auto" title="Theme" (actionEvent)="updateTheme()" (closeEvent)="resetPendingTheme()" #themeModal>
   <div 
     *ngFor="let _theme of themes"
     (click)="selectTheme(_theme)"
@@ -104,53 +102,27 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
   </div>
 </modal>
 
-<modal title="User Setup" [actionButton]="false" #setupModal (closeEvent)="onSetupClose()">
-  <ng-container>
-<!--    <div class="setup-stepper">
-      <label class="container">Pre-show
-        <input value="pre" id="audio-check-yes" (ngModelChange)="setShowStage('pre')" [(ngModel)]="showStage" type="radio" name="show-stage">
-        <span for="audio-check-yes" class="checkmark"></span>
-      </label>
-      <label class="container">Show
-        <input value="show" id="audio-check-no" (ngModelChange)="setShowStage('show')"  [(ngModel)]="showStage" type="radio" name="show-stage">
-        <span for="audio-check-no" class="checkmark"></span>
-      </label>
-    </div>
+<modal title="User Setup" [actionButton]="false" #setupModal (closeEvent)="onSetupClose()" width="700px">
+  <button class="admin-delay-timer" (click)="refreshUserList()">Refresh User List</button>
+  <br/>
+<!--  <label style="display: flex; margin-bottom: 10px">
+    <input (ngModelChange)="onShowDelayChange()" [(ngModel)]="showDelayChecked" type="checkbox" id="showDelay">
+    <span for="showDelay">Show delay prompt to users</span>
+  </label>-->
+  
+    <button class="admin-delay-timer" (click)="toggleDelayTimer()">{{ !delayTimerRunning ? 'Start Timer' : 'Reset Timer' }}</button>
+    <br/>
 
-    <ng-container *ngIf="showStage === 'pre'">
-      <h2>Pre-show</h2>
-      <p>You are in pre-show mode &#45;&#45; you can safely test things without users seeing anything.</p>
-    </ng-container>-->
-    
-      <button class="admin-delay-timer" (click)="toggleDelayTimer()">{{ !delayTimerRunning ? 'Start Timer' : 'Reset Timer' }}</button>
-      <br/>
-    
-      <div>Delay Timer: {{ delayTimer }}</div>
-      <br/>
-    
-      <table>
-        <tr>
-          <th>User</th>
-          <th>Hears audio</th>
-          <th>Delay</th>
-          <th>Set default delay</th>
-        </tr>
-        <tr *ngFor="let user of users | async">
-          <td>{{ user.id }}</td>
-          <td>{{ user.canHear || 'waiting for response...' }}</td>
-          <td><span *ngIf="user.delayConfigured">{{user.delay}}</span><span *ngIf="!user.delayConfigured">waiting for response...</span></td>
-          <td><button (click)="setDefaultDelay(user.id)">Set Default</button></td>
-        </tr>
-      </table>
-  </ng-container>
+    <div>Delay Timer: {{ delayTimer }}</div>
+
+  <br/>
+  
+  <user-table></user-table>
 </modal>
 `,
-  styleUrls: ['./admin.component.css'],
-  host: {
-    '(keydown)': 'onKeyDown($event)'
-  }
+  styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit, OnChanges {
+export class AdminComponent implements OnInit {
   @ViewChild('chatInput') chatInput: ElementRef;
   @ViewChild('feed') feedWrapper: ElementRef;
 
@@ -166,27 +138,25 @@ export class AdminComponent implements OnInit, OnChanges {
   segment = '';
   mode = 'start';
   isPrivate = true;
-  time = '00:00';
-  clock = 0;
   delayTimer = 0;
   user = 'admin';
-  clockRunning = false;
   delayTimerRunning = false;
   showStage;
+  showDelayChecked;
 
   chatUser;
   storyBlocks;
   storySegment;
 
-  feed: Observable<any>;
-  users: Observable<any[]>;
+  feed: Observable<any> = this.storyService.getStory().valueChanges();
+  users: Observable<any[]> = this.chatService.getUserList().valueChanges();
+  showStarted = this.db.object('showStarted').valueChanges();
+  theme = this.db.object('theme').valueChanges();
 
   id = 'admin';
-
   themes = SHOW.themes;
   currentTheme = 'light';
   pendingTheme = 'light';
-  theme = this.db.object('theme').valueChanges();
 
   constructor(
     private db: AngularFireDatabase,
@@ -198,6 +168,7 @@ export class AdminComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.refreshUserList();
     this.db.object('showStage').valueChanges().subscribe((value) => {
       this.showStage = value;
     })
@@ -215,23 +186,14 @@ export class AdminComponent implements OnInit, OnChanges {
       this.currentBlock = this.story[this.storyIndex];
       this.mode = this.currentBlock.type;
     });
-    this.storyService.getClock().valueChanges().pipe(
-      take(1)
-    ).subscribe((clock: any) => {
-      if (clock > 0) {
-        this.clock = clock;
-        this.clockRunning = true;
-      }
-      this.instantiateClock();
-    });
+    this.instantiateDelayTimer();
+    this.db.object('showDelay').valueChanges().pipe(take(1)).subscribe((value) => {
+      this.showDelayChecked = value
+    })
+
     setTimeout(() => {
      this.authService.signInAnonymously();
     });
-    this.instantiateDelayTimer();
-  }
-
-  onKeyDown(e) {
-    console.log(e)
   }
 
   resetUserList() {
@@ -241,11 +203,7 @@ export class AdminComponent implements OnInit, OnChanges {
   reset() {
     if (confirm("This will reset the show and delete all chat conversations. Are you sureeeee you want to do this??")) {
       this.storyService.clear();
-      this.clockRunning = false;
-      this.clock = 0;
-      this.storyService.updateClock(0);
       this.storyService.updateBlockType('start');
-      this.time = '00:00';
       this.storyIndex = 0;
       this.storyService.updateIndex(this.storyIndex);
       this.mode = 'start';
@@ -257,15 +215,12 @@ export class AdminComponent implements OnInit, OnChanges {
       this.storyService.tellStory(this.currentBlock);
       this.autoTypeBlock();
       this.db.object('showStage').set('pre');
+      this.db.object('showDelay').set(false);
+      this.showDelayChecked = false;
     }
     setTimeout(() => {
      this.authService.signInAnonymously();
     });
-  }
-
-  ngOnChanges() {
-    this.feed = this.storyService.getStory().valueChanges();
-    this.users = this.chatService.getUserList().valueChanges();
   }
 
   openThemeModal() {
@@ -285,24 +240,6 @@ export class AdminComponent implements OnInit, OnChanges {
     }
     this.chatUser = user;
     this.chatService.setUnreads(user.id, false);
-  }
-
-  instantiateClock() {
-    setInterval(() => {
-      if (this.clockRunning){
-        this.clock++;
-        this.updateTime(this.clock);
-        this.storyService.updateClock(this.clock);
-      }
-    }, 1000);
-  }
-
-  updateTime(clock) {
-    this.time = `${this.twoDigitFormat(Math.floor(clock / 60))}:${this.twoDigitFormat(clock % 60)}`;
-  }
-
-  twoDigitFormat(number) {
-    return (number > 9) ? String(number) : `0${String(number)}`;
   }
 
   updateTheme() {
@@ -327,9 +264,6 @@ export class AdminComponent implements OnInit, OnChanges {
 
   advanceStory(n) {
     this.feed = this.storyService.getStory().valueChanges();
-    if (!this.clockRunning) {
-      this.clockRunning = true;
-    }
     this.segIndex = 0;
     this.storyIndex += n;
     this.mode = this.story[this.storyIndex].type;
@@ -382,9 +316,10 @@ export class AdminComponent implements OnInit, OnChanges {
     }
   }
 
-  setDefaultDelay(id) {
-    this.db.object(`users/${id}/delay`).set(12);
-    this.db.object(`users/${id}/delayConfigured`).set(true);
+  onShowDelayChange() {
+    setTimeout(() => {
+      this.db.object('showDelay').set(this.showDelayChecked);
+    });
   }
 
   scrollToBottom() {
@@ -395,7 +330,6 @@ export class AdminComponent implements OnInit, OnChanges {
     setInterval(() => {
       if (this.delayTimerRunning) {
         this.delayTimer++;
-        console.log(this.delayTimer);
         this.db.object('delayTimer').set(this.delayTimer);
       }
     }, 1000);
@@ -424,8 +358,8 @@ export class AdminComponent implements OnInit, OnChanges {
     this.db.object('showStage').set(this.showStage);
   }
 
-/*  setShowStage(stage) {
-    this.showStage = stage;
-    this.db.object('showStage').set(stage);
-  }*/
+  refreshUserList() {
+    this.db.object('users').remove();
+    this.db.object('pingUsers').set(Date.now());
+  }
 }

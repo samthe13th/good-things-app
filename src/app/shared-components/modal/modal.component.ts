@@ -1,10 +1,10 @@
-import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'modal',
   template: `
-    <div class="modal-wrapper" *ngIf="!hidden">
-      <div class="modal">
+    <div class="modal-wrapper" [class.hidden]="hidden">
+      <div class="modal" [style.width]="width" [style.height]="height">
         <div class="modal-header">
           <span class="modal-header__title">{{ title }}</span>
           <button class="modal-header__close" (click)="beforeClose($event)">×</button>
@@ -26,6 +26,8 @@ export class ModalComponent {
   @Input() title: string;
   @Input() actionButtonTitle = 'Update';
   @Input() actionButton = true;
+  @Input() width = '100%';
+  @Input() height = '100%';
 
   @Output() actionEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>();

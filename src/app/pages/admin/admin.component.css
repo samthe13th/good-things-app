@@ -1,5 +1,4 @@
 
-
 .user-badge {
     width: 16px;
     text-align: center;
@@ -112,6 +111,7 @@
 }
 
 .admin__toolbar {
+  align-items: center;
   padding-left: 10px;
   font-size: 16px;
   padding: 5px;
@@ -119,9 +119,12 @@
   border-bottom: 1px solid lightgrey;
   height: 42px;
   box-sizing: border-box;
+  display: flex;
+  overflow: auto;
 }
 
 .admin__toolbar button {
+  flex-shrink: 0;
   border-image: none;
   height: 100%;
   border-radius: 8px;
@@ -158,6 +161,7 @@
     flex-direction: column;
     width: 400px;
     box-sizing: border-box;
+    flex-shrink: 0;
 }
 
 .admin__chat-panel-button {
@@ -190,6 +194,7 @@
     flex-direction: column;
     width: 70px;
     overflow: scroll;
+    flex-shrink: 0;
 }
 
 .admin__stage {
@@ -268,7 +273,7 @@
 
 .tally {
     font-family: sans-serif;
-    font-size: 24px;
+    font-size: 35px;
     color: white;
     text-align: center;
     flex: 1;

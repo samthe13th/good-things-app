@@ -9,7 +9,12 @@
   background: rgba(0, 0, 0, 0.5);
   top: 0;
   left: 0;
-  min-height: 500px;
+  z-index: 99999;
+}
+
+.modal-wrapper.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .modal-wrapper.hide {
@@ -17,10 +22,14 @@
 }
 
 .modal {
+  max-height: 700px;
   font-family: sans-serif;
-  width: 800px;
+  max-width: 800px;
   background: white;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
   overflow: hidden;
 }
 
@@ -80,5 +89,5 @@
 
 .modal-content {
   padding: 20px;
-  min-height: 400px;
+  overflow: auto;
 }

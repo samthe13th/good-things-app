@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { map } from 'lodash';
-import { StoryService } from '../../../../services/story.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
@@ -13,7 +12,13 @@ import { AngularFireDatabase } from '@angular/fire/database';
     style="display: inline-block; color: white;  padding: 2px 12px; border-radius: 10px">
     {{ segment.value }}
   </div>
-  <div *ngIf="staticBlock && block.user !== user">{{ segment.value }}</div>
+  <div 
+    *ngIf="staticBlock && block.user !== user"
+    [style.color]="block.color !== undefined ? 'white' : 'inherit'"
+    style="display: inline-block; padding: 2px 12px; border-radius: 10px"
+    [style.background]="block.color">
+    {{ segment.value }}
+  </div>
 </div>
 
 <div class="segment-wrapper" *ngFor="let segment of cue">

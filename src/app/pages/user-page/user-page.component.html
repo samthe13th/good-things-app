@@ -1,0 +1,127 @@
+<div>
+  <ng-container *ngIf="(!isPreShowUser && (showStage | async) === 'pre')">
+    <div class="stage__setup" [class.stage__setup--hide]="!setupMode">
+      <h1>Welcome!</h1>
+      <div style="font-family: sans-serif">Ticket: <em>{{ id }}</em></div>
+      <br/>
+      <p>The show has not started yet. Check back here 5-10 minutes before show time.</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="(isPreShowUser || (showStage | async) === 'show')">
+    <div
+      class="main-content"
+      id="scroller"
+      [class.theme--light]="theme === 'light'"
+      [class.theme--dark]="theme === 'dark'"
+    >
+      <button #audioButton class="audio-button" (click)="openAudioModal()" title="Configuration">
+        <img src="../../../assets/icons/cog.png">
+      </button>
+
+      <tooltip [visible]="!onBoarded" #configTooltip [anchor]="audioButton">
+        This show contains live sound! Click here to configure.
+      </tooltip>
+
+      <div
+        [class.invisible]="!showRamp"
+        class="ramp up"
+        [class.dark]="theme === 'dark'"
+        [class.light]="theme === 'light'"
+      ></div>
+
+      <div class="feedWrapper" #scroller [class.show-end]="showEnded">
+        <feed
+          [user]="id"
+          [feedDebounce]="debounceTime"
+          (advanceScroll)="onAdvanceScroll()"
+          (finishedTyping)="onFinishTyping()"
+          (currentBlock)="onCurrentBlockChange($event)">
+        </feed>
+      </div>
+
+      <div
+        [class.invisible]="!showRamp"
+        class="ramp down"
+        [class.dark]="theme === 'dark'"
+        [class.light]="theme === 'light'"
+      >
+      </div>
+    </div>
+
+    <div
+      *ngIf="currentBlock"
+      (keyup.enter)="submit(input)"
+      [style.marginBottom.px]="(mode !== 'chat') ? -120 : 0"
+      class="stage__chat-wrapper">
+      <input [disabled]="mode !== 'chat'" #input class="stage__chat-input" placeholder="Type something">
+      <button class="stage__chat-button" (click)="submit(input)">SEND</button>
+    </div>
+  </ng-container>
+</div>
+
+<modal title="Configuration" #audioModal [actionButton]="false">
+  <div class="stage__setup-section">
+
+    <h2>Fullscreen</h2>
+    <label class="container">On
+      <input value="on" id="fs-on" (ngModelChange)="setFullScreen(true)" [(ngModel)]="fullscreen" type="radio" name="fullscreen">
+      <span for="fs-on" class="checkmark"></span>
+    </label>
+    <label class="container">Off
+      <input value="off" id="fs-off" (ngModelChange)="setFullScreen(false)" [(ngModel)]="fullscreen" type="radio" name="fullscreen">
+      <span for="fs-off" class="checkmark"></span>
+    </label>
+  </div>
+
+  <br/>
+
+<!--  <iframe src="https://mixlr.com/users/7667871/embed"
+    width="100%"
+    height="180px"
+    scrolling="no"
+    frameborder="no"
+    marginheight="0"
+    marginwidth="0">
+  </iframe>-->
+
+  <iframe src="https://mixlr.com/users/7822221/embed"
+    width="100%"
+    height="180px"
+    scrolling="no"
+    frameborder="no"
+    marginheight="0"
+    marginwidth="0">
+  </iframe>
+
+  <div class="stage__setup-section">
+    <h2>Audio Test</h2>
+    <p>Click play on the live audio player above. Can you hear rain?</p>
+
+    <label class="container">Yes
+      <input value="yes" id="audio-check-yes" (ngModelChange)="hearsAudio('yes')" [(ngModel)]="audioCheck" type="radio" name="audio-check">
+      <span for="audio-check-yes" class="checkmark"></span>
+    </label>
+    <label class="container">No
+      <input value="no" id="audio-check-no" (ngModelChange)="hearsAudio('no')" [(ngModel)]="audioCheck" type="radio" name="audio-check">
+      <span for="audio-check-no" class="checkmark"></span>
+    </label>
+
+    <span *ngIf="audioCheck === 'no'">
+      <ul>
+        <li><em>Check that the audio player above is playing</em></li>
+        <li><em>Make sure you are connected to WIFI</em></li>
+        <li><em>Check that your computer / phone audio is turned up</em></li>
+        <li><em>If still no luck, try refreshing this page, and opening this configuration window again</em></li>
+      </ul>
+    </span>
+  </div>
+
+  <div class="stage__setup-section">
+    <h2>Delay Configuration</h2>
+    <p>Please click the 'Ding!' button, when you hear a ding sound.</p>
+    <button *ngIf="!delayConfigured" (click)="configDelay()">Ding!</button>
+    <div *ngIf="delayConfigured" class="setup-checkmark">Configured</div>
+  </div>
+
+</modal>
