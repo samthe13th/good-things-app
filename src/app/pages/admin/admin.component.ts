@@ -157,8 +157,8 @@ export class AdminComponent implements OnInit {
 
   id = 'admin';
   themes = SHOW.themes;
-  currentTheme = 'light';
-  pendingTheme = 'light';
+  currentTheme = 'dark';
+  pendingTheme = 'dark';
 
   constructor(
     private db: AngularFireDatabase,
@@ -245,7 +245,7 @@ export class AdminComponent implements OnInit {
       this.chatService.clear();
       this.resetUserList();
       this.db.object('showStarted').set(false);
-      this.db.object('theme').set('light');
+      this.db.object('theme').set('dark');
       this.currentBlock = this.story[this.storyIndex];
       this.storyService.tellStory(this.currentBlock);
       this.autoTypeBlock();

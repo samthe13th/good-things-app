@@ -32,7 +32,7 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   debounceTime = 10000;
   setupMode = true;
   delay;
-  theme = 'light';
+  theme = 'dark';
   showRamp = true;
   invalidCode = false;
   audioCheck;
