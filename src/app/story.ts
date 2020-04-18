@@ -305,11 +305,11 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "I want you to teach me your magic./Teach me how to save myself./Let's make a list of good things to do – how about 20 of them?/Push those buttons and make some words that I know"
+        value: "I want you to teach me your magic./Teach me how to save myself./Let's make a list of good things to do/Push those buttons and make some words that I know"
     },
     {
         type: "story",
-        value: "Maybe like/1.    Clean sheets/2.    Holding open a door/3.    Messing up a joke but everyone still laughs (even if its kinda at you instead of with you)"
+        value: "Maybe like:/Clean sheets/Holding open a door/Messing up a joke but everyone still laughs (even if its kinda at you instead of with you)"
     },
     {
         type: "story",
@@ -346,29 +346,32 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "It's time to go, now./I know, I don't want you to go, but we have to. It's time to wake up./It would be no good to stay sleeping./You are needed, out there./Look around your space again."
+        value: "It's time to go, now./I know, I don't want you to go, but we have to. It's time to wake up./It would be no good to stay sleeping./You are needed, out there."
     },
     {
         type: "story",
-        value: "Soon you will be alone here, again, with all the feelings you felt before, the big ones and the scary ones, and the beautiful ones./Except one thing will be different./You will know that I was here with you, for a time/And that's a good thing."
+        value: "Look around your space again."
     },
     {
         type: "story",
-        value: "Take off your headphones./Listen to the sound of your breath, of your home./It's time."
+        value: "Soon you will be alone here, again, with all the feelings you felt before, the big ones and the scary ones, and the beautiful ones./Except one thing will be different."
+    },
+    {
+       type: "story",
+       value: "You will know that I was here with you, for a time/And that's a good thing."
     },
     {
         type: "story",
-        value: "Okay, for real now.",
+        value: "Take off your headphones./Listen to the sound of your breath, of your home."
+    },
+    {
+        type: "story",
+        value: "Okay, for real now./It's time to go.",
         speed: 120
     },
     {
         type: "story",
         value: "I love you./Goodnight./Good morning./Goodbye.",
-        speed: 120
-    },
-    {
-        type: "story",
-        value: "When you're ready, close this screen. Let me go.",
         speed: 120
     },
     {

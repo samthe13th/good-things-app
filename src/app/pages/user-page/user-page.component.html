@@ -1,3 +1,9 @@
+<div *ngIf="isBlacklisted" class="stage__setup" [class.stage__setup--hide]="!setupMode">
+  <div style="font-family: sans-serif; font-size: 18px">Code: <strong><em>{{ id }}</em></strong></div>
+  <br/>
+  <p>This show code has been blacklisted.</p>
+</div>
+
 <div>
   <ng-container *ngIf="(!isPreShowUser && (showStage | async) === 'pre')">
     <div class="stage__setup" [class.stage__setup--hide]="!setupMode">

@@ -37,6 +37,7 @@
   display: flex;
   background: #802d2b;
   color: white;
+  flex-shrink: 0;
 }
 
 .modal-footer {

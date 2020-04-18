@@ -32,7 +32,6 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   debounceTime = 10000;
   setupMode = true;
   delay;
-  landing = true;
   theme = 'light';
   showRamp = true;
   invalidCode = false;
@@ -43,6 +42,7 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   delayConfigured;
   fullscreen = 'off';
   isSafari = false;
+  isBlacklisted = false;
 
   showStage = this.db.object('showStage').valueChanges();
   showDelay = this.db.object('showDelay').valueChanges();
@@ -55,11 +55,19 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
     private authService: AuthService,
     private chatService: ChatService,
     private story: StoryService ) {
-    this.isSafari = (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1);
-    console.log('is safari: ', this.isSafari)
+    this.isSafari = (navigator.userAgent.indexOf('Safari') !== -1
+      && navigator.userAgent.indexOf('Chrome') === -1);
     this.id = this.activatedRoute.snapshot.url[1].path;
+    this.db.object('blacklist')
+      .valueChanges()
+      .subscribe((blacklist) => {
+        if (_.includes(blacklist, this.id)) {
+          this.isBlacklisted = true;
+        } else {
+          this.isBlacklisted = false;
+        }
+      });
     this.db.object(`users/${this.id}/onBoarded`).valueChanges().subscribe((value: boolean) => {
-      console.log(value);
       if (value !== null && this.userConfig) {
         this.userConfig.onBoarded = value;
       }
@@ -137,11 +145,9 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
       this.authService.signInAnonymously();
       this.db.object(`users/${this.id}`).valueChanges().pipe(take(1)).subscribe((user) => {
         if (!user) {
-          console.log('new user: ', this.id)
           this.userConfig = this.chatService.getUserConfig(this.id);
           this.chatService.addUser(this.userConfig);
         } else {
-          console.log('old user: ', user)
           this.userConfig = user;
         }
       });
@@ -161,7 +167,6 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
         this.delay = _.toNumber(delay);
         if (this.delay && this.delay > 0) {
           this.userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay, delayConfigured: true, onBoarded: true });
-          console.log('set config... ', this.userConfig)
           _.forEach(this.userConfig, (value, key) => {
             this.db.object(`users/${this.id}/${key}`).set(value);
           });
@@ -172,7 +177,6 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.db.object('pingUsers').valueChanges().subscribe((ping) => {
-      console.log('ping! ', this.userConfig);
       if (this.userConfig) {
         this.chatService.addUser(this.userConfig);
       }
@@ -252,7 +256,6 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   }
 
   hearsAudio(canHear) {
-    console.log("can hear? ", canHear)
     this.db.object(`users/${this.id}/canHear`).set(canHear);
   }
 }
