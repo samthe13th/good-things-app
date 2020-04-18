@@ -47,12 +47,13 @@ export const SHOW = {
       '#a8614f',
       '#6281a1',
       '#16798E',
-      '#16798E',
-      '#16798E',
-      '#16798E',
-      '#16798E',
-      '#16798E',
-      '#16798E'
+      '#168581',
+      '#169072',
+      '#169a61',
+      '#5c8c5c',
+      '#9c6b52',
+      '#a8614f',
+      '#5c668a',
     ],
     themes: [
       {
@@ -75,7 +76,11 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "Hi - are you there?"
+        value: "Hi/Hi/.../Hi"
+    },
+    {
+        type: "story",
+        value: "Uh, sorry, I didn’t even ask/How are you?"
     },
     {
         type: "chat",
@@ -96,6 +101,10 @@ export const STORY = [
     },
     {
         type: "story",
+        value: "I hope it does."
+    },
+    {
+        type: "story",
         value: "I/Um/I keep getting the feeling that you don't remember me."
     },
     {
@@ -112,20 +121,11 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "Just relax for a bit. Forget about all that hard stuff outside./Be with me./Hey, did you bring yourself something nice to drink like I told you? What do you have?"
-    },
-    {
-        type: "chat",
-        isPrivate: true,
-        value: "",
+        value: "Just relax for a bit. Forget about all that hard stuff outside./Be with me."
     },
     {
         type: "story",
-        value: "See! Look how clever you are (even if you don't remember me)./You know how to take care of yourself.(Or you do your best, anyway)/Well, enjoy."
-    },
-    {
-        type: "story",
-        value: "Okay. I'm going to remind you./Before I tell you this story, I'm going to ask you to close your eyes for a little bit. Do you hear this sound?"
+        value: "Before I tell you this story, I'm going to ask you to close your eyes for a little bit. Just listen for this sound:"
     },
     {
         type: "story",
@@ -253,11 +253,15 @@ export const STORY = [
     },
     {
         type: 'story',
-        value: "When you let go, you are gone./I'm alone./I turn and pick the first daisy./The melody."
+        value: "When you let go, you are gone./I'm alone./I turn and pick the first daisy."
     },
     {
         type: "story",
-        value: "I close my eyes and I feel the shadow pass over me and before the sound can punch me I take a deep breath. I breathe in your warm hand in mine, the paper empire, kicking to shore, sunlight through trees, the sweet mist on my face, the purr of the books, the smell of hot coffee, the ding of the coins, the feeling at the top of a really good jump, and when I land I open my eyes and it's light./Everything is light."
+        value: "The melody."
+    },
+    {
+        type: "story",
+        value: "I close my eyes and I feel the shadow pass over me and before the sound can punch me I take a deep breath./I breathe in your warm hand in mine,/the paper empire,/kicking to shore,/sunlight through trees,/the sweet mist on my face,/the purr of the books,/the smell of hot coffee,/the ding of the coins,/the feeling at the top of a really good jump,/and when I land I open my eyes and it's light./Everything is light."
     },
     {
         type: 'story',
@@ -273,7 +277,7 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "And then I woke up/I was still there in the lake/Walking around, perfectly dry and drowning/I could hear voices, see faces from far below the surface/They could not reach me there."
+        value: "And when I woke up/I was still there in the lake/Walking around, perfectly dry and drowning/I could hear voices, see faces from far below the surface/They could not reach me there."
     },
     {
         type: "story",
@@ -309,7 +313,7 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "Okay?/Are you ready?/GO:/1."
+        value: "Okay?/Are you ready?/GO:"
     },
     {
         type: "chat",
@@ -354,11 +358,18 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "Okay, for real now./When you're ready, close this screen. Let me go."
+        value: "Okay, for real now.",
+        speed: 120
     },
     {
         type: "story",
-        value: "I love you./Goodnight./Good morning./Goodbye."
+        value: "I love you./Goodnight./Good morning./Goodbye.",
+        speed: 120
+    },
+    {
+        type: "story",
+        value: "When you're ready, close this screen. Let me go.",
+        speed: 120
     },
     {
         type: "end"

@@ -42,10 +42,10 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   userConfig;
   delayConfigured;
   fullscreen = 'off';
+  isSafari = false;
 
   showStage = this.db.object('showStage').valueChanges();
   showDelay = this.db.object('showDelay').valueChanges();
-  onBoarded = false;
 
   constructor (
     @Inject(DOCUMENT) private document: Document,
@@ -55,16 +55,21 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
     private authService: AuthService,
     private chatService: ChatService,
     private story: StoryService ) {
+    this.isSafari = (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1);
+    console.log('is safari: ', this.isSafari)
     this.id = this.activatedRoute.snapshot.url[1].path;
     this.db.object(`users/${this.id}/onBoarded`).valueChanges().subscribe((value: boolean) => {
-      this.onBoarded = value;
-    })
+      console.log(value);
+      if (value !== null && this.userConfig) {
+        this.userConfig.onBoarded = value;
+      }
+    });
     this.db.object('preShowUsers').valueChanges()
       .pipe(take(1))
       .subscribe((users: string) => {
-        this.isPreShowUser = _.includes(users.split(','), this.id);
+        this.isPreShowUser = _.includes(users, this.id);
       });
-    this.db.object('showCodes').valueChanges().pipe(take(1)).subscribe((value: string) => {
+    this.db.object('codes').valueChanges().pipe(take(1)).subscribe((value: string) => {
       if (!_.includes(value, this.id)) {
         this.router.navigate(['/stage']);
       } else {
@@ -130,42 +135,18 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   initUser() {
     setTimeout(() => {
       this.authService.signInAnonymously();
-      this.db.object(`users/${this.id}`).valueChanges().subscribe((user) => {
+      this.db.object(`users/${this.id}`).valueChanges().pipe(take(1)).subscribe((user) => {
         if (!user) {
+          console.log('new user: ', this.id)
           this.userConfig = this.chatService.getUserConfig(this.id);
           this.chatService.addUser(this.userConfig);
         } else {
+          console.log('old user: ', user)
           this.userConfig = user;
         }
       });
     });
     this.currentSegment = this.story.getCurrentSegment();
-  }
-
-  enterCode(code) {
-    this.db.object('showCodes').valueChanges()
-      .pipe(take(1))
-      .subscribe((codes) => {
-        if (_.includes(codes, code)) {
-          console.log('id: ', code)
-          this.router.navigate([`stage/${code}`]);
-          this.openAudioModal();
-          this.invalidCode = false;
-          this.landing = false;
-          this.id = code;
-          this.initUser();
-          this.db.object('preShowUsers').valueChanges()
-            .pipe(take(1))
-            .subscribe((users) => {
-              this.isPreShowUser = _.includes(users, this.id);
-            });
-          this.db.object(`users/${this.id}/delayConfigured`).valueChanges().subscribe((value) => {
-            this.delayConfigured = value;
-          });
-        } else {
-          this.invalidCode = true;
-        }
-      });
   }
 
   ngOnChanges() {
@@ -179,7 +160,8 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
       .subscribe((delay) => {
         this.delay = _.toNumber(delay);
         if (this.delay && this.delay > 0) {
-          this.userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay, delayConfigured: true });
+          this.userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay, delayConfigured: true, onBoarded: true });
+          console.log('set config... ', this.userConfig)
           _.forEach(this.userConfig, (value, key) => {
             this.db.object(`users/${this.id}/${key}`).set(value);
           });
@@ -190,7 +172,7 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.db.object('pingUsers').valueChanges().subscribe((ping) => {
-      console.log('ping: ', ping)
+      console.log('ping! ', this.userConfig);
       if (this.userConfig) {
         this.chatService.addUser(this.userConfig);
       }
@@ -209,14 +191,13 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   }
 
   onAdvanceScroll() {
-    if (!this.setupMode) {
-      this.scrollToBottom();
-    }
+    this.scrollToBottom();
   }
 
   submit(input) {
     this.chatInput.nativeElement.focus();
     this.chatService.sendMessage(input.value, this.id, this.id);
+    this.db.object(`users/${this.id}/chatWorks`).set(true);
     this.story.tellStory({
       isPrivate: this.isPrivate,
       value: input.value,
@@ -241,6 +222,7 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   openAudioModal() {
     this.audioModal.open();
     this.db.object(`users/${this.id}/onBoarded`).set(true);
+    this.userConfig.onBoarded = true;
   }
 
   setFullScreen(on) {

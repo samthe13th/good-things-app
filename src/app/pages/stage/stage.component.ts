@@ -14,13 +14,14 @@ export class StageComponent {
 
   constructor (
     private router: Router,
-    private db: AngularFireDatabase) {}
+    private db: AngularFireDatabase) {
+  }
 
   enterCode(code) {
-    this.db.object('showCodes').valueChanges()
+    this.db.object('codes').valueChanges()
       .pipe(take(1))
       .subscribe((codes: string) => {
-        if (_.includes(codes.split(','), code)) {
+        if (_.includes(codes, code)) {
           this.invalidCode = false;
           this.router.navigate([`stage/${code}`]);
         } else {

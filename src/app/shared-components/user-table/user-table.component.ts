@@ -10,16 +10,18 @@ import { ChatService } from '../../services/chat.service';
       <tr>
         <th>User</th>
         <th>Hears audio</th>
+        <th>Chat works</th>
         <th>Delay</th>
         <th>Set default delay</th>
         <th>Clear delay</th>
       </tr>
       <tr *ngFor="let user of users | async">
         <td>{{ user.id }}</td>
-        <td>{{ user.canHear || 'waiting for response...' }}</td>
+        <td>{{ user.canHear || '...' }}</td>
+        <td>{{ user.chatWorks ? 'yes' : '...' }}</td>
         <td>
           <span *ngIf="user.delayConfigured">{{ user.delay }}</span>
-          <span *ngIf="!user.delayConfigured">waiting for response...</span>
+          <span *ngIf="!user.delayConfigured">...</span>
         </td>
         <td><button (click)="setDefaultDelay(user.id)">Set to 12</button></td>
         <td><button (click)="clearDelay(user.id)">Clear</button></td>
@@ -33,7 +35,8 @@ export class UserTableComponent {
 
   constructor(
     private db: AngularFireDatabase,
-    private chatService: ChatService) {}
+    private chatService: ChatService) {
+  }
 
   setDefaultDelay(id) {
     this.db.object(`users/${id}/delay`).set(12);

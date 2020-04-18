@@ -15,7 +15,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
   <div 
     *ngIf="staticBlock && block.user !== user"
     [style.color]="block.color !== undefined ? 'white' : 'inherit'"
-    style="display: inline-block; padding: 2px 12px; border-radius: 10px"
+    [style.padding]="block.color !== undefined ? '2px 12px' : 0"
+    style="display: inline-block; border-radius: 10px"
     [style.background]="block.color">
     {{ segment.value }}
   </div>
@@ -29,6 +30,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
   <auto-type
     *ngIf="!staticBlock && block.canView === undefined || block.user === 'admin'"
     (typedSegment)="onFinishTyping($event)"
+    [speed]="segment.speed"
     [typeString]="segment.value">
   </auto-type>
 </div>`,
@@ -62,14 +64,24 @@ export class StoryBlockComponent implements OnInit {
       return { ...this.block, value: segment };
     });
     if (this.staticBlock === false) {
-      this.cue.push({ type: this.block.type, value: this.segmentList[0] });
+      this.cue.push({
+        type: this.block.type,
+        value: this.segmentList[0],
+        speed: this.block.speed || 80
+      });
     }
   }
 
   onFinishTyping(segment) {
+    console.log("finish typing: ", segment)
     this.advanceScroll.emit(true);
     if (this.cue.length < this.segmentList.length) {
-      this.cue.push({ type: this.block.type, value: this.segmentList[this.cue.length] });
+      console.log('speed: ', this.block.speed)
+      this.cue.push({
+        type: this.block.type,
+        value: this.segmentList[this.cue.length],
+        speed: this.block.speed || 80
+      });
     } else {
       this.finishedTyping.emit(true);
     }

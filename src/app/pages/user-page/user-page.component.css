@@ -13,8 +13,7 @@
 }
 
 .theme--dark .audio-button {
-  background: white;
-  border-radius: 100%;
+  filter: invert(1);
 }
 
 .audio-button {

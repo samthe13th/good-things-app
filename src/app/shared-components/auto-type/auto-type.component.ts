@@ -27,30 +27,34 @@ export class AutoTypeComponent {
         }
     }
     get typeString() {
-        return this._typeString;
+      return this._typeString;
     }
     private _typeString: string;
 
-    interval(char){
+    @Input() speed = 80;
+
+    interval(char) {
         if (char === '.' || char === '?' || char === '!') {
             return 800;
         } else if (char === '-') {
-            return 800
+            return 800;
         } else if (char === ',') {
-            return 400
+            return 400;
         }
-        return (Math.random() * 70 + 15);
+        return (Math.random() * this.speed + 25);
     }
 
     autoType() {
         if (this.typeString[this.charIndex] !== '*') {
             this.stream += this.typeString[this.charIndex];
+        } else {
+            console.log('FOUND CHAR: *')
         }
 
         if (this.charIndex < this.length - 1) {
             setTimeout(() => {
-                this.charIndex += 1;
-                this.autoType();
+               this.charIndex += 1;
+               this.autoType();
             }, this.interval(this.typeString[this.charIndex]));
         } else {
             setTimeout(() => {

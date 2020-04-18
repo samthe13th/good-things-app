@@ -2,7 +2,7 @@
   <ng-container *ngIf="(!isPreShowUser && (showStage | async) === 'pre')">
     <div class="stage__setup" [class.stage__setup--hide]="!setupMode">
       <h1>Welcome!</h1>
-      <div style="font-family: sans-serif">Ticket: <em>{{ id }}</em></div>
+      <div style="font-family: sans-serif; font-size: 18px">Code: <strong><em>{{ id }}</em></strong></div>
       <br/>
       <p>The show has not started yet. Check back here 5-10 minutes before show time.</p>
     </div>
@@ -19,12 +19,12 @@
         <img src="../../../assets/icons/cog.png">
       </button>
 
-      <tooltip [visible]="!onBoarded" #configTooltip [anchor]="audioButton">
+      <tooltip [visible]="userConfig?.onBoarded === undefined" #configTooltip [anchor]="audioButton">
         This show contains live sound! Click here to configure.
       </tooltip>
 
       <div
-        [class.invisible]="!showRamp"
+        [class.invisible]="!showRamp || isSafari"
         class="ramp up"
         [class.dark]="theme === 'dark'"
         [class.light]="theme === 'light'"
@@ -41,7 +41,7 @@
       </div>
 
       <div
-        [class.invisible]="!showRamp"
+        [class.invisible]="!showRamp || isSafari"
         class="ramp down"
         [class.dark]="theme === 'dark'"
         [class.light]="theme === 'light'"
@@ -63,7 +63,7 @@
 <modal title="Configuration" #audioModal [actionButton]="false">
   <div class="stage__setup-section">
 
-    <h2>Fullscreen</h2>
+    <h2>Fullscreen <em>(recommended)</em></h2>
     <label class="container">On
       <input value="on" id="fs-on" (ngModelChange)="setFullScreen(true)" [(ngModel)]="fullscreen" type="radio" name="fullscreen">
       <span for="fs-on" class="checkmark"></span>

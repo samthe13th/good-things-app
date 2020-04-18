@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators'
 import { AngularFireDatabase } from '@angular/fire/database';
 import { ModalComponent } from '../../shared-components/modal/modal.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-admin',
@@ -82,7 +83,7 @@ import { ModalComponent } from '../../shared-components/modal/modal.component';
       <div class="admin__stage" #feed
         [class.theme--light]="(theme | async) === 'light'"
         [class.theme--dark]="(theme | async) === 'dark'">
-        <feed [user]='user' (finishedTyping)="onFinishTyping($event)"></feed>
+        <feed [style.opacity]="showEnded ? 0 : 1" [user]='user' (finishedTyping)="onFinishTyping($event)"></feed>
       </div>
     </div>
 
@@ -143,6 +144,7 @@ export class AdminComponent implements OnInit {
   delayTimerRunning = false;
   showStage;
   showDelayChecked;
+  showEnded = false;
 
   chatUser;
   storyBlocks;
@@ -171,8 +173,7 @@ export class AdminComponent implements OnInit {
     this.refreshUserList();
     this.db.object('showStage').valueChanges().subscribe((value) => {
       this.showStage = value;
-    })
-    this.resetUserList();
+    });
     this.users.subscribe((users) => {
       if (users.length > 0 && !this.chatUser) {
         this.chatUser = users[0];
@@ -188,12 +189,46 @@ export class AdminComponent implements OnInit {
     });
     this.instantiateDelayTimer();
     this.db.object('showDelay').valueChanges().pipe(take(1)).subscribe((value) => {
-      this.showDelayChecked = value
-    })
+      this.showDelayChecked = value;
+    });
 
     setTimeout(() => {
      this.authService.signInAnonymously();
     });
+  }
+
+  generateCodes(n) {
+    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const codes = [];
+    let codeString = '';
+    const preshowUsers = ['21mishelle', '22sam', '23jiv', '24molly', '25christine'];
+
+    _.forEach(_.range(n), (show) => {
+      _.forEach(_.range(10), (i) => {
+        const code = `${('0' + (i + 1)).slice(-2)}${randomCode(4)}`;
+        codeString += `\n${code}`;
+        codes.push(code);
+      });
+    });
+
+    function randomCode(num) {
+      let code = '';
+      _.forEach(_.range(num), (char) => {
+        code += letters[getRandomInt(0, 51)];
+      });
+      return code;
+    }
+
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    this.db.object('preShowUsers').set(preshowUsers);
+    this.db.object('codes').set([...codes, ...preshowUsers]);
+
+    console.log(codeString);
   }
 
   resetUserList() {
@@ -217,6 +252,7 @@ export class AdminComponent implements OnInit {
       this.db.object('showStage').set('pre');
       this.db.object('showDelay').set(false);
       this.showDelayChecked = false;
+      this.showEnded = false;
     }
     setTimeout(() => {
      this.authService.signInAnonymously();
@@ -281,7 +317,10 @@ export class AdminComponent implements OnInit {
       this.storyService.tellStory(this.currentBlock);
       this.autoTypeBlock();
     }
-    this.db.object('showStarted').set(true)
+    this.db.object('showStarted').set(true);
+    if (this.mode === 'end') {
+      this.showEnded = true;
+    }
   }
 
   setMode() {
@@ -301,7 +340,7 @@ export class AdminComponent implements OnInit {
       type: 'chat',
       canView: this.chatUser.id,
       user: 'admin',
-    })
+    });
     input.value = '';
   }
 
@@ -359,6 +398,7 @@ export class AdminComponent implements OnInit {
   }
 
   refreshUserList() {
+    console.log('refresh')
     this.db.object('users').remove();
     this.db.object('pingUsers').set(Date.now());
   }
