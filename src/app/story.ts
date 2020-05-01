@@ -209,7 +209,7 @@ export const STORY = [
     },
     {
         type: "story",
-        value: "We're going higher and higher, up to the edge of the cliffside and suddenly we're running full blast towards the edge. You look back and me and smile so when you jump, I jump."
+        value: "We're going higher and higher, up to the edge of the cliffside and suddenly we're running full blast towards the edge. You look back at me and smile so when you jump, I jump."
     },
     {
         type: "story",
@@ -354,15 +354,15 @@ export const STORY = [
     },
     {
         type: "story",
+        value: "Take off your headphones./Listen to the sound of your breath, of your home."
+    },
+    {
+        type: "story",
         value: "Soon you will be alone here, again, with all the feelings you felt before, the big ones and the scary ones, and the beautiful ones./Except one thing will be different."
     },
     {
        type: "story",
        value: "You will know that I was here with you, for a time/And that's a good thing."
-    },
-    {
-        type: "story",
-        value: "Take off your headphones./Listen to the sound of your breath, of your home."
     },
     {
         type: "story",

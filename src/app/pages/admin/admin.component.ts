@@ -175,8 +175,12 @@ export class AdminComponent implements OnInit {
       this.showStage = value;
     });
     this.users.subscribe((users) => {
-      if (users.length > 0 && !this.chatUser) {
-        this.chatUser = users[0];
+      if (users.length > 0) {
+        if (!this.chatUser) {
+          this.chatUser = users[0];
+        }
+      } else {
+        this.chatUser = undefined;
       }
     });
     this.storyFeed = this.storyService.getStory();
@@ -195,40 +199,6 @@ export class AdminComponent implements OnInit {
     setTimeout(() => {
      this.authService.signInAnonymously();
     });
-  }
-
-  generateCodes(n) {
-    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const codes = [];
-    let codeString = '';
-    const preshowUsers = ['21mishelle', '22sam', '23jiv', '24molly', '25christine'];
-
-    _.forEach(_.range(n), (show) => {
-      _.forEach(_.range(10), (i) => {
-        const code = `${('0' + (i + 1)).slice(-2)}${randomCode(4)}`;
-        codeString += `\n${code}`;
-        codes.push(code);
-      });
-    });
-
-    function randomCode(num) {
-      let code = '';
-      _.forEach(_.range(num), (char) => {
-        code += letters[getRandomInt(0, 51)];
-      });
-      return code;
-    }
-
-    function getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    this.db.object('preShowUsers').set(preshowUsers);
-    this.db.object('codes').set([...codes, ...preshowUsers]);
-
-    console.log(codeString);
   }
 
   resetUserList() {

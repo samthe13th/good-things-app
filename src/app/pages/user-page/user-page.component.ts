@@ -177,9 +177,14 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.db.object('pingUsers').valueChanges().subscribe((ping) => {
-      if (this.userConfig) {
-        this.chatService.addUser(this.userConfig);
-      }
+      this.db.list('codes').valueChanges().pipe(take(1)).subscribe((codes) => {
+        console.log('codes: ', codes, ' user: ', this.id)
+        if (!_.includes(codes, this.id)) {
+          this.router.navigate(['/stage']);
+        } else if (this.userConfig) {
+          this.chatService.addUser(this.userConfig);
+        }
+      });
     });
     this.scrollToBottom();
   }
