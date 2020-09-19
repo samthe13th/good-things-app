@@ -11,7 +11,6 @@ import { take } from 'rxjs/operators';
 export class ChatService {
 user: firebase.User;
 chatMessages;
-userName: string;
 
   constructor(
     private db: AngularFireDatabase,
