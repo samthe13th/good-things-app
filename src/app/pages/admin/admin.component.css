@@ -211,6 +211,11 @@
     font-weight: 100;
 }
 
+.theme--yellow {
+  background: #fff5ab;
+  color: #888888;
+}
+
 .theme--light {
   background: #f5f7f9;
   color: #567492;

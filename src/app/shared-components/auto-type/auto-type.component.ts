@@ -13,6 +13,7 @@ export class AutoTypeComponent {
     length = 0;
     stream = '';
     segments = [];
+    speedMuliplier = 30;
 
     @Output() typedSegment: EventEmitter<string> = new EventEmitter();
 
@@ -31,7 +32,7 @@ export class AutoTypeComponent {
     }
     private _typeString: string;
 
-    @Input() speed = 80;
+    @Input() speed = 3;
 
     interval(char) {
         if (char === '.' || char === '?' || char === '!') {
@@ -41,14 +42,14 @@ export class AutoTypeComponent {
         } else if (char === ',') {
             return 400;
         }
-        return (Math.random() * this.speed + 25);
+        return ((6 - this.speed) * this.speedMuliplier + (Math.round((Math.random() * 10))));
     }
 
     autoType() {
         if (this.typeString[this.charIndex] !== '*') {
             this.stream += this.typeString[this.charIndex];
         } else {
-            console.log('FOUND CHAR: *')
+            console.log('FOUND CHAR: *');
         }
 
         if (this.charIndex < this.length - 1) {

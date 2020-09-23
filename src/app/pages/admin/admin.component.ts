@@ -57,7 +57,7 @@ import * as _ from 'lodash';
               class="user-badge">!</div>
           </div>
         </div>
-        
+
         <chat-feed class="chat-feed" [user]="chatUser"></chat-feed>
       </div>
 
@@ -81,6 +81,7 @@ import * as _ from 'lodash';
         <span *ngIf="mode === 'chat'">Chat Mode</span>
       </div>
       <div class="admin__stage" #feed
+        [class.theme--yellow]="(theme | async) === 'yellow'"
         [class.theme--light]="(theme | async) === 'light'"
         [class.theme--dark]="(theme | async) === 'dark'">
         <feed [style.opacity]="showEnded ? 0 : 1" [user]='user' (finishedTyping)="onFinishTyping($event)"></feed>
@@ -91,11 +92,12 @@ import * as _ from 'lodash';
 </div>
 
 <modal height="auto" title="Theme" (actionEvent)="updateTheme()" (closeEvent)="resetPendingTheme()" #themeModal>
-  <div 
+  <div
     *ngFor="let _theme of themes"
     (click)="selectTheme(_theme)"
     class="admin-theme"
     [class.selected]="_theme.name === pendingTheme"
+    [class.theme--yellow]="_theme.name === 'yellow'"
     [class.theme--dark]="_theme.name === 'dark'"
     [class.theme--light]="_theme.name === 'light'"
   >
@@ -110,14 +112,14 @@ import * as _ from 'lodash';
     <input (ngModelChange)="onShowDelayChange()" [(ngModel)]="showDelayChecked" type="checkbox" id="showDelay">
     <span for="showDelay">Show delay prompt to users</span>
   </label>-->
-  
+
     <button class="admin-delay-timer" (click)="toggleDelayTimer()">{{ !delayTimerRunning ? 'Start Timer' : 'Reset Timer' }}</button>
     <br/>
 
     <div>Delay Timer: {{ delayTimer }}</div>
 
   <br/>
-  
+
   <user-table></user-table>
 </modal>
 `,
@@ -263,7 +265,7 @@ export class AdminComponent implements OnInit {
 
   autoTypeBlock() {
     if (this.segIndex < this.currentBlock.length) {
-      this.storyService.updateCurrentSegment({ type: 'story', value: this.currentBlock});
+      this.storyService.updateCurrentSegment({ type: 'story', value: this.currentBlock });
       this.segment = this.currentBlock;
     }
   }
