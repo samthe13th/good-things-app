@@ -21,7 +21,7 @@ export class AutoTypeComponent {
       length: 0,
       correcting: false,
       typing: false,
-    }
+    };
 
     @Output() typedSegment: EventEmitter<string> = new EventEmitter();
 

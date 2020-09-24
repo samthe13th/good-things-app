@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnChanges, OnInit, Inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnChanges, Inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
 import { StoryService } from '../../services/story.service';

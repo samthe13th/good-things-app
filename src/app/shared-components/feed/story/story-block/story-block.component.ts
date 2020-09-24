@@ -54,6 +54,7 @@ export class StoryBlockComponent implements OnInit {
   @Output() advanceScroll: EventEmitter<boolean> = new EventEmitter();
   @Input()
   set block(_block) {
+    this.isTyping = true;
     this._block = _block
   }
   get block() {
@@ -78,13 +79,15 @@ export class StoryBlockComponent implements OnInit {
   onFinishTyping(segment) {
     this.advanceScroll.emit(true);
     if (this.cue.length < this.segmentList.length) {
-      console.log('speed: ', this.block.speed)
+      console.log('speed: ', this.block.speed);
       this.cue.push({
         type: this.block.type,
         value: this.segmentList[this.cue.length],
         speed: this.block.speed || 80
       });
     } else {
+      this.isTyping = false;
+      console.log('finish typing: ', segment);
       this.finishedTyping.emit(true);
     }
   }

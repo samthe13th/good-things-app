@@ -46,7 +46,7 @@ export class UserTableComponent {
   }
 
   setDefaultDelay(id) {
-    this.db.object(`users/${id}/delay`).set(0);
+    this.db.object(`users/${id}/delay`).set(12);
     this.db.object(`users/${id}/delayConfigured`).set(true);
   }
 
