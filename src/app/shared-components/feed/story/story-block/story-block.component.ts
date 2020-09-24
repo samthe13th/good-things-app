@@ -18,7 +18,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
     [style.padding]="block.color !== undefined ? '2px 12px' : 0"
     style="display: inline-block; border-radius: 10px"
     [style.background]="block.color">
-    {{ segment.value }}
+    {{ removeTypos(segment.value) }}
   </div>
 </div>
 
@@ -33,7 +33,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
     [speed]="segment.speed"
     [typeString]="segment.value">
   </auto-type>
-  <!--<span *ngIf="(index + 1) === cue.length" class="cursor" [class.blink]="!isTyping">|</span>-->
+  <span *ngIf="(index + 1) === cue.length" class="cursor" [class.blink]="!isTyping">|</span>
 </div>
   `,
   styleUrls: ['./story-block.component.css']
@@ -87,5 +87,13 @@ export class StoryBlockComponent implements OnInit {
     } else {
       this.finishedTyping.emit(true);
     }
+  }
+
+  removeTypos(segment) {
+    const split = segment.split('[').map((sub) => {
+      const subSplit = sub.split(']');
+      return (subSplit.length === 1) ? subSplit[0] : subSplit[1];
+    });
+    return split.join('');
   }
 }

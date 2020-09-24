@@ -77,17 +77,17 @@ export const SHOW = {
 export const STORY = [
     {
         type: "start",
-        value: "Hi. You made it!/ I'll be with you soon. For now, just relax and listen to the rain./ While you're waiting to begin, take a look around your space./See if you can notice something you haven't noticed before./How does this space make you feel?/Just make a note of it.  I'll be right back."
+        value: "Hi. You made it!/I'll be with you soon. For now, just relax and listen to the rain./ While you're waiting to begin, take a look around your space./See if you can notice something you haven't noticed before./How does this space make you feel?/Just make a note of it. I'll be right back."
     },
     {
         speed: 2,
         type: "story",
-        value: "[dicks]Hi/Hi/.../Hi"
+        value: "Hi/Hi/.../Hi"
     },
     {
         speed: 3.5,
         type: "story",
-        value: "I can't bel[ee]ieve you're here./Um, I don't even know what to say./Or, 'say'. Whatever this is."
+        value: "I can't believe you're here./Um, I don't even [knwo]know what to say./Or, 'say'. Whatever this is."
     },
     {
         speed: 4,
@@ -112,7 +112,7 @@ export const STORY = [
     {
         speed: 2,
         type: "story",
-        value: "I hope it wasn't hard for you to be here today/Literally, or otherwise/Figuratively/Both legitimate."
+        value: "I hope it wasn't hard for you to be here today/Literally, or ot[hir]herwise/Figuratively/Both legitimate"
     },
     {
         speed: 4,
@@ -142,7 +142,7 @@ export const STORY = [
     {
         speed: 3.5,
         type: "story",
-        value: "Which is fine!/Not your fault!/I wondered if this might happen./ But that is okay./Everything is okay./Because I'm here to remind you of everything."
+        value: "Which is fine!/Not your fault!/I wondered if this might happen./But that is okay./Everything is okay./Because I'm here to remind you of everything."
     },
     {
         speed: 2,
@@ -152,7 +152,7 @@ export const STORY = [
     {
         speed: 3.5,
         type: "story",
-        value: "I'm going to share something with you, but first I want to ask you to close your eyes for a little bit. Just listen for this sound:"
+        value: "I'm going to share something with you, but first I want to ask[y] you to close your eyes for a little bit. Just listen for this sound:"
     },
     {
         speed: 3.5,
@@ -217,12 +217,12 @@ export const STORY = [
     {
         speed: 5,
         type: "story",
-        value: "So I ran./The shadow covered everything I could see so I guess I just ran straight forward, from where I was standing. I just went. No plan. All I could hear was the sound of my breath, panting harder and harder as I ran and ran, the vibrations and the pressure loosening up on my lungs, on my skin."
+        value: "So I ran./The shadow covered everything I cou[kd]ld see so I guess I just ran straight forward, from where I was standing. I just went. No plan. All [Iouflgj]I could hear was the sound of my breath, panting harder and harder as I ran and ran, the vibrations and the pressure loosening up on my lungs, on my skin."
     },
     {
         speed: 4,
         type: "story",
-        value: "Sand, beneath my bare feet. Wet, cold sand, a little blue – light ahead. Above, actually – the moon./A lake."
+        value: "Sand, beneath my bare feet. Wet, cold sand, a little blue – light ahead. Above, act[ual]ually – the moon./A lake."
     },
     {
         speed: 5,
@@ -277,7 +277,7 @@ export const STORY = [
     {
         speed: 3.5,
         type: "story",
-        value: "I find you sitting at the edge of the city, dipping your feet in the water. You're kicking. I sit down and I kick too. The paper empire spins gently, picking up speed until the outline of a bank of trees comes glowing onto the horizon, closer and closer until the city shakes just a bit as you jump off – you reach out a hand and I follow you, landing softly on a bed of moss."
+        value: "I find you sitting at the edge of the city, dipping your feet in the water. You're kicking. I sit down and I kick too. The paper empire spins gently, picking up speed until the outline of a bank of trees comes glowing onto the horizon, closer [nad]and closer until the city shakes just a bit as you jump off – you reach out a hand and I follow you, landing softly on a bed of moss."
     },
     {
         speed: 3.5,
@@ -337,7 +337,7 @@ export const STORY = [
     {
         speed: 4,
         type: "story",
-        value: "I don't have time to think about it though, because suddenly you're pushing through the heavy double doors and leaping over the turnstiles and you've got your hands all over the books./Plumes of dust rise up and glitter in the sunlight and you make the books purr by flipping the pages through your excited palms, smelling the sweetness of old ink and sneezing when you breathe in too hard."
+        value: "I don't have time to think about it though, because suddenly you're pushing through the heavy double doors and leaping over the turnstiles and you've got your hands all over the books./Plumes of dust rise up and glitter in the sunlight and you make the books purr by flipping the pages through your excited palms, smelling the sweetness of old ink and sneezing when you breathe in to[ h]o hard."
     },
     {
         speed: 3.5,
@@ -402,7 +402,7 @@ export const STORY = [
     {
         speed: 3.5,
         type: "story",
-        value: "And for a while, I stopped having the dream/You chased it right away/But then/I started to forget your magic/The dream started coming back again/The shadow would come, and the noise would slam into me, and I'd run and run into the lake, under the water, into the cold, into the quiet/And I would stay there./No one would come for me."
+        value: "And for a while, I stopped having the dream/You chased it right away/But then/I started to forget your magic/The dream started coming back again/The shadow would come, and the noise would slam into me, and I'd run and run into the lake, under the water, into the c[lo]old, into the quiet/And I would stay there./No one would come for me."
     },
     {
         speed: 2,

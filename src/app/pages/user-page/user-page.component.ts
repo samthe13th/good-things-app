@@ -161,6 +161,7 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   }
 
   configDelay() {
+    console.log('config this delay shit');
     this.db.object('delayTimer').valueChanges()
       .pipe(take(1))
       .subscribe((delay) => {
