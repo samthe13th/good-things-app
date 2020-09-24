@@ -14,6 +14,14 @@ export class AutoTypeComponent {
     stream = '';
     segments = [];
     speedMuliplier = 30;
+    isTyping = true;
+    mistakePause = false;
+
+    typo = {
+      length: 0,
+      correcting: false,
+      typing: false,
+    }
 
     @Output() typedSegment: EventEmitter<string> = new EventEmitter();
 
@@ -46,21 +54,35 @@ export class AutoTypeComponent {
     }
 
     autoType() {
-        if (this.typeString[this.charIndex] !== '*') {
-            this.stream += this.typeString[this.charIndex];
-        } else {
-            console.log('FOUND CHAR: *');
-        }
+      if (this.typeString[this.charIndex] === '[') {
+        this.typo.typing = true;
+      } else if (this.typeString[this.charIndex] === ']') {
+        this.mistakePause = true;
+        this.typo.typing = false;
+        this.typo.correcting = true;
+      } else if (!this.typo.correcting) {
+        this.stream += this.typeString[this.charIndex];
+      }
 
-        if (this.charIndex < this.length - 1) {
-            setTimeout(() => {
-               this.charIndex += 1;
-               this.autoType();
-            }, this.interval(this.typeString[this.charIndex]));
-        } else {
-            setTimeout(() => {
-                this.typedSegment.emit(this.stream);
-            }, 800);
-        }
+      if (this.typo.correcting && this.typo.length > 1) {
+        this.stream = this.stream.substring(0, this.stream.length - 1);
+        this.typo.length--;
+      } else if (this.typo.typing) {
+        this.typo.length++;
+      } else {
+        this.typo.correcting = false;
+      }
+
+      if (this.charIndex < this.length - 1) {
+        setTimeout(() => {
+          this.charIndex = (this.typo.correcting) ? this.charIndex : this.charIndex + 1;
+          this.autoType();
+        }, this.interval(this.typeString[this.charIndex]));
+      } else {
+        setTimeout(() => {
+          this.isTyping = false;
+          this.typedSegment.emit(this.stream);
+        }, 800);
+      }
     }
 }

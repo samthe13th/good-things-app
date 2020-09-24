@@ -1,3 +1,15 @@
 .segment-wrapper {
     margin-bottom: 5px;
 }
+
+.cursor.blink {
+  animation: blink 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes blink {
+  0%   { opacity: 0; }
+  33%  { opacity: 0; }
+  34% { opacity: 1; }
+  100% { opacity: 1; }
+}

@@ -12,7 +12,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
     style="display: inline-block; color: white;  padding: 2px 12px; border-radius: 10px">
     {{ segment.value }}
   </div>
-  <div 
+  <div
     *ngIf="staticBlock && block.user !== user"
     [style.color]="block.color !== undefined ? 'white' : 'inherit'"
     [style.padding]="block.color !== undefined ? '2px 12px' : 0"
@@ -22,7 +22,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
   </div>
 </div>
 
-<div class="segment-wrapper" *ngFor="let segment of cue">
+<div class="segment-wrapper" *ngFor="let segment of cue; let index = index">
   <div [style.background]="block.color" *ngIf="!staticBlock && block.canView && block.user !== 'admin'"
     style="display: inline-block; color: white; padding: 2px 12px; border-radius: 10px">
     {{ segment.value }}
@@ -33,7 +33,9 @@ import { AngularFireDatabase } from '@angular/fire/database';
     [speed]="segment.speed"
     [typeString]="segment.value">
   </auto-type>
-</div>`,
+  <!--<span *ngIf="(index + 1) === cue.length" class="cursor" [class.blink]="!isTyping">|</span>-->
+</div>
+  `,
   styleUrls: ['./story-block.component.css']
 })
 export class StoryBlockComponent implements OnInit {
@@ -42,6 +44,7 @@ export class StoryBlockComponent implements OnInit {
   cue = [];
   staticBlocks;
   showStarted = false;
+  isTyping = false;
 
   constructor(private db: AngularFireDatabase) {}
 
@@ -73,7 +76,6 @@ export class StoryBlockComponent implements OnInit {
   }
 
   onFinishTyping(segment) {
-    console.log("finish typing: ", segment)
     this.advanceScroll.emit(true);
     if (this.cue.length < this.segmentList.length) {
       console.log('speed: ', this.block.speed)
