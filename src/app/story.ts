@@ -76,10 +76,12 @@ export const SHOW = {
 
 export const STORY = [
   {
+    theme: "blue",
     type: "start",
     value: "Hi. You made it!/I'll be with you soon. For now, just relax and listen to the rain./While you're waiting to begin, take a look around your space./See if you can notice something you haven't noticed before./How does this space make you feel?/Just make a note of it. I'll be right back."
   },
   {
+    theme: "white",
     speed: 2,
     type: "story",
     value: "Hi/Hi/.../Hi"
@@ -155,6 +157,7 @@ export const STORY = [
     value: "I'm going to share something with you, but first I want to ask[y] you to close your eyes for a little bit. Just listen for this sound:"
   },
   {
+    theme: "yellow",
     speed: 3.5,
     type: "story",
     value: "When you hear that sound, it's time to open your eyes again./Ready?/Close your eyes."
@@ -480,6 +483,7 @@ export const STORY = [
     value: "But right now – relax. I want you to close your eyes again, I'll bring you back with this sound."
   },
   {
+    theme: "white",
     speed: 3.5,
     type: "story",
     value: "Ready? Close your eyes."

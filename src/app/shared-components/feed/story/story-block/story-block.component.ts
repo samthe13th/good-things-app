@@ -79,7 +79,6 @@ export class StoryBlockComponent implements OnInit {
   onFinishTyping(segment) {
     this.advanceScroll.emit(true);
     if (this.cue.length < this.segmentList.length) {
-      console.log('speed: ', this.block.speed);
       this.cue.push({
         type: this.block.type,
         value: this.segmentList[this.cue.length],
@@ -87,7 +86,6 @@ export class StoryBlockComponent implements OnInit {
       });
     } else {
       this.isTyping = false;
-      console.log('finish typing: ', segment);
       this.finishedTyping.emit(true);
     }
   }
