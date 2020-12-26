@@ -49,7 +49,6 @@ export class FeedComponent implements OnChanges, AfterViewInit {
         ? interval(this.feedDebounce)
         : of(undefined)),
       tap(v => {
-        console.log('initialized? ', this.initialized)
         this.initialized = true;
       }),
     );
@@ -65,7 +64,7 @@ export class FeedComponent implements OnChanges, AfterViewInit {
   }
 
   onCurrentBlockChange(block) {
-    console.log("block change: ", block)
+    console.log('block change: ', block);
     this.currentBlock.emit(block);
   }
 }

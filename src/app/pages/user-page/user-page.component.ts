@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, OnChanges, OnInit, Inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, OnChanges, Inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
 import { StoryService } from '../../services/story.service';
@@ -161,6 +161,7 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   }
 
   configDelay() {
+    console.log('config this delay shit');
     this.db.object('delayTimer').valueChanges()
       .pipe(take(1))
       .subscribe((delay) => {

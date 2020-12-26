@@ -3,7 +3,7 @@
 }
 
 .cursor.blink {
-  animation: blink 2s;
+  animation: blink 1500ms;
   animation-iteration-count: infinite;
 }
 

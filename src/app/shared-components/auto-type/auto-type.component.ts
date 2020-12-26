@@ -21,7 +21,7 @@ export class AutoTypeComponent {
       length: 0,
       correcting: false,
       typing: false,
-    }
+    };
 
     @Output() typedSegment: EventEmitter<string> = new EventEmitter();
 
@@ -49,6 +49,8 @@ export class AutoTypeComponent {
             return 800;
         } else if (char === ',') {
             return 400;
+        } else if (char === ']') {
+           return 200;
         }
         return ((6 - this.speed) * this.speedMuliplier + (Math.round((Math.random() * 10))));
     }
