@@ -1,26 +1,13 @@
 {
   "hosting": [
     {
-      "public": "src",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    },
-    {
       "target": "good-things",
       "public": "dist",
       "ignore": [
         "firebase.json",
         "**/.*",
-        "**/node_modules/**"
+        "**/node_modules/**",
+        "functions"
       ],
       "rewrites": [
         {
@@ -32,11 +19,5 @@
   ],
   "database": {
     "rules": "database.rules.json"
-  },
-  "functions": {
-    "predeploy": [
-      "npm --prefix \"functions\" run lint",
-      "npm --prefix \"functions\" run build"
-    ]
   }
 }
