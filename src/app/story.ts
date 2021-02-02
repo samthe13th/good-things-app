@@ -370,7 +370,7 @@ export const STORY = [
   {
     speed: 2,
     type: "story",
-    value: "The field./The green grass. The daisies./I don't want to go, Blargis."
+    value: "The field./The green grass. The daisies./I don't want to go."
   },
   {
     speed: 3.5,
