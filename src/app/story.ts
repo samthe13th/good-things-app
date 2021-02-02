@@ -440,7 +440,7 @@ export const STORY = [
   {
     speed: 3.5,
     type: "story",
-    value: "Holding open a door/Putting clean sheets on your bed/Messing up a joke but everyone still laughs (even if its kinda at you instead of with you)"
+    value: "Holding open a door/Clean sheets/Messing up a joke but everyone still laughs (even if it's kinda at you instead of with you)"
   },
   {
     speed: 4,
