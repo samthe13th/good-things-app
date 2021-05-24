@@ -130,6 +130,12 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
             }
           });
 
+          this.db.object('delayTimer').valueChanges()
+          .subscribe((delay) => {
+            console.log('delay: ', delay);
+            this.delay = _.toNumber(delay);
+          });
+
         document.addEventListener('fullscreenchange', (event) => {
           if (document.fullscreenElement) {
             this.fullscreen = 'on';
@@ -162,19 +168,13 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
   }
 
   configDelay() {
-    console.log('config this delay shit');
-    this.db.object('delayTimer').valueChanges()
-      .pipe(take(1))
-      .subscribe((delay) => {
-        this.delay = _.toNumber(delay);
-        if (this.delay && this.delay > 0) {
-          this.userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay, delayConfigured: true, onBoarded: true });
-          _.forEach(this.userConfig, (value, key) => {
-            this.db.object(`users/${this.id}/${key}`).set(value);
-          });
-          this.debounceTime = this.delay * 1000;
-        }
+    if (this.delay && this.delay > 0) {
+      this.userConfig = this.chatService.getUserConfig(this.id, { delay: this.delay, delayConfigured: true, onBoarded: true });
+      _.forEach(this.userConfig, (value, key) => {
+        this.db.object(`users/${this.id}/${key}`).set(value);
       });
+      this.debounceTime = this.delay * 1000;
+    }
   }
 
   ngAfterViewInit() {

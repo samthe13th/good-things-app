@@ -259,8 +259,13 @@ app-user-list {
   border: none;
 }
 
-.stage__setup-section button:hover,
-.stage__setup-section button:focus {
+.stage__setup-section button.disabled {
+  cursor: default;
+  background: grey;
+}
+
+.stage__setup-section button:hover:not(button.disabled),
+.stage__setup-section button:focus:not(button.disabled) {
   opacity: 0.8;
 }
 
@@ -313,8 +318,4 @@ app-user-list {
 
 .show-end {
   opacity: 0;
-}
-
-.audio-popup {
-
 }

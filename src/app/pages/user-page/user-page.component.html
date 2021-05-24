@@ -131,7 +131,7 @@
     <h2>Delay Configuration</h2>
     <p>You'll hear Mishelle's voice over the audio player giving instructions for this section,
       close to or at showtime. Do not click this button until instructed!</p>
-    <button *ngIf="!delayConfigured" (click)="configDelay()">Ding!</button>
+    <button class="delay-button" [class.disabled]="!delay" *ngIf="!delayConfigured" (click)="configDelay()">Ding!</button>
     <div *ngIf="delayConfigured" class="setup-checkmark">Configured</div>
   </div>
 
