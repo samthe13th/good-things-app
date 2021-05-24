@@ -391,8 +391,13 @@ export const STORY = [
   {
     speed: 3.5,
     type: "story",
+    value: "I close my eyes and I feel the shadow pass over me and before the sound can punch me I take a deep breath./I breathe in your warm hand in mine,/the paper empire,/kicking to shore,/sunlight through trees,/the sweet mist on my face,/the purr of the books,/the smell of hot coffee,/the feeling at the top of a really good jump,/and when I land I open my eyes and it's light."
+  },
+  {
+    speed: 3.5,
+    type: "story",
     theme: "yellow",
-    value: "I close my eyes and I feel the shadow pass over me and before the sound can punch me I take a deep breath./I breathe in your warm hand in mine,/the paper empire,/kicking to shore,/sunlight through trees,/the sweet mist on my face,/the purr of the books,/the smell of hot coffee,/the feeling at the top of a really good jump,/and when I land I open my eyes and it's light./Everything is light."
+    value: "Everything is light."
   },
   {
     speed: 3.5,
