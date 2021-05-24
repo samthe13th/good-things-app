@@ -198,7 +198,7 @@ export const STORY = [
     value: "It's like peace, but fun. It's like curiosity, but calm. It's like being a thousand years old and a brand new baby at the same time. I'm not really sure how to say it except that it's the best feeling I've ever had."
   },
   {
-    speed: 3.5,
+    speed: 4,
     type: "story",
     value: "And then everything goes black, but it's not dark, it's a shadow. I never see what the shadow is of. The melody stops and a roar of sound slams into my ears, and I can't tell if it's heavy metal music or screaming or construction or alarms because it's so loud the sound is like nothing, it's all like a shock, like jumping off a high dive and hitting ice­ cold water so hard it knocks the air out of me."
   },
@@ -518,7 +518,7 @@ export const STORY = [
   {
     speed: 2,
     type: "story",
-    value: "Okay, for real now./It's time to go./Good night./Good morning."
+    value: "Okay, for real now./It's time to go./I love you./Good night./Good morning."
   },
   {
     speed: 1,
