@@ -36,7 +36,6 @@ import { StoryService } from './services/story.service';
 import { appRoutes } from '../routes';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { CookieComponent } from './pages/cookie/cookie.component';
 import { LoginFormComponent } from './pages/login-form/login-form.component';
 import { SignupFormComponent } from './pages/signup-form/signup-form.component';
 
@@ -58,7 +57,6 @@ import { SignupFormComponent } from './pages/signup-form/signup-form.component';
     StoryBlockComponent,
     ProgramComponent,
     SurveyComponent,
-    CookieComponent,
     UserPageComponent,
     ModalComponent,
     TooltipComponent,

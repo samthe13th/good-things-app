@@ -120,6 +120,7 @@ export class UserPageComponent implements AfterViewInit, OnChanges {
           .valueChanges()
           .pipe(debounceTime(this.debounceTime - 2000))
           .subscribe((value: string) => {
+            console.log("THEME: ", value, this.debounceTime);
             if (value !== undefined) {
               this.showRamp = false;
               setTimeout(() => {

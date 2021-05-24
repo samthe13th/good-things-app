@@ -6,7 +6,6 @@ import { StageComponent } from './app/pages/stage/stage.component';
 import { ProgramComponent } from './app/pages/program/program.component';
 import { AllTheThingsComponent } from './app/pages/allthethings/allthethings.component';
 import { SurveyComponent } from './app/pages/survey/survey.component';
-import { CookieComponent } from './app/pages/cookie/cookie.component';
 import { UserPageComponent } from './app/pages/user-page/user-page.component';
 import { UserManagementComponent } from './app/pages/user-management/user-managment.component';
 
@@ -19,6 +18,5 @@ export const appRoutes: Routes = [
   { path: 'stage/:id', component: UserPageComponent },
   { path: '', component: SurveyComponent },
   { path: 'stage', component: StageComponent },
-  { path: 'secretcookie', component: CookieComponent },
   { path: 'admin/users', component: UserManagementComponent },
 ];

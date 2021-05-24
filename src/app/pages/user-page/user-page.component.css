@@ -19,7 +19,7 @@
 }
 
 .audio-button {
-  opacity: 0.3;
+  opacity: 0.7;
   position: absolute;
   display: flex;
   justify-content: center;
@@ -155,7 +155,7 @@ app-user-list {
 
 .theme--yellow {
   background: #fff5ab;
-  color: #888888;
+  color: #636262
 }
 
 .theme--light {

@@ -3,6 +3,7 @@ import { StoryService } from '../../services/story.service';
 import { interval, Observable, of } from 'rxjs';
 import { debounceTime, delayWhen, tap } from 'rxjs/internal/operators';
 import { last } from 'lodash';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 @Component({
   selector: 'feed',
@@ -34,7 +35,7 @@ export class FeedComponent implements OnChanges, AfterViewInit {
   visible = false;
   initialized = false;
 
-  constructor(private story: StoryService) { }
+  constructor(private story: StoryService, private db: AngularFireDatabase) { }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -66,5 +67,9 @@ export class FeedComponent implements OnChanges, AfterViewInit {
   onCurrentBlockChange(block) {
     console.log('block change: ', block);
     this.currentBlock.emit(block);
+    if (block.theme) {
+      console.log('new theme: ', block.theme)
+      this.db.object('theme').set(block.theme);
+    }
   }
 }

@@ -1,7 +1,8 @@
 .modal-wrapper {
+  margin: 10px;
   display: block;
   height: 100vh;
-  width: 100vw;
+  width: calc(100vw - 20px);
   display: flex;
   position: fixed;
   justify-content: center;
@@ -90,5 +91,5 @@
 
 .modal-content {
   padding: 20px;
-  overflow: auto;
+  overflow: scroll;
 }

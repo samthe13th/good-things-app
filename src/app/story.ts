@@ -76,12 +76,12 @@ export const SHOW = {
 
 export const STORY = [
   {
-    theme: "blue",
+    theme: "dark",
     type: "start",
     value: "Hi. You made it!/I'll be with you soon. For now, just relax and listen to the rain./While you're waiting to begin, take a look around your space./See if you can notice something you haven't noticed before./How does this space make you feel?/Just make a note of it. I'll be right back."
   },
   {
-    theme: "white",
+    theme: "light",
     speed: 2,
     type: "story",
     value: "Hi/Hi/.../Hi"
@@ -225,7 +225,7 @@ export const STORY = [
   {
     speed: 4,
     type: "story",
-    value: "Sand, beneath my bare feet. Wet, cold sand, a little blue – light ahead. Above, act[aul]ually – the moon./A lake."
+    value: "Sand, beneath my bare feet. Wet, cold sand, a little dark – light ahead. Above, act[aul]ually – the moon./A lake."
   },
   {
     speed: 5,
@@ -234,6 +234,7 @@ export const STORY = [
   },
   {
     speed: 3,
+    theme: "dark",
     type: "story",
     value: "It's so cold and my heart rate slows down, and slows down."
   },
@@ -390,6 +391,7 @@ export const STORY = [
   {
     speed: 3.5,
     type: "story",
+    theme: "yellow",
     value: "I close my eyes and I feel the shadow pass over me and before the sound can punch me I take a deep breath./I breathe in your warm hand in mine,/the paper empire,/kicking to shore,/sunlight through trees,/the sweet mist on my face,/the purr of the books,/the smell of hot coffee,/the feeling at the top of a really good jump,/and when I land I open my eyes and it's light./Everything is light."
   },
   {
@@ -483,7 +485,7 @@ export const STORY = [
     value: "But right now – relax. I want you to close your eyes again, I'll bring you back with this sound."
   },
   {
-    theme: "white",
+    theme: "light",
     speed: 3.5,
     type: "story",
     value: "Ready? Close your eyes."
