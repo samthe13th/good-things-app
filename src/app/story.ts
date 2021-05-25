@@ -122,19 +122,14 @@ export const STORY = [
     value: "I'm nervous/Sorry./I'm just - as I said - just very happy that you're here."
   },
   {
-    speed: 2,
+    speed: 2.5,
     type: "story",
     value: "So you're alone, now, okay? No one is going to come bother you, so relax, get comfortable. You are safe here./But out there/I'm not always sure."
   },
   {
-    speed: 3.5,
+    speed: 3,
     type: "story",
     value: "It was the rain that reminded me of you/It was the one sound that could reach me, where I am/It woke me up/And I decided to find you/There is so much in this world./There is too much./Does that sound familiar?"
-  },
-  {
-    type: "chat",
-    value: "",
-    isPrivate: true,
   },
   {
     speed: 1,
@@ -142,7 +137,7 @@ export const STORY = [
     value: "Um/I keep getting the feeling that you don't remember me."
   },
   {
-    speed: 3.5,
+    speed: 4,
     type: "story",
     value: "Which is fine!/Not your fault!/I wondered if this might happen./But that is okay./Everything is okay./Because I'm here to remind you of everything."
   },
@@ -152,18 +147,28 @@ export const STORY = [
     value: "Just relax for a bit. Forget about all that hard stuff outside./Be with me."
   },
   {
+    speed: 2,
+    type: "story",
+    value: "Does that sound ok?"
+  },
+  {
+    type: "chat",
+    value: "",
+    isPrivate: true,
+  },
+  {
     speed: 3.5,
     type: "story",
     value: "I'm going to share something with you, but first I want to ask[y] you to close your eyes for a little bit. Just listen for this sound:"
   },
   {
-    theme: "yellow",
     speed: 3.5,
     type: "story",
     value: "When you hear that sound, it's time to open your eyes again./Ready?/Close your eyes."
   },
   {
     speed: 3.5,
+    theme: "yellow",
     type: "story",
     value: "Welcome back."
   },
@@ -183,7 +188,7 @@ export const STORY = [
     value: "Anyway"
   },
   {
-    speed: 3.5,
+    speed: 4,
     type: "story",
     value: "I'm in a field. A field of crisp green grass. Dotted through the field are little white daisies. I'm small, wearing cotton play clothes and bare feet. It's sunny and the air is cool and fresh and I'm just walking through the field picking daisies, and I hear a voice – I don't know whose – singing a beautiful song. No words. Just a melody."
   },
@@ -205,6 +210,7 @@ export const STORY = [
   {
     speed: 3.5,
     type: "story",
+    theme: "light",
     value: "And then I wake up."
   },
   {
@@ -215,6 +221,7 @@ export const STORY = [
   {
     speed: 3.5,
     type: "story",
+    theme: "yellow",
     value: "This one time the shadow came and the sound punched my ears and I stood there, my head aching like a black hole. The fear seized me. I waited for that falling feeling of myself landing back in my body, awake in my shaky heart, but it didn't come. The sound got louder and louder, rattling in my lungs, blasting every cell of my body."
   },
   {
@@ -498,7 +505,7 @@ export const STORY = [
   {
     speed: 3.5,
     type: "story",
-    value: "It's time to go, now."
+    value: "It's time to go now."
   },
   {
     speed: 3.5,

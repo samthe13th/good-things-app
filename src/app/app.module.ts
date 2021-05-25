@@ -16,6 +16,7 @@ import { UserPageComponent } from './pages/user-page/user-page.component';
 import { UserManagementComponent } from './pages/user-management/user-managment.component';
 import { SurveyComponent } from './pages/survey/survey.component';
 import { ProgramComponent } from './pages/program/program.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 // Components
 import { AutoTypeComponent } from './shared-components/auto-type/auto-type.component';
@@ -62,6 +63,7 @@ import { SignupFormComponent } from './pages/signup-form/signup-form.component';
     TooltipComponent,
     UserTableComponent,
     UserManagementComponent,
+    LandingComponent,
   ],
   imports: [
     BrowserModule,
