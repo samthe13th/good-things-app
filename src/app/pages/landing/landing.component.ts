@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { RainComponent } from '../../shared-components/rain/rain.component';
 
 @Component({
   selector: 'app-landing',
   template: `
   <div class="landing">
-  <div class="rain">
-    <div [style.animation-delay]="drop.delay" [style.left]="drop.x" *ngFor="let drop of rain" class="raindrop"></div>
-  </div>
-  <img class="boat" src="assets/sailboat.png"/>
-  <div class="waveHorizontals">
-	<div id="waveHorizontal1" class="waveHorizontal"></div>
-    <div id="waveHorizontal2" class="waveHorizontal"></div>
-    <div id="waveHorizontal3" class="waveHorizontal"></div>
-  </div>
-  <div class="content"></div>
-  <h1>good things to do.</h1>
+    <rain></rain>
+    <img class="boat" src="assets/sailboat.png"/>
+    <div class="waveHorizontals">
+    <div id="waveHorizontal1" class="waveHorizontal"></div>
+      <div id="waveHorizontal2" class="waveHorizontal"></div>
+      <div id="waveHorizontal3" class="waveHorizontal"></div>
+    </div>
+    <div class="content"></div>  
+    <router-outlet></router-outlet>
   </div>
   `,
   styleUrls: ['./landing.component.css']
@@ -22,6 +21,7 @@ import { Component, OnInit } from '@angular/core';
 export class LandingComponent implements OnInit {
   constructor() { }
   rain;
+
   ngOnInit() {
     this.generateRain();
   }

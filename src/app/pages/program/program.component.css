@@ -10,22 +10,26 @@
 }
 
 .program__section {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-    padding: 40px 40px 20px 40px;
+  background: #f9f6ed;
+  color: #272727;
+  padding: 40px 40px 20px 40px;
+  box-shadow: -10px 10px 15px rgb(0 0 0 / 30%);   
 }
 
 .program__base {
-   display: flex;
-   margin-bottom: 100px;
+  display: flex;
+  height: calc(100vh - 65px);
+  overflow: auto;
+  margin-top: 45px;
+  padding-bottom: 20px;
 }
 
 .program__contents {
     width: 200px;
     padding: 5px;
     font-size: 1em;
-       position: fixed;
-       margin: 20px;
+    position: fixed;
+    margin: 20px;
 }
 
  .program__contents--select {
@@ -48,33 +52,16 @@
 }
 
 .program__main {
-     max-width: 1000px;
-     margin: auto;
-     overflow: auto;
-     height: 100%;
-     font-size: 20px;
-     font-weight: 200;
-     line-height: 24px;
-     overflow: scroll;
-     height: 100%;
+  max-width: 800px;
+  margin-bottom: 40px;
+  font-family: monospace;
+  font-weight: normal;
+  font-size: 1.3em;
+  font-weight: 200;
+  line-height: 24px;
+  margin: auto;
 }
 
-h1 {
-    font-weight: 100;
-    font-size: 40px;
-    margin-top: 0;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-h2 {
-    font-size: 24px;
-    font-weight: 300;
-    margin-top: 50px;
-    margin-bottom: 40px;
-    text-align: center;
-  color: white;
-}
 h4 {
     margin-top: 0;
     font-weight: 400;

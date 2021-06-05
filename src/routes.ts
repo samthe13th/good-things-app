@@ -6,17 +6,26 @@ import { StageComponent } from './app/pages/stage/stage.component';
 import { ProgramComponent } from './app/pages/program/program.component';
 import { AllTheThingsComponent } from './app/pages/allthethings/allthethings.component';
 import { LandingComponent } from './app/pages/landing/landing.component';
+import { GoodThingsComponent } from './app/pages/good-things/good-things.component';
 import { UserPageComponent } from './app/pages/user-page/user-page.component';
 import { UserManagementComponent } from './app/pages/user-management/user-managment.component';
+import { HomeComponent } from './app/pages/home/home.component';
 
 export const appRoutes: Routes = [
   { path: 'signup', component: SignupFormComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'program', component: ProgramComponent },
   { path: 'allthethings', component: AllTheThingsComponent },
   { path: 'stage/:id', component: UserPageComponent },
-  { path: '', component: LandingComponent },
-  { path: 'stage', component: StageComponent },
+  { 
+    path: '',
+    component: LandingComponent,
+    children: [
+      { path: '', component: HomeComponent },
+      { path: 'stage', component: StageComponent },
+      { path: 'program', component: ProgramComponent },
+      { path: 'goodthings', component: GoodThingsComponent },
+    ]
+  },
   { path: 'admin/users', component: UserManagementComponent },
 ];

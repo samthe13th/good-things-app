@@ -80,9 +80,13 @@
   border-right: 1px solid #222;
 }
 
+::-webkit-scrollbar {
+  background: none;
+}
+
 .feedWrapper {
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   padding-left: 15%;
   padding-right: 15%;
   width: 70%;

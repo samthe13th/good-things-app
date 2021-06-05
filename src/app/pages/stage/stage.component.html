@@ -1,4 +1,4 @@
-<form class="stage-form">
+<form *ngIf="page === 'sign-in'" class="stage-form">
   <input #codeInput placeholder="Enter Show Code"/>
   <div *ngIf="invalidCode">Sorry! That code is not correct.</div>
   <button (click)="enterCode(codeInput.value)">Submit</button>
@@ -7,6 +7,6 @@
 <nav class="goodthings-nav">
   <a href="/">Home</a>
   <a href="/program">Program</a>
-  <a target="_blank" href="https://www.eventbrite.com/e/rumble-presents-good-things-to-do-tickets-102448897410">Tickets</a>
-  <a href="/stage">Stage</a>
+  <a href="https://www.folda.ca/good-things-to-do/" target="_blank">Tickets</a>
+  <a class="selected" href="/stage">Stage</a>
 </nav>

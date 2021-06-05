@@ -8,9 +8,13 @@ import { AngularFireDatabase } from '@angular/fire/database';
   selector: 'app-stage',
   templateUrl: './stage.component.html',
   styleUrls: ['./stage.component.css'],
+  host: {
+    'class': 'app-stage'
+  }
 })
 export class StageComponent {
   invalidCode = false;
+  page = 'sign-in';
 
   constructor (
     private router: Router,

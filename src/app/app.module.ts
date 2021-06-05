@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 // Pages
 import { AdminComponent } from './pages/admin/admin.component';
 import { AllTheThingsComponent } from './pages/allthethings/allthethings.component';
+import { GoodThingsComponent } from './pages/good-things/good-things.component';
+import { HomeComponent } from './pages/home/home.component';
 import { StageComponent } from './pages/stage/stage.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { UserManagementComponent } from './pages/user-management/user-managment.component';
@@ -25,6 +27,7 @@ import { FeedComponent } from './shared-components/feed/feed.component';
 import { StoryBlockComponent } from './shared-components/feed/story/story-block/story-block.component';
 import { StoryComponent } from './shared-components/feed/story/story.component';
 import { ModalComponent } from './shared-components/modal/modal.component';
+import { RainComponent } from './shared-components/rain/rain.component';
 import { TooltipComponent } from './shared-components/tooltip/tooltip.component';
 import { UserTableComponent } from './shared-components/user-table/user-table.component';
 
@@ -49,8 +52,11 @@ import { SignupFormComponent } from './pages/signup-form/signup-form.component';
     AutoTypeComponent,
     ChatFeedComponent,
     FeedComponent,
+    GoodThingsComponent,
+    HomeComponent,
     LoginFormComponent,
     ProgramComponent,
+    RainComponent,
     SignupFormComponent,
     StoryBlockComponent,
     StageComponent,
