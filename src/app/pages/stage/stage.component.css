@@ -256,6 +256,14 @@ app-user-list {
   opacity: 0.8;
 }
 
+.stage-form p {
+  color: white;
+  max-width: 800px;
+  text-align: center;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
+}
 
 .stage-form {
   z-index: 10;

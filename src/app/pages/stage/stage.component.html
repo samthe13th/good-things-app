@@ -1,4 +1,9 @@
 <form *ngIf="page === 'sign-in'" class="stage-form">
+  <p>
+      For the best experience, <br/> please view on a <em>Chrome</em> or <em>Safari</em> browser,<br/>
+      and use a computer, not your phone.
+  </p>
+  <br/><br/>
   <input #codeInput placeholder="Enter Show Code"/>
   <div *ngIf="invalidCode">Sorry! That code is not correct.</div>
   <button (click)="enterCode(codeInput.value)">Submit</button>
@@ -8,5 +13,4 @@
   <a href="/">Home</a>
   <a href="/program">Program</a>
   <a href="https://www.folda.ca/good-things-to-do/" target="_blank">Tickets</a>
-  <a class="selected" href="/stage">Stage</a>
 </nav>

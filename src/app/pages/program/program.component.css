@@ -1,7 +1,6 @@
 .program {
   overflow: auto;
    height: 100vh;
-   background-image: url(./mountains.jpg);
    background-repeat: no-repeat;
    background-size: cover;
    font-family: sans-serif;
