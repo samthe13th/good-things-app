@@ -383,12 +383,12 @@ export const STORY = [
   {
     speed: 3.5,
     type: "story",
-    value: "Hot tears spill from my eyes but you hug me very very hard and squeeze the sadness right out until I feel brave."
+    value: "I turn to look for you, but you are already gone./I'm alone."
   },
   {
     speed: 2,
     type: 'story',
-    value: "When you let go, you are gone./I'm alone./I turn and pick the first daisy."
+    value: "I start to feel scared but I do what I always do./I turn and pick the first daisy."
   },
   {
     speed: 2,
