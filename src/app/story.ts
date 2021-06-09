@@ -193,12 +193,12 @@ export const STORY = [
     value: "I'm in a field. A field of crisp green grass. Dotted through the field are little white daisies. I'm small, wearing cotton play clothes and bare feet. It's sunny and the air is cool and fresh and I'm just walking through the field picking daisies, and I hear a voice – I don't know whose – singing a beautiful song. No words. Just a melody."
   },
   {
-    speed: 2,
+    speed: 2.5,
     type: "story",
     value: "I can't describe exactly what I'm feeling/because it's not really a feeling I get anymore,/if I ever did."
   },
   {
-    speed: 2,
+    speed: 2.75,
     type: "story",
     value: "It's like peace, but fun. It's like curiosity, but calm. It's like being a thousand years old and a brand new baby at the same time. I'm not really sure how to say it except that it's the best feeling I've ever had."
   },
